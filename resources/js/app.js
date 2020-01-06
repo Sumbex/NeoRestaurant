@@ -7,6 +7,9 @@ import Rutas from './rutas.js';
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 
+import 'bootstrap';
+import 'bootstrap/dist/css/bootstrap.css';
+
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 

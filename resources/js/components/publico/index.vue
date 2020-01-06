@@ -1,26 +1,37 @@
 <template>
-    <div class="container">
-  <div class="row justify-content-md-center">
-    <div class="col col-lg-2">
-      1 of 3
-    </div>
-    <div class="col-md-auto">
-      Variable width content
-    </div>
-    <div class="col col-lg-2">
-      3 of 3
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <br />
+      <h1 class="text-center">Neo RestoBar</h1>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title text-center">Identifiquese</h5>
+          <form>
+            <div class="form-label-group">
+              <input
+                type="email"
+                class="form-control"
+                placeholder="Ingrese su correo"
+                required
+                autofocus
+              />
+              <label for="inputEmail">Correo</label>
+            </div>
+
+            <div class="form-label-group">
+              <input
+                type="password"
+                class="form-control"
+                placeholder="Ingrese su contraseña"
+                required
+              />
+              <label for="inputPassword">Contraseña</label>
+            </div>
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Ingresar</button>
+          </form>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="row">
-    <div class="col">
-      1 of 3
-    </div>
-    <div class="col-md-auto">
-      Variable width content
-    </div>
-    <div class="col col-lg-2">
-      3 of 3
-    </div>
-  </div>
-</div>
 </template>
