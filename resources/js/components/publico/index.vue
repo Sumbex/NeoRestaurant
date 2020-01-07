@@ -5,7 +5,7 @@
       <h1 class="text-center">Neo RestoBar</h1>
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title text-center">Identifiquese</h5>
+          <h5 class="card-title text-center">Identifíquese</h5>
           <form>
             <div class="form-label-group">
               <input

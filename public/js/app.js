@@ -39074,7 +39074,7 @@ var staticRenderFns = [
         _c("div", { staticClass: "card" }, [
           _c("div", { staticClass: "card-body" }, [
             _c("h5", { staticClass: "card-title text-center" }, [
-              _vm._v("Identifiquese")
+              _vm._v("Identifíquese")
             ]),
             _vm._v(" "),
             _c("form", [
