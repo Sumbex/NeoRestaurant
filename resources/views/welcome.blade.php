@@ -12,6 +12,8 @@
     {{-- <link href="{{ mix('css/app.css') }}" type="text/css" rel="stylesheet" /> --}}
     <meta name="csrf-token" value="{{ csrf_token() }}" />
 
+    <script src="https://kit.fontawesome.com/4906bb7fec.js" crossorigin="anonymous"></script>
+
 </head>
 
 <body>
