@@ -3,9 +3,28 @@
     <div class="d-flex" id="wrapper">
       <!-- Sidebar -->
       <div class="bg-dark border-right" id="sidebar-wrapper">
-        <div class="sidebar-heading">Neo RestoBar</div>
+        <div class="sidebar-heading">
+          <div class="row px-2 no-gutters">
+            <div class="col-8 mt-2 ml-3">
+              <h5 class="text-white">Neo RestoBar</h5>
+            </div>
+            <div class="col-3 mt-1">
+              <i class="fas fa-utensils fa-2x" style="color:white"></i>
+            </div>
+          </div>
+        </div>
         <div class="list-group list-group-flush">
-          <a href="#" class="list-group-item list-group-item-action bg-dark">Home</a>
+          <!--  <div class="bg-primary text-center"><h5>Navegacion</h5></div> -->
+          <a
+            data-toggle="collapse"
+            href="#collapseExample"
+            class="list-group-item list-group-item-action bg-dark"
+          >Home</a>
+          <div class="collapse" id="collapseExample">
+            <a href="#" class="list-group-item list-group-item-action list-group-item-light">1</a>
+            <a href="#" class="list-group-item list-group-item-action list-group-item-light">2</a>
+            <a href="#" class="list-group-item list-group-item-action list-group-item-light">3</a>
+          </div>
           <a href="#" class="list-group-item list-group-item-action bg-dark">Sucursales</a>
           <a href="#" class="list-group-item list-group-item-action bg-dark">Usuarios</a>
           <a href="#" class="list-group-item list-group-item-action bg-dark">Almacen</a>
@@ -20,7 +39,9 @@
       <!-- Page Content -->
       <div id="page-content-wrapper">
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom">
-          <button class="btn btn-primary" id="menu-toggle" @click="toggle()"><span class="navbar-toggler-icon"></span></button>
+          <button class="btn btn-primary rounded-circle border-0" id="menu-toggle" @click="toggle()">
+            <i class="fa "></i>
+          </button>
 
           <button
             class="navbar-toggler"

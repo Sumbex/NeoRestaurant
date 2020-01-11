@@ -7682,7 +7682,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "/*!\r\n * Start Bootstrap - Simple Sidebar (https://startbootstrap.com/template-overviews/simple-sidebar)\r\n * Copyright 2013-2019 Start Bootstrap\r\n * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-simple-sidebar/blob/master/LICENSE)\r\n */\nbody {\r\n  overflow-x: hidden;\n}\n#sidebar-wrapper {\r\n  min-height: 100vh;\r\n  margin-left: -15rem;\r\n  -webkit-transition: margin .25s ease-out;\r\n  transition: margin .25s ease-out;\n}\n#sidebar-wrapper .sidebar-heading {\r\n  padding: 0.875rem 1.25rem;\r\n  font-size: 1.2rem;\n}\n#sidebar-wrapper .list-group {\r\n  width: 15rem;\n}\n#page-content-wrapper {\r\n  min-width: 100vw;\n}\n#wrapper.toggled #sidebar-wrapper {\r\n  margin-left: 0;\n}\n@media (min-width: 768px) {\n#sidebar-wrapper {\r\n    margin-left: 0;\n}\n#page-content-wrapper {\r\n    min-width: 0;\r\n    width: 100%;\n}\n#wrapper.toggled #sidebar-wrapper {\r\n    margin-left: -15rem;\n}\n}\r\n", ""]);
+exports.push([module.i, "/*!\r\n * Start Bootstrap - Simple Sidebar (https://startbootstrap.com/template-overviews/simple-sidebar)\r\n * Copyright 2013-2019 Start Bootstrap\r\n * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-simple-sidebar/blob/master/LICENSE)\r\n */\nbody {\r\n  overflow-x: hidden;\n}\n#sidebar-wrapper {\r\n  min-height: 100vh;\r\n  margin-left: -15rem;\r\n  -webkit-transition: margin .25s ease-out;\r\n  transition: margin .25s ease-out;\n}\n#sidebar-wrapper .sidebar-heading {\r\n  padding: 0.375rem 0.45rem;\r\n  font-size: 1.2rem;\n}\n#sidebar-wrapper .list-group {\r\n  width: 15rem;\n}\n#page-content-wrapper {\r\n  min-width: 100vw;\n}\n#wrapper.toggled #sidebar-wrapper {\r\n  margin-left: 0;\n}\n@media (min-width: 768px) {\n#sidebar-wrapper {\r\n    margin-left: 0;\n}\n#page-content-wrapper {\r\n    min-width: 0;\r\n    width: 100%;\n}\n#wrapper.toggled #sidebar-wrapper {\r\n    margin-left: -15rem;\n}\n}\n#menu-toggle .fa:before {  \r\n  content: \"\\F137\";\n}\n#wrapper.toggled .fa:before {\r\n  content: \"\\F138\";\n}\r\n", ""]);
 
 // exports
 
@@ -39333,7 +39333,7 @@ var render = function() {
             _c(
               "button",
               {
-                staticClass: "btn btn-primary",
+                staticClass: "btn btn-primary rounded-circle border-0",
                 attrs: { id: "menu-toggle" },
                 on: {
                   click: function($event) {
@@ -39341,7 +39341,7 @@ var render = function() {
                   }
                 }
               },
-              [_c("span", { staticClass: "navbar-toggler-icon" })]
+              [_c("i", { staticClass: "fa " })]
             ),
             _vm._v(" "),
             _vm._m(1),
@@ -39414,16 +39414,65 @@ var staticRenderFns = [
       "div",
       { staticClass: "bg-dark border-right", attrs: { id: "sidebar-wrapper" } },
       [
-        _c("div", { staticClass: "sidebar-heading" }, [_vm._v("Neo RestoBar")]),
+        _c("div", { staticClass: "sidebar-heading" }, [
+          _c("div", { staticClass: "row px-2 no-gutters" }, [
+            _c("div", { staticClass: "col-8 mt-2 ml-3" }, [
+              _c("h5", { staticClass: "text-white" }, [_vm._v("Neo RestoBar")])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-3 mt-1" }, [
+              _c("i", {
+                staticClass: "fas fa-utensils fa-2x",
+                staticStyle: { color: "white" }
+              })
+            ])
+          ])
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "list-group list-group-flush" }, [
           _c(
             "a",
             {
               staticClass: "list-group-item list-group-item-action bg-dark",
-              attrs: { href: "#" }
+              attrs: { "data-toggle": "collapse", href: "#collapseExample" }
             },
             [_vm._v("Home")]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "collapse", attrs: { id: "collapseExample" } },
+            [
+              _c(
+                "a",
+                {
+                  staticClass:
+                    "list-group-item list-group-item-action list-group-item-light",
+                  attrs: { href: "#" }
+                },
+                [_vm._v("1")]
+              ),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  staticClass:
+                    "list-group-item list-group-item-action list-group-item-light",
+                  attrs: { href: "#" }
+                },
+                [_vm._v("2")]
+              ),
+              _vm._v(" "),
+              _c(
+                "a",
+                {
+                  staticClass:
+                    "list-group-item list-group-item-action list-group-item-light",
+                  attrs: { href: "#" }
+                },
+                [_vm._v("3")]
+              )
+            ]
           ),
           _vm._v(" "),
           _c(
@@ -55159,8 +55208,8 @@ var routes = [{
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\bryan\Desktop\NeoRestaurant\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\bryan\Desktop\NeoRestaurant\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\NeoRestaurant\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\NeoRestaurant\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

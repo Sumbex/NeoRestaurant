@@ -17,7 +17,7 @@
 }
 
 #sidebar-wrapper .sidebar-heading {
-  padding: 0.875rem 1.25rem;
+  padding: 0.375rem 0.45rem;
   font-size: 1.2rem;
 }
 
@@ -46,4 +46,12 @@
   #wrapper.toggled #sidebar-wrapper {
     margin-left: -15rem;
   }
+}
+
+#menu-toggle .fa:before {  
+  content: "\f137";
+}
+
+#wrapper.toggled .fa:before {
+  content: "\f138";
 }
