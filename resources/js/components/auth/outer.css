@@ -17,7 +17,7 @@
 }
 
 #sidebar-wrapper .sidebar-heading {
-  padding: 0.375rem 0.45rem;
+  padding: 0.372rem 0.45rem;
   font-size: 1.2rem;
 }
 
@@ -54,4 +54,12 @@
 
 #wrapper.toggled .fa:before {
   content: "\f138";
+}
+
+[data-toggle="collapse"] .fa:before {  
+  content: "\f078";
+}
+
+[data-toggle="collapse"].collapsed .fa:before {
+  content: "\f054";
 }
