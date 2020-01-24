@@ -10,6 +10,7 @@
             <div class="form-group col-md-6">
               <input
                 type="text"
+                v-model="sucursal"
                 class="form-control"
                 placeholder="Nombre Sucursal"
                 aria-label="Nombre"
@@ -18,16 +19,22 @@
             <div class="form-group col-md-6">
               <input
                 type="text"
+                v-model="direccion"
                 class="form-control"
                 placeholder="Direccion"
                 aria-label="Direccion"
               />
             </div>
             <div class="form-group col-md-12">
-              <textarea class="form-control resize-none" placeholder="Observacion" aria-label="Observacion"></textarea>
+              <textarea
+                class="form-control resize-none"
+                v-model="observacion"
+                placeholder="Observacion"
+                aria-label="Observacion"
+              ></textarea>
             </div>
             <div class="form-group col-md-12 mt-2 mb-3 text-center">
-              <button type="button" class="btn btn-success">Guardar</button>
+              <button type="button" class="btn btn-success rounded-pill" @click="ingresar()">Guardar</button>
             </div>
           </div>
         </div>
@@ -38,39 +45,33 @@
       <div class="card col-md-12">
         <div class="row justify-center">
           <div class="col-md-12 my-1">
-            <h3 class="text-center">Tabla</h3>
+            <h3 class="text-center">Sucursales</h3>
           </div>
           <div class="col-md-12">
-            <table class="table">
-              <thead class="thead-dark">
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">First</th>
-                  <th scope="col">Last</th>
-                  <th scope="col">Handle</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
-                  <td>@fat</td>
-                </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td>Larry</td>
-                  <td>the Bird</td>
-                  <td>@twitter</td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="table-responsive">
+              <table class="table">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Sucursal</th>
+                    <th scope="col">Direccion</th>
+                    <th scope="col">Observacion</th>
+                    <th scope="col">Creada por:</th>
+                    <th scope="col">Creada:</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="sucursal in sucursales">
+                    <th scope="row">{{sucursal.id}}</th>
+                    <td>{{sucursal.sucursal}}</td>
+                    <td>{{sucursal.direccion}}</td>
+                    <td>{{sucursal.observacion}}</td>
+                    <td>{{sucursal.nombre}}</td>
+                    <td>{{sucursal.created_at}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
@@ -79,3 +80,4 @@
 </template>
 
 <style src="./sucursal.css"></style>
+<script src="./sucursal.js"></script>

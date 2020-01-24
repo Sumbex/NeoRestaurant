@@ -21,4 +21,7 @@ Route::post('auth/login', 'AuthController@Login');
 
 Route::group(['middleware' => 'auth.jwt'], function () {
     Route::post('auth/logout', 'AuthController@Logout');
+
+    Route::post('/ingresar_sucursal', 'SucursalController@IngresarSucursal');
+    Route::get('/traer_sucursales', 'SucursalController@TraerSucursales');
 });

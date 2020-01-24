@@ -11,7 +11,9 @@ import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import 'jquery/dist/jquery.min.js';
-
+import Notifications from 'vue-notification/dist/ssr.js'
+Vue.use(Notifications)
+import Chart from 'chart.js';
 
 import axios from 'axios';
 import VueAxios from 'vue-axios';

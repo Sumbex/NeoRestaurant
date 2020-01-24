@@ -101,6 +101,7 @@
         <transition name>
           <router-view></router-view>
         </transition>
+        <notifications group="foo" />
       </div>
     </div>
     <!-- /#page-content-wrapper -->
