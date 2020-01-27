@@ -43,6 +43,7 @@ class Sucursal extends Model
             ->where([
                 's.activo' => 'S'
             ])
+            ->orderBy('s.created_at', 'desc')
             ->get();
         if (!$sucursales->isEmpty()) {
             Carbon::setLocale('es');

@@ -34,14 +34,30 @@
               ></textarea>
             </div>
             <div class="form-group col-md-12 mt-2 mb-3 text-center">
-              <button type="button" class="btn btn-success rounded-pill" @click="ingresar()">Guardar</button>
+              <button
+                type="button"
+                :disabled="!!guardar"
+                v-on:click="guardar = !guardar"
+                class="btn btn-success rounded-pill"
+                @click="ingresar()"
+              >
+                <span v-show="!guardar">Guardar</span>
+                <span v-show="guardar">
+                  Guardando Sucursal
+                  <i class="fa fa-circle-o-notch fa-spin"></i>
+                </span>
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="row justify-center my-3">
+    <div class="row justify-center my-5" v-show="!tabla">
+      <div class="loader"></div>
+    </div>
+
+    <div class="row justify-center my-3" v-show="tabla">
       <div class="card col-md-12">
         <div class="row justify-center">
           <div class="col-md-12 my-1">
@@ -58,10 +74,11 @@
                     <th scope="col">Observacion</th>
                     <th scope="col">Creada por:</th>
                     <th scope="col">Creada:</th>
+                    <th scope="col">Opciones</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="sucursal in sucursales">
+                  <tr v-for="sucursal in sucursales" :prop="sucursal" :key="sucursal.id">
                     <th scope="row">{{sucursal.id}}</th>
                     <td>{{sucursal.sucursal}}</td>
                     <td>{{sucursal.direccion}}</td>
@@ -76,6 +93,8 @@
         </div>
       </div>
     </div>
+
+    <vue-snotify></vue-snotify>
   </div>
 </template>
 

@@ -3,7 +3,7 @@
     <!-- Sidebar -->
     <div class="bg-dark border-right" id="sidebar-wrapper">
       <div class="sidebar-heading border-bottom">
-        <a href="#" @click="url('home')" style="text-decoration:none">
+        <a href="#" @click="url('Home')" style="text-decoration:none">
           <div class="row px-2 no-gutters">
             <div class="col-8 mt-2 ml-3">
               <h5 class="text-white">Neo RestoBar</h5>
@@ -30,12 +30,12 @@
           <a
             href="#"
             class="list-group-item list-group-item-action list-group-item-light"
-            @click="url('sucursales')"
+            @click="url('Sucursal')"
           >Sucursales</a>
           <a
             href="#"
             class="list-group-item list-group-item-action list-group-item-light"
-            @click="url('mesas')"
+            @click="url('Mesas')"
           >Mesas</a>
         </div>
         <a href="#" class="list-group-item list-group-item-action bg-dark text-white">Usuarios</a>
@@ -101,7 +101,6 @@
         <transition name>
           <router-view></router-view>
         </transition>
-        <notifications group="foo" />
       </div>
     </div>
     <!-- /#page-content-wrapper -->

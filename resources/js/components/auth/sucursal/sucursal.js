@@ -1,13 +1,22 @@
+import { SnotifyPosition, SnotifyStyle } from 'vue-snotify';
+
 export default {
+
     data() {
         return {
             sucursal: null,
             direccion: null,
             observacion: null,
-            sucursales: []
+            sucursales: [],
+            tabla: false,
+            guardar: false,
         }
     },
     methods: {
+
+        isDisabled: () {
+
+        },
         ingresar() {
             const data = {
                 'sucursal': this.sucursal,
@@ -15,28 +24,56 @@ export default {
                 'observacion': this.observacion,
             }
             axios.post('api/ingresar_sucursal', data).then((res) => {
-                if (res.data.estado = 'success') {
+                this.guardar = true;
+                if (res.data.estado == 'success') {
+                    this.guardar = false;
                     this.limpiar();
-                    this.$notify({
-                        group: 'foo',
-                        title: '<h4>Nothing!</h4>',
-                        text: 'Don`t eat it!',
-                        type: 'warning',
-                        duration: -10
-                      })
+                    this.$snotify.create({
+                        body: res.data.mensaje,
+                        config: {
+                            timeout: 2000,
+                            showProgressBar: true,
+                            closeOnClick: true,
+                            pauseOnHover: false,
+                            position: SnotifyPosition.centerBottom,
+                            type: SnotifyStyle.success,
+                        }
+                    })
                     this.traer();
                 } else {
-                    alert(res.data.mensaje);
+                    this.guardar = false;
+                    this.$snotify.create({
+                        body: res.data.mensaje,
+                        config: {
+                            timeout: 2000,
+                            showProgressBar: true,
+                            closeOnClick: true,
+                            pauseOnHover: false,
+                            position: SnotifyPosition.centerBottom,
+                            type: SnotifyStyle.error,
+                        }
+                    });
+
                 }
             });
         },
         traer() {
             axios.get('api/traer_sucursales').then((res) => {
-                if (res.data.estado = 'success') {
+                if (res.data.estado == 'success') {
                     this.sucursales = res.data.sucursales;
-                    console.log(this.sucursales);
+                    this.tabla = true;
                 } else {
-                    alert(res.data.mensaje);
+                    this.$snotify.create({
+                        body: res.data.mensaje,
+                        config: {
+                            timeout: 3000,
+                            showProgressBar: true,
+                            closeOnClick: true,
+                            pauseOnHover: false,
+                            position: SnotifyPosition.centerBottom,
+                            type: SnotifyStyle.error,
+                        }
+                    })
                 }
             });
         },

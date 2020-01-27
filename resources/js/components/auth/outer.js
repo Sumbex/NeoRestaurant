@@ -1,6 +1,6 @@
 export default {
     methods: {
-        logout: function () {
+        logout: function() {
             this.$auth.logout({
                 makeRequest: true,
                 redirect: '/'
@@ -12,7 +12,7 @@ export default {
         },
 
         url(ruta) {
-            this.$router.push({ path: ruta }).catch(error => {
+            this.$router.push({ name: ruta }).catch(error => {
                 if (error.name != "NavigationDuplicated") {
                     throw error;
                 }
