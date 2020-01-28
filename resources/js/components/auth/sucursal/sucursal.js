@@ -14,9 +14,9 @@ export default {
     },
     methods: {
 
-        isDisabled: () {
+        /* isDisabled: () {
 
-        },
+        }, */
         ingresar() {
             const data = {
                 'sucursal': this.sucursal,

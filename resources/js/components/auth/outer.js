@@ -1,4 +1,9 @@
 export default {
+    data() {
+        return {
+            activeClass: 'active',
+        }
+    },
     methods: {
         logout: function() {
             this.$auth.logout({
@@ -18,5 +23,10 @@ export default {
                 }
             });
         }
+    },
+    computed:{
+        currentPage(){
+            return this.$route.path;
+        }   
     }
 };

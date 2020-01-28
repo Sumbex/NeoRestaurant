@@ -3,7 +3,7 @@
     <!-- Sidebar -->
     <div class="bg-dark border-right" id="sidebar-wrapper">
       <div class="sidebar-heading border-bottom">
-        <a href="#" @click="url('Home')" style="text-decoration:none">
+        <a @click="url('Home')" style="text-decoration:none">
           <div class="row px-2 no-gutters">
             <div class="col-8 mt-2 ml-3">
               <h5 class="text-white">Neo RestoBar</h5>
@@ -28,13 +28,11 @@
         </a>
         <div class="collapse" id="collapseSucursal">
           <a
-            href="#"
-            class="list-group-item list-group-item-action list-group-item-light"
+            class="list-group-item list-group-item-action list-group-item-light" :class="[currentPage.includes('sucursales') ? activeClass : 'list-group-item-action']"
             @click="url('Sucursal')"
           >Sucursales</a>
           <a
-            href="#"
-            class="list-group-item list-group-item-action list-group-item-light"
+            class="list-group-item list-group-item-action list-group-item-light" :class="[currentPage.includes('mesas') ? activeClass : 'list-group-item-action']"
             @click="url('Mesas')"
           >Mesas</a>
         </div>
@@ -102,6 +100,7 @@
           <router-view></router-view>
         </transition>
       </div>
+      <vue-snotify></vue-snotify>
     </div>
     <!-- /#page-content-wrapper -->
   </div>

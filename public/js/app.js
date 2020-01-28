@@ -3151,6 +3151,11 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      activeClass: 'active'
+    };
+  },
   methods: {
     logout: function logout() {
       this.$auth.logout({
@@ -3170,6 +3175,11 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     }
+  },
+  computed: {
+    currentPage: function currentPage() {
+      return this.$route.path;
+    }
   }
 });
 
@@ -3180,9 +3190,104 @@ __webpack_require__.r(__webpack_exports__);
   !*** ./node_modules/babel-loader/lib??ref--4-0!./resources/js/components/auth/sucursal/sucursal.js?vue&type=script&lang=js& ***!
   \******************************************************************************************************************************/
 /*! exports provided: default */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: C:\\Users\\bryan\\Desktop\\NeoRestaurant\\resources\\js\\components\\auth\\sucursal\\sucursal.js: Unexpected token (17:21)\n\n\u001b[0m \u001b[90m 15 | \u001b[39m    methods\u001b[33m:\u001b[39m {\u001b[0m\n\u001b[0m \u001b[90m 16 | \u001b[39m\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 17 | \u001b[39m        isDisabled\u001b[33m:\u001b[39m () {\u001b[0m\n\u001b[0m \u001b[90m    | \u001b[39m                     \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 18 | \u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 19 | \u001b[39m        }\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 20 | \u001b[39m        ingresar() {\u001b[0m\n    at Parser.raise (C:\\Users\\bryan\\Desktop\\NeoRestaurant\\node_modules\\@babel\\parser\\lib\\index.js:7012:17)\n    at Parser.unexpected (C:\\Users\\bryan\\Desktop\\NeoRestaurant\\node_modules\\@babel\\parser\\lib\\index.js:8405:16)\n    at Parser.parseParenAndDistinguishExpression (C:\\Users\\bryan\\Desktop\\NeoRestaurant\\node_modules\\@babel\\parser\\lib\\index.js:9831:12)\n    at Parser.parseExprAtom (C:\\Users\\bryan\\Desktop\\NeoRestaurant\\node_modules\\@babel\\parser\\lib\\index.js:9582:21)\n    at Parser.parseExprSubscripts (C:\\Users\\bryan\\Desktop\\NeoRestaurant\\node_modules\\@babel\\parser\\lib\\index.js:9237:23)\n    at Parser.parseMaybeUnary (C:\\Users\\bryan\\Desktop\\NeoRestaurant\\node_modules\\@babel\\parser\\lib\\index.js:9217:21)\n    at Parser.parseExprOps (C:\\Users\\bryan\\Desktop\\NeoRestaurant\\node_modules\\@babel\\parser\\lib\\index.js:9083:23)\n    at Parser.parseMaybeConditional (C:\\Users\\bryan\\Desktop\\NeoRestaurant\\node_modules\\@babel\\parser\\lib\\index.js:9056:23)\n    at Parser.parseMaybeAssign (C:\\Users\\bryan\\Desktop\\NeoRestaurant\\node_modules\\@babel\\parser\\lib\\index.js:9015:21)\n    at Parser.parseObjectProperty (C:\\Users\\bryan\\Desktop\\NeoRestaurant\\node_modules\\@babel\\parser\\lib\\index.js:10113:101)\n    at Parser.parseObjPropValue (C:\\Users\\bryan\\Desktop\\NeoRestaurant\\node_modules\\@babel\\parser\\lib\\index.js:10138:101)\n    at Parser.parseObjectMember (C:\\Users\\bryan\\Desktop\\NeoRestaurant\\node_modules\\@babel\\parser\\lib\\index.js:10062:10)\n    at Parser.parseObj (C:\\Users\\bryan\\Desktop\\NeoRestaurant\\node_modules\\@babel\\parser\\lib\\index.js:9982:25)\n    at Parser.parseExprAtom (C:\\Users\\bryan\\Desktop\\NeoRestaurant\\node_modules\\@babel\\parser\\lib\\index.js:9604:28)\n    at Parser.parseExprSubscripts (C:\\Users\\bryan\\Desktop\\NeoRestaurant\\node_modules\\@babel\\parser\\lib\\index.js:9237:23)\n    at Parser.parseMaybeUnary (C:\\Users\\bryan\\Desktop\\NeoRestaurant\\node_modules\\@babel\\parser\\lib\\index.js:9217:21)\n    at Parser.parseExprOps (C:\\Users\\bryan\\Desktop\\NeoRestaurant\\node_modules\\@babel\\parser\\lib\\index.js:9083:23)\n    at Parser.parseMaybeConditional (C:\\Users\\bryan\\Desktop\\NeoRestaurant\\node_modules\\@babel\\parser\\lib\\index.js:9056:23)\n    at Parser.parseMaybeAssign (C:\\Users\\bryan\\Desktop\\NeoRestaurant\\node_modules\\@babel\\parser\\lib\\index.js:9015:21)\n    at Parser.parseObjectProperty (C:\\Users\\bryan\\Desktop\\NeoRestaurant\\node_modules\\@babel\\parser\\lib\\index.js:10113:101)\n    at Parser.parseObjPropValue (C:\\Users\\bryan\\Desktop\\NeoRestaurant\\node_modules\\@babel\\parser\\lib\\index.js:10138:101)\n    at Parser.parseObjectMember (C:\\Users\\bryan\\Desktop\\NeoRestaurant\\node_modules\\@babel\\parser\\lib\\index.js:10062:10)\n    at Parser.parseObj (C:\\Users\\bryan\\Desktop\\NeoRestaurant\\node_modules\\@babel\\parser\\lib\\index.js:9982:25)\n    at Parser.parseExprAtom (C:\\Users\\bryan\\Desktop\\NeoRestaurant\\node_modules\\@babel\\parser\\lib\\index.js:9604:28)\n    at Parser.parseExprSubscripts (C:\\Users\\bryan\\Desktop\\NeoRestaurant\\node_modules\\@babel\\parser\\lib\\index.js:9237:23)\n    at Parser.parseMaybeUnary (C:\\Users\\bryan\\Desktop\\NeoRestaurant\\node_modules\\@babel\\parser\\lib\\index.js:9217:21)\n    at Parser.parseExprOps (C:\\Users\\bryan\\Desktop\\NeoRestaurant\\node_modules\\@babel\\parser\\lib\\index.js:9083:23)\n    at Parser.parseMaybeConditional (C:\\Users\\bryan\\Desktop\\NeoRestaurant\\node_modules\\@babel\\parser\\lib\\index.js:9056:23)\n    at Parser.parseMaybeAssign (C:\\Users\\bryan\\Desktop\\NeoRestaurant\\node_modules\\@babel\\parser\\lib\\index.js:9015:21)\n    at Parser.parseExportDefaultExpression (C:\\Users\\bryan\\Desktop\\NeoRestaurant\\node_modules\\@babel\\parser\\lib\\index.js:11870:24)\n    at Parser.parseExport (C:\\Users\\bryan\\Desktop\\NeoRestaurant\\node_modules\\@babel\\parser\\lib\\index.js:11772:31)\n    at Parser.parseStatementContent (C:\\Users\\bryan\\Desktop\\NeoRestaurant\\node_modules\\@babel\\parser\\lib\\index.js:10794:27)\n    at Parser.parseStatement (C:\\Users\\bryan\\Desktop\\NeoRestaurant\\node_modules\\@babel\\parser\\lib\\index.js:10690:17)\n    at Parser.parseBlockOrModuleBlockBody (C:\\Users\\bryan\\Desktop\\NeoRestaurant\\node_modules\\@babel\\parser\\lib\\index.js:11266:25)\n    at Parser.parseBlockBody (C:\\Users\\bryan\\Desktop\\NeoRestaurant\\node_modules\\@babel\\parser\\lib\\index.js:11253:10)\n    at Parser.parseTopLevel (C:\\Users\\bryan\\Desktop\\NeoRestaurant\\node_modules\\@babel\\parser\\lib\\index.js:10621:10)");
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue_snotify__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-snotify */ "./node_modules/vue-snotify/vue-snotify.esm.js");
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      sucursal: null,
+      direccion: null,
+      observacion: null,
+      sucursales: [],
+      tabla: false,
+      guardar: false
+    };
+  },
+  methods: {
+    /* isDisabled: () {
+      }, */
+    ingresar: function ingresar() {
+      var _this = this;
+
+      var data = {
+        'sucursal': this.sucursal,
+        'direccion': this.direccion,
+        'observacion': this.observacion
+      };
+      axios.post('api/ingresar_sucursal', data).then(function (res) {
+        _this.guardar = true;
+
+        if (res.data.estado == 'success') {
+          _this.guardar = false;
+
+          _this.limpiar();
+
+          _this.$snotify.create({
+            body: res.data.mensaje,
+            config: {
+              timeout: 2000,
+              showProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: false,
+              position: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyPosition"].centerBottom,
+              type: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyStyle"].success
+            }
+          });
+
+          _this.traer();
+        } else {
+          _this.guardar = false;
+
+          _this.$snotify.create({
+            body: res.data.mensaje,
+            config: {
+              timeout: 2000,
+              showProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: false,
+              position: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyPosition"].centerBottom,
+              type: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyStyle"].error
+            }
+          });
+        }
+      });
+    },
+    traer: function traer() {
+      var _this2 = this;
+
+      axios.get('api/traer_sucursales').then(function (res) {
+        if (res.data.estado == 'success') {
+          _this2.sucursales = res.data.sucursales;
+          _this2.tabla = true;
+        } else {
+          _this2.$snotify.create({
+            body: res.data.mensaje,
+            config: {
+              timeout: 3000,
+              showProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: false,
+              position: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyPosition"].centerBottom,
+              type: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyStyle"].error
+            }
+          });
+        }
+      });
+    },
+    limpiar: function limpiar() {
+      this.sucursal = '';
+      this.direccion = '';
+      this.observacion = '';
+    }
+  },
+  mounted: function mounted() {
+    this.traer();
+  }
+});
 
 /***/ }),
 
@@ -24031,7 +24136,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "/*!\r\n * Start Bootstrap - Simple Sidebar (https://startbootstrap.com/template-overviews/simple-sidebar)\r\n * Copyright 2013-2019 Start Bootstrap\r\n * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-simple-sidebar/blob/master/LICENSE)\r\n */\nbody {\r\n  overflow-x: hidden;\n}\n#sidebar-wrapper {\r\n  min-height: 100vh;\r\n  margin-left: -15rem;\r\n  -webkit-transition: margin .25s ease-out;\r\n  transition: margin .25s ease-out;\n}\n#sidebar-wrapper .sidebar-heading {\r\n  padding: 0.372rem 0.45rem;\r\n  font-size: 1.2rem;\n}\n#sidebar-wrapper .list-group {\r\n  width: 15rem;\n}\n#page-content-wrapper {\r\n  min-width: 100vw;\n}\n#wrapper.toggled #sidebar-wrapper {\r\n  margin-left: 0;\n}\n@media (min-width: 768px) {\n#sidebar-wrapper {\r\n    margin-left: 0;\n}\n#page-content-wrapper {\r\n    min-width: 0;\r\n    width: 100%;\n}\n#wrapper.toggled #sidebar-wrapper {\r\n    margin-left: -15rem;\n}\n}\n#menu-toggle .fa:before {  \r\n  content: \"\\F137\";\n}\n#wrapper.toggled .fa:before {\r\n  content: \"\\F138\";\n}\n[data-toggle=\"collapse\"] .fa:before {  \r\n  content: \"\\F078\";\n}\n[data-toggle=\"collapse\"].collapsed .fa:before {\r\n  content: \"\\F054\";\n}\r\n", ""]);
+exports.push([module.i, "/*!\r\n * Start Bootstrap - Simple Sidebar (https://startbootstrap.com/template-overviews/simple-sidebar)\r\n * Copyright 2013-2019 Start Bootstrap\r\n * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-simple-sidebar/blob/master/LICENSE)\r\n */\nbody {\r\n  overflow-x: hidden;\n}\n#sidebar-wrapper {\r\n  min-height: 100vh;\r\n  margin-left: -15rem;\r\n  -webkit-transition: margin .25s ease-out;\r\n  transition: margin .25s ease-out;\n}\n#sidebar-wrapper .sidebar-heading {\r\n  padding: 0.372rem 0.45rem;\r\n  font-size: 1.2rem;\n}\n#sidebar-wrapper .list-group {\r\n  width: 15rem;\n}\n#page-content-wrapper {\r\n  min-width: 100vw;\n}\n#wrapper.toggled #sidebar-wrapper {\r\n  margin-left: 0;\n}\n@media (min-width: 768px) {\n#sidebar-wrapper {\r\n    margin-left: 0;\n}\n#page-content-wrapper {\r\n    min-width: 0;\r\n    width: 100%;\n}\n#wrapper.toggled #sidebar-wrapper {\r\n    margin-left: -15rem;\n}\n}\na {\r\n  cursor: pointer;\n}\n#menu-toggle .fa:before {  \r\n  content: \"\\F137\";\n}\n#wrapper.toggled .fa:before {\r\n  content: \"\\F138\";\n}\n[data-toggle=\"collapse\"] .fa:before {  \r\n  content: \"\\F078\";\n}\n[data-toggle=\"collapse\"].collapsed .fa:before {\r\n  content: \"\\F054\";\n}\n.active{\r\n  opacity: 1;\r\n  visibility: visible;\r\n  -webkit-transition: all 0.25s;\r\n  transition: all 0.25s;\n}", ""]);
 
 // exports
 
@@ -73413,7 +73518,6 @@ var render = function() {
               "a",
               {
                 staticStyle: { "text-decoration": "none" },
-                attrs: { href: "#" },
                 on: {
                   click: function($event) {
                     return _vm.url("Home")
@@ -73438,7 +73542,11 @@ var render = function() {
                   {
                     staticClass:
                       "list-group-item list-group-item-action list-group-item-light",
-                    attrs: { href: "#" },
+                    class: [
+                      _vm.currentPage.includes("sucursales")
+                        ? _vm.activeClass
+                        : "list-group-item-action"
+                    ],
                     on: {
                       click: function($event) {
                         return _vm.url("Sucursal")
@@ -73453,7 +73561,11 @@ var render = function() {
                   {
                     staticClass:
                       "list-group-item list-group-item-action list-group-item-light",
-                    attrs: { href: "#" },
+                    class: [
+                      _vm.currentPage.includes("mesas")
+                        ? _vm.activeClass
+                        : "list-group-item-action"
+                    ],
                     on: {
                       click: function($event) {
                         return _vm.url("Mesas")
@@ -73528,86 +73640,93 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
-      _c("div", { attrs: { id: "page-content-wrapper" } }, [
-        _c(
-          "nav",
-          {
-            staticClass:
-              "navbar navbar-expand-lg navbar-dark bg-dark border-bottom"
-          },
-          [
-            _c(
-              "button",
-              {
-                staticClass: "btn btn-primary rounded-circle border-0",
-                attrs: { id: "menu-toggle" },
-                on: {
-                  click: function($event) {
-                    return _vm.toggle()
+      _c(
+        "div",
+        { attrs: { id: "page-content-wrapper" } },
+        [
+          _c(
+            "nav",
+            {
+              staticClass:
+                "navbar navbar-expand-lg navbar-dark bg-dark border-bottom"
+            },
+            [
+              _c(
+                "button",
+                {
+                  staticClass: "btn btn-primary rounded-circle border-0",
+                  attrs: { id: "menu-toggle" },
+                  on: {
+                    click: function($event) {
+                      return _vm.toggle()
+                    }
                   }
-                }
-              },
-              [_c("i", { staticClass: "fa" })]
-            ),
-            _vm._v(" "),
-            _vm._m(3),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "collapse navbar-collapse",
-                attrs: { id: "navbarSupportedContent" }
-              },
-              [
-                _c("ul", { staticClass: "navbar-nav ml-auto mt-2 mt-lg-0" }, [
-                  _c("li", { staticClass: "nav-item dropdown" }, [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "nav-link dropdown-toggle text-white",
-                        attrs: {
-                          href: "http://example.com",
-                          id: "dropdown07",
-                          "data-toggle": "dropdown",
-                          "aria-haspopup": "true",
-                          "aria-expanded": "false"
-                        }
-                      },
-                      [_vm._v("Bryan Montecino")]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "dropdown-menu",
-                        attrs: { "aria-labelledby": "dropdown07" }
-                      },
-                      [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "dropdown-item",
-                            attrs: { href: "#" },
-                            on: { click: _vm.logout }
-                          },
-                          [_vm._v("Log out")]
-                        )
-                      ]
-                    )
+                },
+                [_c("i", { staticClass: "fa" })]
+              ),
+              _vm._v(" "),
+              _vm._m(3),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "collapse navbar-collapse",
+                  attrs: { id: "navbarSupportedContent" }
+                },
+                [
+                  _c("ul", { staticClass: "navbar-nav ml-auto mt-2 mt-lg-0" }, [
+                    _c("li", { staticClass: "nav-item dropdown" }, [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "nav-link dropdown-toggle text-white",
+                          attrs: {
+                            href: "http://example.com",
+                            id: "dropdown07",
+                            "data-toggle": "dropdown",
+                            "aria-haspopup": "true",
+                            "aria-expanded": "false"
+                          }
+                        },
+                        [_vm._v("Bryan Montecino")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "dropdown-menu",
+                          attrs: { "aria-labelledby": "dropdown07" }
+                        },
+                        [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "dropdown-item",
+                              attrs: { href: "#" },
+                              on: { click: _vm.logout }
+                            },
+                            [_vm._v("Log out")]
+                          )
+                        ]
+                      )
+                    ])
                   ])
-                ])
-              ]
-            )
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          { staticClass: "container-fluid" },
-          [_c("transition", { attrs: { name: "" } }, [_c("router-view")], 1)],
-          1
-        )
-      ])
+                ]
+              )
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "container-fluid" },
+            [_c("transition", { attrs: { name: "" } }, [_c("router-view")], 1)],
+            1
+          ),
+          _vm._v(" "),
+          _c("vue-snotify")
+        ],
+        1
+      )
     ]
   )
 }
@@ -73971,241 +74090,232 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "container" },
-    [
-      _c("div", { staticClass: "row justify-center my-3" }, [
-        _c("div", { staticClass: "card col-md-12" }, [
-          _c("div", { staticClass: "form-row justify-center" }, [
-            _vm._m(0),
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row justify-center my-3" }, [
+      _c("div", { staticClass: "card col-md-12" }, [
+        _c("div", { staticClass: "form-row justify-center" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "input-group my-1" }, [
+            _c("div", { staticClass: "form-group col-md-6" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.sucursal,
+                    expression: "sucursal"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  placeholder: "Nombre Sucursal",
+                  "aria-label": "Nombre"
+                },
+                domProps: { value: _vm.sucursal },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.sucursal = $event.target.value
+                  }
+                }
+              })
+            ]),
             _vm._v(" "),
-            _c("div", { staticClass: "input-group my-1" }, [
-              _c("div", { staticClass: "form-group col-md-6" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.sucursal,
-                      expression: "sucursal"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    type: "text",
-                    placeholder: "Nombre Sucursal",
-                    "aria-label": "Nombre"
-                  },
-                  domProps: { value: _vm.sucursal },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.sucursal = $event.target.value
-                    }
+            _c("div", { staticClass: "form-group col-md-6" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.direccion,
+                    expression: "direccion"
                   }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-group col-md-6" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.direccion,
-                      expression: "direccion"
+                ],
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  placeholder: "Direccion",
+                  "aria-label": "Direccion"
+                },
+                domProps: { value: _vm.direccion },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
                     }
-                  ],
-                  staticClass: "form-control",
-                  attrs: {
-                    type: "text",
-                    placeholder: "Direccion",
-                    "aria-label": "Direccion"
-                  },
-                  domProps: { value: _vm.direccion },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.direccion = $event.target.value
-                    }
+                    _vm.direccion = $event.target.value
                   }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-group col-md-12" }, [
-                _c("textarea", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.observacion,
-                      expression: "observacion"
-                    }
-                  ],
-                  staticClass: "form-control resize-none",
-                  attrs: {
-                    placeholder: "Observacion",
-                    "aria-label": "Observacion"
-                  },
-                  domProps: { value: _vm.observacion },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.observacion = $event.target.value
-                    }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group col-md-12" }, [
+              _c("textarea", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.observacion,
+                    expression: "observacion"
                   }
-                })
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "form-group col-md-12 mt-2 mb-3 text-center" },
-                [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-success rounded-pill",
-                      attrs: { type: "button", disabled: !!_vm.guardar },
-                      on: {
-                        click: [
-                          function($event) {
-                            _vm.guardar = !_vm.guardar
-                          },
-                          function($event) {
-                            return _vm.ingresar()
+                ],
+                staticClass: "form-control resize-none",
+                attrs: {
+                  placeholder: "Observacion",
+                  "aria-label": "Observacion"
+                },
+                domProps: { value: _vm.observacion },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.observacion = $event.target.value
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "form-group col-md-12 mt-2 mb-3 text-center" },
+              [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-success rounded-pill",
+                    attrs: { type: "button", disabled: !!_vm.guardar },
+                    on: {
+                      click: [
+                        function($event) {
+                          _vm.guardar = !_vm.guardar
+                        },
+                        function($event) {
+                          return _vm.ingresar()
+                        }
+                      ]
+                    }
+                  },
+                  [
+                    _c(
+                      "span",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: !_vm.guardar,
+                            expression: "!guardar"
                           }
                         ]
-                      }
-                    },
-                    [
-                      _c(
-                        "span",
-                        {
-                          directives: [
-                            {
-                              name: "show",
-                              rawName: "v-show",
-                              value: !_vm.guardar,
-                              expression: "!guardar"
-                            }
-                          ]
-                        },
-                        [_vm._v("Guardar")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "span",
-                        {
-                          directives: [
-                            {
-                              name: "show",
-                              rawName: "v-show",
-                              value: _vm.guardar,
-                              expression: "guardar"
-                            }
-                          ]
-                        },
-                        [
-                          _vm._v(
-                            "\n                Guardando Sucursal\n                "
-                          ),
-                          _c("i", {
-                            staticClass: "fa fa-circle-o-notch fa-spin"
-                          })
-                        ]
-                      )
-                    ]
-                  )
-                ]
-              )
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: !_vm.tabla,
-              expression: "!tabla"
-            }
-          ],
-          staticClass: "row justify-center my-5"
-        },
-        [_c("div", { staticClass: "loader" })]
-      ),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.tabla,
-              expression: "tabla"
-            }
-          ],
-          staticClass: "row justify-center my-3"
-        },
-        [
-          _c("div", { staticClass: "card col-md-12" }, [
-            _c("div", { staticClass: "row justify-center" }, [
-              _vm._m(1),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-12" }, [
-                _c("div", { staticClass: "table-responsive" }, [
-                  _c("table", { staticClass: "table" }, [
-                    _vm._m(2),
+                      },
+                      [_vm._v("Guardar")]
+                    ),
                     _vm._v(" "),
                     _c(
-                      "tbody",
-                      _vm._l(_vm.sucursales, function(sucursal) {
-                        return _c(
-                          "tr",
-                          { key: sucursal.id, attrs: { prop: sucursal } },
-                          [
-                            _c("th", { attrs: { scope: "row" } }, [
-                              _vm._v(_vm._s(sucursal.id))
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(sucursal.sucursal))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(sucursal.direccion))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(sucursal.observacion))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(sucursal.nombre))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(sucursal.created_at))])
-                          ]
-                        )
-                      }),
-                      0
+                      "span",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.guardar,
+                            expression: "guardar"
+                          }
+                        ]
+                      },
+                      [
+                        _vm._v(
+                          "\n                Guardando Sucursal\n                "
+                        ),
+                        _c("i", { staticClass: "fa fa-circle-o-notch fa-spin" })
+                      ]
                     )
-                  ])
+                  ]
+                )
+              ]
+            )
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: !_vm.tabla,
+            expression: "!tabla"
+          }
+        ],
+        staticClass: "row justify-center my-5"
+      },
+      [_c("div", { staticClass: "loader" })]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.tabla,
+            expression: "tabla"
+          }
+        ],
+        staticClass: "row justify-center my-3"
+      },
+      [
+        _c("div", { staticClass: "card col-md-12" }, [
+          _c("div", { staticClass: "row justify-center" }, [
+            _vm._m(1),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-12" }, [
+              _c("div", { staticClass: "table-responsive" }, [
+                _c("table", { staticClass: "table" }, [
+                  _vm._m(2),
+                  _vm._v(" "),
+                  _c(
+                    "tbody",
+                    _vm._l(_vm.sucursales, function(sucursal) {
+                      return _c(
+                        "tr",
+                        { key: sucursal.id, attrs: { prop: sucursal } },
+                        [
+                          _c("th", { attrs: { scope: "row" } }, [
+                            _vm._v(_vm._s(sucursal.id))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(sucursal.sucursal))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(sucursal.direccion))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(sucursal.observacion))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(sucursal.nombre))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(sucursal.created_at))])
+                        ]
+                      )
+                    }),
+                    0
+                  )
                 ])
               ])
             ])
           ])
-        ]
-      ),
-      _vm._v(" "),
-      _c("vue-snotify")
-    ],
-    1
-  )
+        ])
+      ]
+    )
+  ])
 }
 var staticRenderFns = [
   function() {
@@ -91680,8 +91790,8 @@ var routes = [{
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\bryan\Desktop\NeoRestaurant\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\bryan\Desktop\NeoRestaurant\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\NeoRestaurant\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\NeoRestaurant\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

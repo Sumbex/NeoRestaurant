@@ -48,6 +48,10 @@
   }
 }
 
+a {
+  cursor: pointer;
+}
+
 #menu-toggle .fa:before {  
   content: "\f137";
 }
@@ -62,4 +66,11 @@
 
 [data-toggle="collapse"].collapsed .fa:before {
   content: "\f054";
+}
+
+
+.active{
+  opacity: 1;
+  visibility: visible;
+  transition: all 0.25s;
 }
