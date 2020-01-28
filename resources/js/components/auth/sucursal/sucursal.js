@@ -1,7 +1,6 @@
 import { SnotifyPosition, SnotifyStyle } from 'vue-snotify';
 
 export default {
-
     data() {
         return {
             sucursal: null,
@@ -10,13 +9,11 @@ export default {
             sucursales: [],
             tabla: false,
             guardar: false,
+            test: false,
+            errors: [],
         }
     },
     methods: {
-
-        /* isDisabled: () {
-
-        }, */
         ingresar() {
             const data = {
                 'sucursal': this.sucursal,
@@ -85,5 +82,12 @@ export default {
     },
     mounted() {
         this.traer();
+    },
+    computed: {
+        isDisabled: function () {
+            if (this.sucursal == null || this.direccion == null) {
+                return !this.test;
+            }
+        }
     }
 };

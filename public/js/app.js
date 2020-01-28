@@ -3204,12 +3204,12 @@ __webpack_require__.r(__webpack_exports__);
       observacion: null,
       sucursales: [],
       tabla: false,
-      guardar: false
+      guardar: false,
+      test: false,
+      errors: []
     };
   },
   methods: {
-    /* isDisabled: () {
-      }, */
     ingresar: function ingresar() {
       var _this = this;
 
@@ -3286,6 +3286,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.traer();
+  },
+  computed: {
+    isDisabled: function isDisabled() {
+      if (this.sucursal == null || this.direccion == null) {
+        return !this.test;
+      }
+    }
   }
 });
 
@@ -74188,16 +74195,11 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn btn-success rounded-pill",
-                    attrs: { type: "button", disabled: !!_vm.guardar },
+                    attrs: { type: "submit", disabled: _vm.guardar },
                     on: {
-                      click: [
-                        function($event) {
-                          _vm.guardar = !_vm.guardar
-                        },
-                        function($event) {
-                          return _vm.ingresar()
-                        }
-                      ]
+                      click: function($event) {
+                        _vm.ingresar(), (_vm.guardar = !_vm.guardar)
+                      }
                     }
                   },
                   [
@@ -74338,7 +74340,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "thead-dark" }, [
+    return _c("thead", { staticClass: "thead-dark text-center" }, [
       _c("tr", [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
         _vm._v(" "),

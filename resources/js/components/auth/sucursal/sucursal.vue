@@ -35,11 +35,10 @@
             </div>
             <div class="form-group col-md-12 mt-2 mb-3 text-center">
               <button
-                type="button"
-                :disabled="!!guardar"
-                v-on:click="guardar = !guardar"
+                type="submit"
+                :disabled="guardar"
                 class="btn btn-success rounded-pill"
-                @click="ingresar()"
+                @click="ingresar(), guardar = !guardar"
               >
                 <span v-show="!guardar">Guardar</span>
                 <span v-show="guardar">
@@ -66,7 +65,7 @@
           <div class="col-md-12">
             <div class="table-responsive">
               <table class="table">
-                <thead class="thead-dark">
+                <thead class="thead-dark text-center">
                   <tr>
                     <th scope="col">#</th>
                     <th scope="col">Sucursal</th>

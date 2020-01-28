@@ -5,7 +5,7 @@ export default {
         }
     },
     methods: {
-        logout: function() {
+        logout: function () {
             this.$auth.logout({
                 makeRequest: true,
                 redirect: '/'
@@ -24,9 +24,9 @@ export default {
             });
         }
     },
-    computed:{
-        currentPage(){
+    computed: {
+        currentPage() {
             return this.$route.path;
-        }   
+        }
     }
 };
