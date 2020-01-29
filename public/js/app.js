@@ -3199,13 +3199,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      sucursal: null,
-      direccion: null,
-      observacion: null,
+      sucursal: '',
+      direccion: '',
+      observacion: '',
       sucursales: [],
       tabla: false,
       guardar: false,
-      test: false,
+      boton: true,
       errors: []
     };
   },
@@ -3225,6 +3225,8 @@ __webpack_require__.r(__webpack_exports__);
           _this.guardar = false;
 
           _this.limpiar();
+
+          _this.boton = true;
 
           _this.$snotify.create({
             body: res.data.mensaje,
@@ -3264,6 +3266,8 @@ __webpack_require__.r(__webpack_exports__);
           _this2.sucursales = res.data.sucursales;
           _this2.tabla = true;
         } else {
+          _this2.tabla = true;
+
           _this2.$snotify.create({
             body: res.data.mensaje,
             config: {
@@ -3282,17 +3286,17 @@ __webpack_require__.r(__webpack_exports__);
       this.sucursal = '';
       this.direccion = '';
       this.observacion = '';
+    },
+    escribiendo: function escribiendo() {
+      if (this.sucursal.toLowerCase().trim() == '' || this.direccion.toLowerCase().trim() == '') {
+        this.boton = true;
+      } else {
+        this.boton = false;
+      }
     }
   },
   mounted: function mounted() {
     this.traer();
-  },
-  computed: {
-    isDisabled: function isDisabled() {
-      if (this.sucursal == null || this.direccion == null) {
-        return !this.test;
-      }
-    }
   }
 });
 
@@ -74122,6 +74126,7 @@ var render = function() {
                 },
                 domProps: { value: _vm.sucursal },
                 on: {
+                  keyup: _vm.escribiendo,
                   input: function($event) {
                     if ($event.target.composing) {
                       return
@@ -74150,6 +74155,7 @@ var render = function() {
                 },
                 domProps: { value: _vm.direccion },
                 on: {
+                  keyup: _vm.escribiendo,
                   input: function($event) {
                     if ($event.target.composing) {
                       return
@@ -74195,7 +74201,10 @@ var render = function() {
                   "button",
                   {
                     staticClass: "btn btn-success rounded-pill",
-                    attrs: { type: "submit", disabled: _vm.guardar },
+                    attrs: {
+                      type: "submit",
+                      disabled: !!_vm.boton || !!_vm.guardar
+                    },
                     on: {
                       click: function($event) {
                         _vm.ingresar(), (_vm.guardar = !_vm.guardar)
@@ -91792,8 +91801,8 @@ var routes = [{
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\NeoRestaurant\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\NeoRestaurant\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\bryan\Desktop\NeoRestaurant\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\bryan\Desktop\NeoRestaurant\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

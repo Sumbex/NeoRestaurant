@@ -14,6 +14,7 @@
                 class="form-control"
                 placeholder="Nombre Sucursal"
                 aria-label="Nombre"
+                v-on:keyup="escribiendo"
               />
             </div>
             <div class="form-group col-md-6">
@@ -23,6 +24,7 @@
                 class="form-control"
                 placeholder="Direccion"
                 aria-label="Direccion"
+                v-on:keyup="escribiendo"
               />
             </div>
             <div class="form-group col-md-12">
@@ -36,7 +38,7 @@
             <div class="form-group col-md-12 mt-2 mb-3 text-center">
               <button
                 type="submit"
-                :disabled="guardar"
+                :disabled="!!boton || !!guardar"
                 class="btn btn-success rounded-pill"
                 @click="ingresar(), guardar = !guardar"
               >

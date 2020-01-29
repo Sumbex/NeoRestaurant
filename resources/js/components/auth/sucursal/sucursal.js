@@ -3,13 +3,13 @@ import { SnotifyPosition, SnotifyStyle } from 'vue-snotify';
 export default {
     data() {
         return {
-            sucursal: null,
-            direccion: null,
-            observacion: null,
+            sucursal: '',
+            direccion: '',
+            observacion: '',
             sucursales: [],
             tabla: false,
             guardar: false,
-            test: false,
+            boton: true,
             errors: [],
         }
     },
@@ -25,6 +25,7 @@ export default {
                 if (res.data.estado == 'success') {
                     this.guardar = false;
                     this.limpiar();
+                    this.boton = true;
                     this.$snotify.create({
                         body: res.data.mensaje,
                         config: {
@@ -60,6 +61,7 @@ export default {
                     this.sucursales = res.data.sucursales;
                     this.tabla = true;
                 } else {
+                    this.tabla = true;
                     this.$snotify.create({
                         body: res.data.mensaje,
                         config: {
@@ -78,16 +80,17 @@ export default {
             this.sucursal = '';
             this.direccion = '';
             this.observacion = '';
+        },
+        escribiendo() {
+            if (this.sucursal.toLowerCase().trim() == '' || this.direccion.toLowerCase().trim() == '') {
+                this.boton = true;
+            } else {
+
+                this.boton = false;
+            }
         }
     },
     mounted() {
         this.traer();
-    },
-    computed: {
-        isDisabled: function () {
-            if (this.sucursal == null || this.direccion == null) {
-                return !this.test;
-            }
-        }
     }
 };
