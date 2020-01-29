@@ -85,7 +85,6 @@ export default {
             if (this.sucursal.toLowerCase().trim() == '' || this.direccion.toLowerCase().trim() == '') {
                 this.boton = true;
             } else {
-
                 this.boton = false;
             }
         }

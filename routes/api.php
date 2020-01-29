@@ -22,6 +22,14 @@ Route::post('auth/login', 'AuthController@Login');
 Route::group(['middleware' => 'auth.jwt'], function () {
     Route::post('auth/logout', 'AuthController@Logout');
 
+    /* <---Sucursal---> */
+    //Sucursales
     Route::post('/ingresar_sucursal', 'SucursalController@IngresarSucursal');
     Route::get('/traer_sucursales', 'SucursalController@TraerSucursales');
+    //Mesas
+    Route::get('/traer_sucursales_select', 'MesasController@TraerSucursales');
+    //Zonas
+    Route::post('/ingresar_zona', 'ZonasController@IngresarZona');
+    Route::get('/traer_zonas_select', 'ZonasController@TraerZonas');
+    /* <---Sucursal---> */
 });

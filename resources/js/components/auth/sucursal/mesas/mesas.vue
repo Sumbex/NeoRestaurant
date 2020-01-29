@@ -8,21 +8,62 @@
           </div>
           <div class="input-group my-1">
             <div class="form-group col-md-6">
-              <select class="form-control">
-                <option>Default Sucursal</option>
+              <select class="form-control" v-model="sucursal">
+                <option value="0">Seleccione una Sucursal</option>
+                <option
+                  v-for="option in select_sucursal"
+                  v-bind:value="option.id"
+                  :key="option.id"
+                >{{option.descripcion}}</option>
               </select>
             </div>
             <div class="form-group col-md-6">
               <select class="form-control">
-                <option>Default Zona</option>
+                <option value="0">Seleccione una Zona</option>
               </select>
             </div>
-            <div class="form-group col-md-12">
+            <div class="form-group col-md-12 text-center">
+              <div class="custom-control custom-radio custom-control-inline">
+                <input
+                  type="radio"
+                  id="customRadioInline1"
+                  name="customRadioInline1"
+                  class="custom-control-input"
+                  v-model="radio"
+                  v-bind:value="true"
+                  @change="estado()"
+                />
+                <label class="custom-control-label" for="customRadioInline1">Individual</label>
+              </div>
+              <div class="custom-control custom-radio custom-control-inline">
+                <input
+                  type="radio"
+                  id="customRadioInline2"
+                  name="customRadioInline1"
+                  class="custom-control-input"
+                  v-model="radio"
+                  v-bind:value="false"
+                  @change="estado()"
+                />
+                <label class="custom-control-label" for="customRadioInline2">Multiple</label>
+              </div>
+            </div>
+            <div class="form-group col-md-6">
               <input
                 type="text"
                 class="form-control"
                 placeholder="Nombre/Numero Mesa"
                 aria-label="Mesa"
+                :disabled="!disabled"
+              />
+            </div>
+            <div class="form-group col-md-6">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Cantidad de Mesas"
+                aria-label="Mesas"
+                :disabled="disabled"
               />
             </div>
             <div class="form-group col-md-12 mt-2 mb-3 text-center">
@@ -103,8 +144,8 @@
                 <input
                   type="text"
                   class="form-control"
-                  placeholder="Nombre/Numero Mesa"
-                  aria-label="Mesa"
+                  placeholder="Zona de la Mesa"
+                  aria-label="Zona"
                 />
               </div>
               <div class="col-12 mt-2">
@@ -129,10 +170,13 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary rounded-pill" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary rounded-pill">Guardar</button>
+            <button type="button" class="btn btn-success rounded-pill">Guardar</button>
           </div>
         </div>
       </div>
     </div>
   </div>
 </template>
+
+<style src="./mesas.css"></style>
+<script src="./mesas.js"></script>

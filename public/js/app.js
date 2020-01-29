@@ -3185,6 +3185,96 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./resources/js/components/auth/sucursal/mesas/mesas.js?vue&type=script&lang=js&":
+/*!*********************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./resources/js/components/auth/sucursal/mesas/mesas.js?vue&type=script&lang=js& ***!
+  \*********************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue_snotify__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-snotify */ "./node_modules/vue-snotify/vue-snotify.esm.js");
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      sucursal: 0,
+      select_sucursal: null,
+      zonas: null,
+      select_zonas: null,
+      radio: true,
+      disabled: true,
+      tabla: false
+      /* checkmul: false, */
+
+    };
+  },
+  methods: {
+    estado: function estado() {
+      if (this.radio == true) {
+        this.disabled = true;
+      } else {
+        this.disabled = false;
+      }
+    },
+    traerSucursales: function traerSucursales() {
+      var _this = this;
+
+      axios.get('api/traer_sucursales_select').then(function (res) {
+        if (res.data.estado == 'success') {
+          _this.select_sucursal = res.data.sucursales;
+          _this.tabla = true;
+        } else {
+          _this.tabla = true;
+
+          _this.$snotify.create({
+            body: res.data.mensaje,
+            config: {
+              timeout: 3000,
+              showProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: false,
+              position: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyPosition"].centerBottom,
+              type: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyStyle"].error
+            }
+          });
+        }
+      });
+    },
+    traerZonaSelect: function traerZonaSelect() {
+      var _this2 = this;
+
+      axios.get('api/traer_zonas_select').then(function (res) {
+        if (res.data.estado == 'success') {
+          _this2.select_zonas = res.data.zonas;
+          _this2.tabla = true;
+        } else {
+          _this2.tabla = true;
+
+          _this2.$snotify.create({
+            body: res.data.mensaje,
+            config: {
+              timeout: 3000,
+              showProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: false,
+              position: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyPosition"].centerBottom,
+              type: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyStyle"].error
+            }
+          });
+        }
+      });
+    }
+  },
+  mounted: function mounted() {
+    this.traerSucursales();
+    this.traerZonaSelect();
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./resources/js/components/auth/sucursal/sucursal.js?vue&type=script&lang=js&":
 /*!******************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./resources/js/components/auth/sucursal/sucursal.js?vue&type=script&lang=js& ***!
@@ -24148,6 +24238,25 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 // module
 exports.push([module.i, "/*!\r\n * Start Bootstrap - Simple Sidebar (https://startbootstrap.com/template-overviews/simple-sidebar)\r\n * Copyright 2013-2019 Start Bootstrap\r\n * Licensed under MIT (https://github.com/BlackrockDigital/startbootstrap-simple-sidebar/blob/master/LICENSE)\r\n */\nbody {\r\n  overflow-x: hidden;\n}\n#sidebar-wrapper {\r\n  min-height: 100vh;\r\n  margin-left: -15rem;\r\n  -webkit-transition: margin .25s ease-out;\r\n  transition: margin .25s ease-out;\n}\n#sidebar-wrapper .sidebar-heading {\r\n  padding: 0.372rem 0.45rem;\r\n  font-size: 1.2rem;\n}\n#sidebar-wrapper .list-group {\r\n  width: 15rem;\n}\n#page-content-wrapper {\r\n  min-width: 100vw;\n}\n#wrapper.toggled #sidebar-wrapper {\r\n  margin-left: 0;\n}\n@media (min-width: 768px) {\n#sidebar-wrapper {\r\n    margin-left: 0;\n}\n#page-content-wrapper {\r\n    min-width: 0;\r\n    width: 100%;\n}\n#wrapper.toggled #sidebar-wrapper {\r\n    margin-left: -15rem;\n}\n}\na {\r\n  cursor: pointer;\n}\n#menu-toggle .fa:before {  \r\n  content: \"\\F137\";\n}\n#wrapper.toggled .fa:before {\r\n  content: \"\\F138\";\n}\n[data-toggle=\"collapse\"] .fa:before {  \r\n  content: \"\\F078\";\n}\n[data-toggle=\"collapse\"].collapsed .fa:before {\r\n  content: \"\\F054\";\n}\n.active{\r\n  opacity: 1;\r\n  visibility: visible;\r\n  -webkit-transition: all 0.25s;\r\n  transition: all 0.25s;\n}", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./resources/js/components/auth/sucursal/mesas/mesas.css?vue&type=style&index=0&lang=css&":
+/*!*****************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./resources/js/components/auth/sucursal/mesas/mesas.css?vue&type=style&index=0&lang=css& ***!
+  \*****************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
 
 // exports
 
@@ -72710,6 +72819,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./resources/js/components/auth/sucursal/mesas/mesas.css?vue&type=style&index=0&lang=css&":
+/*!*********************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./resources/js/components/auth/sucursal/mesas/mesas.css?vue&type=style&index=0&lang=css& ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../../../node_modules/css-loader??ref--6-1!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--6-2!./mesas.css?vue&type=style&index=0&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./resources/js/components/auth/sucursal/mesas/mesas.css?vue&type=style&index=0&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./resources/js/components/auth/sucursal/sucursal.css?vue&type=style&index=0&lang=css&":
 /*!******************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./resources/js/components/auth/sucursal/sucursal.css?vue&type=style&index=0&lang=css& ***!
@@ -73830,254 +73969,424 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row justify-center my-3" }, [
+      _c("div", { staticClass: "card col-md-12" }, [
+        _c("div", { staticClass: "form-row justify-center" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "input-group my-1" }, [
+            _c("div", { staticClass: "form-group col-md-6" }, [
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.sucursal,
+                      expression: "sucursal"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.sucursal = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    }
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "0" } }, [
+                    _vm._v("Seleccione una Sucursal")
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.select_sucursal, function(option) {
+                    return _c(
+                      "option",
+                      { key: option.id, domProps: { value: option.id } },
+                      [_vm._v(_vm._s(option.descripcion))]
+                    )
+                  })
+                ],
+                2
+              )
+            ]),
+            _vm._v(" "),
+            _vm._m(1),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group col-md-12 text-center" }, [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "custom-control custom-radio custom-control-inline"
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.radio,
+                        expression: "radio"
+                      }
+                    ],
+                    staticClass: "custom-control-input",
+                    attrs: {
+                      type: "radio",
+                      id: "customRadioInline1",
+                      name: "customRadioInline1"
+                    },
+                    domProps: { value: true, checked: _vm._q(_vm.radio, true) },
+                    on: {
+                      change: [
+                        function($event) {
+                          _vm.radio = true
+                        },
+                        function($event) {
+                          return _vm.estado()
+                        }
+                      ]
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    {
+                      staticClass: "custom-control-label",
+                      attrs: { for: "customRadioInline1" }
+                    },
+                    [_vm._v("Individual")]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "custom-control custom-radio custom-control-inline"
+                },
+                [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.radio,
+                        expression: "radio"
+                      }
+                    ],
+                    staticClass: "custom-control-input",
+                    attrs: {
+                      type: "radio",
+                      id: "customRadioInline2",
+                      name: "customRadioInline1"
+                    },
+                    domProps: {
+                      value: false,
+                      checked: _vm._q(_vm.radio, false)
+                    },
+                    on: {
+                      change: [
+                        function($event) {
+                          _vm.radio = false
+                        },
+                        function($event) {
+                          return _vm.estado()
+                        }
+                      ]
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    {
+                      staticClass: "custom-control-label",
+                      attrs: { for: "customRadioInline2" }
+                    },
+                    [_vm._v("Multiple")]
+                  )
+                ]
+              )
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group col-md-6" }, [
+              _c("input", {
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  placeholder: "Nombre/Numero Mesa",
+                  "aria-label": "Mesa",
+                  disabled: !_vm.disabled
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group col-md-6" }, [
+              _c("input", {
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  placeholder: "Cantidad de Mesas",
+                  "aria-label": "Mesas",
+                  disabled: _vm.disabled
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _vm._m(2)
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _vm._m(3),
+    _vm._v(" "),
+    _vm._m(4)
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-center my-3" }, [
-        _c("div", { staticClass: "card col-md-12" }, [
-          _c("div", { staticClass: "form-row justify-center" }, [
-            _c("div", { staticClass: "col-12 my-1" }, [
-              _c("h3", { staticClass: "text-center" }, [_vm._v("Formulario")])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "input-group my-1" }, [
-              _c("div", { staticClass: "form-group col-md-6" }, [
-                _c("select", { staticClass: "form-control" }, [
-                  _c("option", [_vm._v("Default Sucursal")])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-group col-md-6" }, [
-                _c("select", { staticClass: "form-control" }, [
-                  _c("option", [_vm._v("Default Zona")])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-group col-md-12" }, [
-                _c("input", {
-                  staticClass: "form-control",
-                  attrs: {
-                    type: "text",
-                    placeholder: "Nombre/Numero Mesa",
-                    "aria-label": "Mesa"
-                  }
-                })
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "form-group col-md-12 mt-2 mb-3 text-center" },
-                [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary rounded-pill",
-                      attrs: {
-                        type: "button",
-                        "data-toggle": "modal",
-                        "data-target": "#staticBackdrop"
-                      }
-                    },
-                    [_vm._v("Agregar Zonas")]
-                  ),
+    return _c("div", { staticClass: "col-12 my-1" }, [
+      _c("h3", { staticClass: "text-center" }, [_vm._v("Formulario")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group col-md-6" }, [
+      _c("select", { staticClass: "form-control" }, [
+        _c("option", { attrs: { value: "0" } }, [_vm._v("Seleccione una Zona")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "form-group col-md-12 mt-2 mb-3 text-center" },
+      [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-primary rounded-pill",
+            attrs: {
+              type: "button",
+              "data-toggle": "modal",
+              "data-target": "#staticBackdrop"
+            }
+          },
+          [_vm._v("Agregar Zonas")]
+        ),
+        _vm._v(" "),
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-success rounded-pill",
+            attrs: { type: "button" }
+          },
+          [_vm._v("Guardar")]
+        )
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row justify-center my-3" }, [
+      _c("div", { staticClass: "card col-md-12" }, [
+        _c("div", { staticClass: "row justify-center" }, [
+          _c("div", { staticClass: "col-md-12 my-1" }, [
+            _c("h3", { staticClass: "text-center" }, [_vm._v("Tabla")])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-12" }, [
+            _c("table", { staticClass: "table" }, [
+              _c("thead", { staticClass: "thead-dark" }, [
+                _c("tr", [
+                  _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
                   _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-success rounded-pill",
-                      attrs: { type: "button" }
-                    },
-                    [_vm._v("Guardar")]
-                  )
-                ]
-              )
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "row justify-center my-3" }, [
-        _c("div", { staticClass: "card col-md-12" }, [
-          _c("div", { staticClass: "row justify-center" }, [
-            _c("div", { staticClass: "col-md-12 my-1" }, [
-              _c("h3", { staticClass: "text-center" }, [_vm._v("Tabla")])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-12" }, [
-              _c("table", { staticClass: "table" }, [
-                _c("thead", { staticClass: "thead-dark" }, [
-                  _c("tr", [
-                    _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [_vm._v("First")]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [_vm._v("Last")]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [_vm._v("Handle")])
-                  ])
+                  _c("th", { attrs: { scope: "col" } }, [_vm._v("First")]),
+                  _vm._v(" "),
+                  _c("th", { attrs: { scope: "col" } }, [_vm._v("Last")]),
+                  _vm._v(" "),
+                  _c("th", { attrs: { scope: "col" } }, [_vm._v("Handle")])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("tbody", [
+                _c("tr", [
+                  _c("th", { attrs: { scope: "row" } }, [_vm._v("1")]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v("Mark")]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v("Otto")]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v("@mdo")])
                 ]),
                 _vm._v(" "),
-                _c("tbody", [
-                  _c("tr", [
-                    _c("th", { attrs: { scope: "row" } }, [_vm._v("1")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("Mark")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("Otto")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("@mdo")])
-                  ]),
+                _c("tr", [
+                  _c("th", { attrs: { scope: "row" } }, [_vm._v("2")]),
                   _vm._v(" "),
-                  _c("tr", [
-                    _c("th", { attrs: { scope: "row" } }, [_vm._v("2")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("Jacob")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("Thornton")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("@fat")])
-                  ]),
+                  _c("td", [_vm._v("Jacob")]),
                   _vm._v(" "),
-                  _c("tr", [
-                    _c("th", { attrs: { scope: "row" } }, [_vm._v("3")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("Larry")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("the Bird")]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v("@twitter")])
-                  ])
+                  _c("td", [_vm._v("Thornton")]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v("@fat")])
+                ]),
+                _vm._v(" "),
+                _c("tr", [
+                  _c("th", { attrs: { scope: "row" } }, [_vm._v("3")]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v("Larry")]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v("the Bird")]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v("@twitter")])
                 ])
               ])
             ])
           ])
         ])
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        {
-          staticClass: "modal fade",
-          attrs: {
-            id: "staticBackdrop",
-            "data-backdrop": "static",
-            tabindex: "-1",
-            role: "dialog",
-            "aria-labelledby": "staticBackdropLabel",
-            "aria-hidden": "true"
-          }
-        },
-        [
-          _c(
-            "div",
-            { staticClass: "modal-dialog", attrs: { role: "document" } },
-            [
-              _c("div", { staticClass: "modal-content" }, [
-                _c("div", { staticClass: "modal-header" }, [
-                  _c(
-                    "h5",
-                    {
-                      staticClass: "modal-title",
-                      attrs: { id: "staticBackdropLabel" }
-                    },
-                    [_vm._v("Zonas Mesas")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "close",
-                      attrs: {
-                        type: "button",
-                        "data-dismiss": "modal",
-                        "aria-label": "Close"
-                      }
-                    },
-                    [
-                      _c("span", { attrs: { "aria-hidden": "true" } }, [
-                        _vm._v("×")
-                      ])
-                    ]
-                  )
-                ]),
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "staticBackdrop",
+          "data-backdrop": "static",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "staticBackdropLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-header" }, [
+                _c(
+                  "h5",
+                  {
+                    staticClass: "modal-title",
+                    attrs: { id: "staticBackdropLabel" }
+                  },
+                  [_vm._v("Zonas Mesas")]
+                ),
                 _vm._v(" "),
-                _c("div", { staticClass: "modal-body" }, [
-                  _c("div", { staticClass: "row justify-center" }, [
-                    _c("div", { staticClass: "col-12 my-1" }, [
-                      _c("input", {
-                        staticClass: "form-control",
-                        attrs: {
-                          type: "text",
-                          placeholder: "Nombre/Numero Mesa",
-                          "aria-label": "Mesa"
-                        }
-                      })
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-12 mt-2" }, [
-                      _c("table", { staticClass: "table" }, [
-                        _c("thead", { staticClass: "thead-dark" }, [
-                          _c("tr", [
-                            _c("th", { attrs: { scope: "col" } }, [
-                              _vm._v("#")
-                            ]),
-                            _vm._v(" "),
-                            _c("th", { attrs: { scope: "col" } }, [
-                              _vm._v("Descripcion")
-                            ]),
-                            _vm._v(" "),
-                            _c("th", { attrs: { scope: "col" } }, [
-                              _vm._v("Opcion")
-                            ])
+                _c(
+                  "button",
+                  {
+                    staticClass: "close",
+                    attrs: {
+                      type: "button",
+                      "data-dismiss": "modal",
+                      "aria-label": "Close"
+                    }
+                  },
+                  [
+                    _c("span", { attrs: { "aria-hidden": "true" } }, [
+                      _vm._v("×")
+                    ])
+                  ]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c("div", { staticClass: "row justify-center" }, [
+                  _c("div", { staticClass: "col-12 my-1" }, [
+                    _c("input", {
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        placeholder: "Zona de la Mesa",
+                        "aria-label": "Zona"
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-12 mt-2" }, [
+                    _c("table", { staticClass: "table" }, [
+                      _c("thead", { staticClass: "thead-dark" }, [
+                        _c("tr", [
+                          _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
+                          _vm._v(" "),
+                          _c("th", { attrs: { scope: "col" } }, [
+                            _vm._v("Descripcion")
+                          ]),
+                          _vm._v(" "),
+                          _c("th", { attrs: { scope: "col" } }, [
+                            _vm._v("Opcion")
                           ])
-                        ]),
-                        _vm._v(" "),
-                        _c("tbody", [
-                          _c("tr", [
-                            _c("th", { attrs: { scope: "row" } }, [
-                              _vm._v("1")
-                            ]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v("Mark")]),
-                            _vm._v(" "),
-                            _c("td")
-                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("tbody", [
+                        _c("tr", [
+                          _c("th", { attrs: { scope: "row" } }, [_vm._v("1")]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v("Mark")]),
+                          _vm._v(" "),
+                          _c("td")
                         ])
                       ])
                     ])
                   ])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "modal-footer" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-secondary rounded-pill",
-                      attrs: { type: "button", "data-dismiss": "modal" }
-                    },
-                    [_vm._v("Close")]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary rounded-pill",
-                      attrs: { type: "button" }
-                    },
-                    [_vm._v("Guardar")]
-                  )
                 ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary rounded-pill",
+                    attrs: { type: "button", "data-dismiss": "modal" }
+                  },
+                  [_vm._v("Close")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-success rounded-pill",
+                    attrs: { type: "button" }
+                  },
+                  [_vm._v("Guardar")]
+                )
               ])
-            ]
-          )
-        ]
-      )
-    ])
+            ])
+          ]
+        )
+      ]
+    )
   }
 ]
 render._withStripped = true
@@ -91398,6 +91707,36 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/auth/sucursal/mesas/mesas.css?vue&type=style&index=0&lang=css&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/components/auth/sucursal/mesas/mesas.css?vue&type=style&index=0&lang=css& ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_mesas_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/style-loader!../../../../../../node_modules/css-loader??ref--6-1!../../../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../../../node_modules/postcss-loader/src??ref--6-2!./mesas.css?vue&type=style&index=0&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./resources/js/components/auth/sucursal/mesas/mesas.css?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_mesas_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_mesas_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_mesas_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_mesas_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_mesas_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/auth/sucursal/mesas/mesas.js?vue&type=script&lang=js&":
+/*!***************************************************************************************!*\
+  !*** ./resources/js/components/auth/sucursal/mesas/mesas.js?vue&type=script&lang=js& ***!
+  \***************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_mesas_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../../node_modules/babel-loader/lib??ref--4-0!./mesas.js?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./resources/js/components/auth/sucursal/mesas/mesas.js?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_mesas_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
 /***/ "./resources/js/components/auth/sucursal/mesas/mesas.vue":
 /*!***************************************************************!*\
   !*** ./resources/js/components/auth/sucursal/mesas/mesas.vue ***!
@@ -91408,15 +91747,19 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mesas_vue_vue_type_template_id_7b34a5c8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./mesas.vue?vue&type=template&id=7b34a5c8& */ "./resources/js/components/auth/sucursal/mesas/mesas.vue?vue&type=template&id=7b34a5c8&");
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _mesas_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./mesas.js?vue&type=script&lang=js& */ "./resources/js/components/auth/sucursal/mesas/mesas.js?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _mesas_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./mesas.css?vue&type=style&index=0&lang=css& */ "./resources/js/components/auth/sucursal/mesas/mesas.css?vue&type=style&index=0&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
-var script = {}
+
+
+
 
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_1__["default"])(
-  script,
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _mesas_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _mesas_vue_vue_type_template_id_7b34a5c8___WEBPACK_IMPORTED_MODULE_0__["render"],
   _mesas_vue_vue_type_template_id_7b34a5c8___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
