@@ -16,4 +16,9 @@ class ZonasController extends Controller
     {
         return Zonas::IngresarZona($request);
     }
+
+    public function TraerZonasModal()
+    {
+        return Zonas::traerZonasModal();
+    }
 }

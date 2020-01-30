@@ -18,10 +18,16 @@
               </select>
             </div>
             <div class="form-group col-md-6">
-              <select class="form-control">
+              <select class="form-control" v-model="zonas">
                 <option value="0">Seleccione una Zona</option>
+                <option
+                  v-for="option in select_zonas"
+                  v-bind:value="option.id"
+                  :key="option.id"
+                >{{option.zona}}</option>
               </select>
             </div>
+            {{radio}}
             <div class="form-group col-md-12 text-center">
               <div class="custom-control custom-radio custom-control-inline">
                 <input
@@ -55,6 +61,7 @@
                 placeholder="Nombre/Numero Mesa"
                 aria-label="Mesa"
                 :disabled="!disabled"
+                v-model="mesa"
               />
             </div>
             <div class="form-group col-md-6">
@@ -64,6 +71,7 @@
                 placeholder="Cantidad de Mesas"
                 aria-label="Mesas"
                 :disabled="disabled"
+                v-model="cantMesa"
               />
             </div>
             <div class="form-group col-md-12 mt-2 mb-3 text-center">
@@ -72,8 +80,9 @@
                 class="btn btn-primary rounded-pill"
                 data-toggle="modal"
                 data-target="#staticBackdrop"
+                @click="traerZonas()"
               >Agregar Zonas</button>
-              <button type="button" class="btn btn-success rounded-pill">Guardar</button>
+              <button type="button" class="btn btn-success rounded-pill" @click="ingresarMesa()">Guardar</button>
             </div>
           </div>
         </div>
@@ -130,7 +139,7 @@
       aria-labelledby="staticBackdropLabel"
       aria-hidden="true"
     >
-      <div class="modal-dialog" role="document">
+      <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="staticBackdropLabel">Zonas Mesas</h5>
@@ -146,6 +155,7 @@
                   class="form-control"
                   placeholder="Zona de la Mesa"
                   aria-label="Zona"
+                  v-model="zona"
                 />
               </div>
               <div class="col-12 mt-2">
@@ -153,15 +163,18 @@
                   <thead class="thead-dark">
                     <tr>
                       <th scope="col">#</th>
-                      <th scope="col">Descripcion</th>
-                      <th scope="col">Opcion</th>
+                      <th scope="col">Zona</th>
+                      <th scope="col">Creada por:</th>
+                      <th scope="col">Creada</th>
+                      <th scope="col">Opciones</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <th scope="row">1</th>
-                      <td>Mark</td>
-                      <td></td>
+                    <tr v-for="zonas in zonasModal" :prop="zonas" :key="zonas.id">
+                      <th scope="row">{{zonas.id}}</th>
+                      <td>{{zonas.zona}}</td>
+                      <td>{{zonas.nombre}}</td>
+                      <td>{{zonas.created_at}}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -170,7 +183,11 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary rounded-pill" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-success rounded-pill">Guardar</button>
+            <button
+              type="button"
+              class="btn btn-success rounded-pill"
+              @click="ingresarZonas()"
+            >Guardar</button>
           </div>
         </div>
       </div>

@@ -3201,11 +3201,15 @@ __webpack_require__.r(__webpack_exports__);
     return {
       sucursal: 0,
       select_sucursal: null,
-      zonas: null,
+      zonas: 0,
       select_zonas: null,
       radio: true,
       disabled: true,
-      tabla: false
+      tabla: false,
+      zonasModal: [],
+      zona: null,
+      mesa: null,
+      cantMesa: null
       /* checkmul: false, */
 
     };
@@ -3242,17 +3246,88 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
-    traerZonaSelect: function traerZonaSelect() {
+    ingresarZonas: function ingresarZonas() {
       var _this2 = this;
+
+      var data = {
+        'zona': this.zona
+      };
+      axios.post('api/ingresar_zona', data).then(function (res) {
+        if (res.data.estado == 'success') {
+          _this2.zona = '';
+
+          _this2.$snotify.create({
+            body: res.data.mensaje,
+            config: {
+              timeout: 2000,
+              showProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: false,
+              position: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyPosition"].centerBottom,
+              type: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyStyle"].success
+            }
+          });
+
+          _this2.traerZonas();
+
+          _this2.traerZonaSelect();
+        } else {
+          _this2.$snotify.create({
+            body: res.data.mensaje,
+            config: {
+              timeout: 2000,
+              showProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: false,
+              position: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyPosition"].centerBottom,
+              type: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyStyle"].error
+            }
+          });
+        }
+      });
+    },
+    ingresarMesa: function ingresarMesa() {
+      var data = {
+        'mesa': this.mesa,
+        'sucursal': this.sucursal,
+        'zona': this.zonas,
+        'estado': this.radio
+      };
+      console.log(data);
+      /* axios.post('api/ingresar_mesa') */
+    },
+    traerZonas: function traerZonas() {
+      var _this3 = this;
+
+      axios.get('api/traer_zonas').then(function (res) {
+        if (res.data.estado == 'success') {
+          _this3.zonasModal = res.data.zonas;
+        } else {
+          _this3.$snotify.create({
+            body: res.data.mensaje,
+            config: {
+              timeout: 3000,
+              showProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: false,
+              position: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyPosition"].centerBottom,
+              type: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyStyle"].error
+            }
+          });
+        }
+      });
+    },
+    traerZonaSelect: function traerZonaSelect() {
+      var _this4 = this;
 
       axios.get('api/traer_zonas_select').then(function (res) {
         if (res.data.estado == 'success') {
-          _this2.select_zonas = res.data.zonas;
-          _this2.tabla = true;
+          _this4.select_zonas = res.data.zonas;
+          _this4.tabla = true;
         } else {
-          _this2.tabla = true;
+          _this4.tabla = true;
 
-          _this2.$snotify.create({
+          _this4.$snotify.create({
             body: res.data.mensaje,
             config: {
               timeout: 3000,
@@ -74022,8 +74097,52 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _vm._m(1),
-            _vm._v(" "),
+            _c("div", { staticClass: "form-group col-md-6" }, [
+              _c(
+                "select",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.zonas,
+                      expression: "zonas"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  on: {
+                    change: function($event) {
+                      var $$selectedVal = Array.prototype.filter
+                        .call($event.target.options, function(o) {
+                          return o.selected
+                        })
+                        .map(function(o) {
+                          var val = "_value" in o ? o._value : o.value
+                          return val
+                        })
+                      _vm.zonas = $event.target.multiple
+                        ? $$selectedVal
+                        : $$selectedVal[0]
+                    }
+                  }
+                },
+                [
+                  _c("option", { attrs: { value: "0" } }, [
+                    _vm._v("Seleccione una Zona")
+                  ]),
+                  _vm._v(" "),
+                  _vm._l(_vm.select_zonas, function(option) {
+                    return _c(
+                      "option",
+                      { key: option.id, domProps: { value: option.id } },
+                      [_vm._v(_vm._s(option.zona))]
+                    )
+                  })
+                ],
+                2
+              )
+            ]),
+            _vm._v("\n          " + _vm._s(_vm.radio) + "\n          "),
             _c("div", { staticClass: "form-group col-md-12 text-center" }, [
               _c(
                 "div",
@@ -74123,37 +74242,216 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "form-group col-md-6" }, [
               _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.mesa,
+                    expression: "mesa"
+                  }
+                ],
                 staticClass: "form-control",
                 attrs: {
                   type: "text",
                   placeholder: "Nombre/Numero Mesa",
                   "aria-label": "Mesa",
                   disabled: !_vm.disabled
+                },
+                domProps: { value: _vm.mesa },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.mesa = $event.target.value
+                  }
                 }
               })
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group col-md-6" }, [
               _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.cantMesa,
+                    expression: "cantMesa"
+                  }
+                ],
                 staticClass: "form-control",
                 attrs: {
                   type: "text",
                   placeholder: "Cantidad de Mesas",
                   "aria-label": "Mesas",
                   disabled: _vm.disabled
+                },
+                domProps: { value: _vm.cantMesa },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.cantMesa = $event.target.value
+                  }
                 }
               })
             ]),
             _vm._v(" "),
-            _vm._m(2)
+            _c(
+              "div",
+              { staticClass: "form-group col-md-12 mt-2 mb-3 text-center" },
+              [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary rounded-pill",
+                    attrs: {
+                      type: "button",
+                      "data-toggle": "modal",
+                      "data-target": "#staticBackdrop"
+                    },
+                    on: {
+                      click: function($event) {
+                        return _vm.traerZonas()
+                      }
+                    }
+                  },
+                  [_vm._v("Agregar Zonas")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-success rounded-pill",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.ingresarMesa()
+                      }
+                    }
+                  },
+                  [_vm._v("Guardar")]
+                )
+              ]
+            )
           ])
         ])
       ])
     ]),
     _vm._v(" "),
-    _vm._m(3),
+    _vm._m(1),
     _vm._v(" "),
-    _vm._m(4)
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "staticBackdrop",
+          "data-backdrop": "static",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "staticBackdropLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog modal-lg", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(2),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c("div", { staticClass: "row justify-center" }, [
+                  _c("div", { staticClass: "col-12 my-1" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.zona,
+                          expression: "zona"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        placeholder: "Zona de la Mesa",
+                        "aria-label": "Zona"
+                      },
+                      domProps: { value: _vm.zona },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.zona = $event.target.value
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-12 mt-2" }, [
+                    _c("table", { staticClass: "table" }, [
+                      _vm._m(3),
+                      _vm._v(" "),
+                      _c(
+                        "tbody",
+                        _vm._l(_vm.zonasModal, function(zonas) {
+                          return _c(
+                            "tr",
+                            { key: zonas.id, attrs: { prop: zonas } },
+                            [
+                              _c("th", { attrs: { scope: "row" } }, [
+                                _vm._v(_vm._s(zonas.id))
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(zonas.zona))]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(zonas.nombre))]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(zonas.created_at))])
+                            ]
+                          )
+                        }),
+                        0
+                      )
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary rounded-pill",
+                    attrs: { type: "button", "data-dismiss": "modal" }
+                  },
+                  [_vm._v("Close")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-success rounded-pill",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.ingresarZonas()
+                      }
+                    }
+                  },
+                  [_vm._v("Guardar")]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -74164,48 +74462,6 @@ var staticRenderFns = [
     return _c("div", { staticClass: "col-12 my-1" }, [
       _c("h3", { staticClass: "text-center" }, [_vm._v("Formulario")])
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group col-md-6" }, [
-      _c("select", { staticClass: "form-control" }, [
-        _c("option", { attrs: { value: "0" } }, [_vm._v("Seleccione una Zona")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      { staticClass: "form-group col-md-12 mt-2 mb-3 text-center" },
-      [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-primary rounded-pill",
-            attrs: {
-              type: "button",
-              "data-toggle": "modal",
-              "data-target": "#staticBackdrop"
-            }
-          },
-          [_vm._v("Agregar Zonas")]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-success rounded-pill",
-            attrs: { type: "button" }
-          },
-          [_vm._v("Guardar")]
-        )
-      ]
-    )
   },
   function() {
     var _vm = this
@@ -74273,120 +74529,44 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "modal fade",
-        attrs: {
-          id: "staticBackdrop",
-          "data-backdrop": "static",
-          tabindex: "-1",
-          role: "dialog",
-          "aria-labelledby": "staticBackdropLabel",
-          "aria-hidden": "true"
-        }
-      },
-      [
-        _c(
-          "div",
-          { staticClass: "modal-dialog", attrs: { role: "document" } },
-          [
-            _c("div", { staticClass: "modal-content" }, [
-              _c("div", { staticClass: "modal-header" }, [
-                _c(
-                  "h5",
-                  {
-                    staticClass: "modal-title",
-                    attrs: { id: "staticBackdropLabel" }
-                  },
-                  [_vm._v("Zonas Mesas")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "close",
-                    attrs: {
-                      type: "button",
-                      "data-dismiss": "modal",
-                      "aria-label": "Close"
-                    }
-                  },
-                  [
-                    _c("span", { attrs: { "aria-hidden": "true" } }, [
-                      _vm._v("×")
-                    ])
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "modal-body" }, [
-                _c("div", { staticClass: "row justify-center" }, [
-                  _c("div", { staticClass: "col-12 my-1" }, [
-                    _c("input", {
-                      staticClass: "form-control",
-                      attrs: {
-                        type: "text",
-                        placeholder: "Zona de la Mesa",
-                        "aria-label": "Zona"
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-12 mt-2" }, [
-                    _c("table", { staticClass: "table" }, [
-                      _c("thead", { staticClass: "thead-dark" }, [
-                        _c("tr", [
-                          _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
-                          _vm._v(" "),
-                          _c("th", { attrs: { scope: "col" } }, [
-                            _vm._v("Descripcion")
-                          ]),
-                          _vm._v(" "),
-                          _c("th", { attrs: { scope: "col" } }, [
-                            _vm._v("Opcion")
-                          ])
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("tbody", [
-                        _c("tr", [
-                          _c("th", { attrs: { scope: "row" } }, [_vm._v("1")]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v("Mark")]),
-                          _vm._v(" "),
-                          _c("td")
-                        ])
-                      ])
-                    ])
-                  ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "modal-footer" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-secondary rounded-pill",
-                    attrs: { type: "button", "data-dismiss": "modal" }
-                  },
-                  [_vm._v("Close")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-success rounded-pill",
-                    attrs: { type: "button" }
-                  },
-                  [_vm._v("Guardar")]
-                )
-              ])
-            ])
-          ]
-        )
-      ]
-    )
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "staticBackdropLabel" } },
+        [_vm._v("Zonas Mesas")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "thead-dark" }, [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Zona")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Creada por:")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Creada")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Opciones")])
+      ])
+    ])
   }
 ]
 render._withStripped = true

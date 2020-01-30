@@ -7,7 +7,13 @@ use Illuminate\Http\Request;
 
 class MesasController extends Controller
 {
-    public function TraerSucursales(){
+    public function TraerSucursales()
+    {
         return Mesas::traerSucursales();
+    }
+
+    public function IngresarMesas(Request $request)
+    {
+        return Mesas::ingresarMesas($request);
     }
 }
