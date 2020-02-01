@@ -10,7 +10,7 @@
           <div class="card-body">
             <h3 class="card-title text-center">{{zona}}</h3>
             <div class="row justify-center my-3">
-              <div class="col-sm-2 " v-for="mesa in mesas[zona]" prop="mesa" :key="mesa.id">
+              <div class="col-sm-2" v-for="mesa in mesas[zona]" prop="mesa" :key="mesa.id">
                 <div class="card border-info mb-3">
                   <a
                     class="text-white"
@@ -62,45 +62,18 @@
                   class="form-control"
                   placeholder="Zona de la Mesa"
                   aria-label="Zona"
-                  
                 />
-              </div>
-              <div class="col-12 mt-2">
-                <!-- <table class="table">
-                  <thead class="thead-dark">
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Zona</th>
-                      <th scope="col">Creada por:</th>
-                      <th scope="col">Creada</th>
-                      <th scope="col">Opciones</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="zonas in zonasModal" :prop="zonas" :key="zonas.id">
-                      <th scope="row">{{zonas.id}}</th>
-                      <td>{{zonas.zona}}</td>
-                      <td>{{zonas.nombre}}</td>
-                      <td>{{zonas.created_at}}</td>
-                    </tr>
-                  </tbody>
-                </table> -->
               </div>
             </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary rounded-pill" data-dismiss="modal">Close</button>
-            <button
-              type="button"
-              class="btn btn-success rounded-pill"
-              
-            >Guardar</button>
+            <button type="button" class="btn btn-success rounded-pill">Guardar</button>
           </div>
         </div>
       </div>
     </div>
   </div>
-  
 </template>
 
 <style src="./ver_mesas.css"></style>

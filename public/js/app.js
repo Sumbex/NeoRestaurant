@@ -3212,7 +3212,8 @@ __webpack_require__.r(__webpack_exports__);
       id: this.$route.params.id,
       mesas: [],
       zonas: [],
-      idMesa: null
+      idMesa: null,
+      test: false
     };
   },
   methods: {
@@ -74188,20 +74189,248 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "container" }, [
+    _vm._m(0),
+    _vm._v(" "),
+    _vm._m(1),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "staticBackdrop",
+          "data-backdrop": "static",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "staticBackdropLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog modal-lg", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(2),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c("div", { staticClass: "row justify-center" }, [
+                  _c("div", { staticClass: "col-12 my-1" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.tipo,
+                          expression: "tipo"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        placeholder: "Tipo de Insumo",
+                        "aria-label": "Insumo"
+                      },
+                      domProps: { value: _vm.tipo },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.tipo = $event.target.value
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(3)
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary rounded-pill",
+                    attrs: { type: "button", "data-dismiss": "modal" }
+                  },
+                  [_vm._v("Close")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-success rounded-pill",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.ingresarZonas()
+                      }
+                    }
+                  },
+                  [_vm._v("Guardar")]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    )
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-center my-3" }, [
-        _c("div", { staticClass: "card col-md-12" }, [
-          _c("div", { staticClass: "form-row justify-center" }, [
-            _c("div", { staticClass: "col-12 my-1" }, [
-              _c("h3", { staticClass: "text-center" }, [_vm._v("Insumos")])
+    return _c("div", { staticClass: "row justify-center my-3" }, [
+      _c("div", { staticClass: "card col-md-12" }, [
+        _c("div", { staticClass: "form-row justify-center" }, [
+          _c("div", { staticClass: "col-12 my-1" }, [
+            _c("h3", { staticClass: "text-center" }, [_vm._v("Formulario")])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "input-group my-1" }, [
+            _c("div", { staticClass: "form-group col-md-6" }),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group col-md-6" }, [
+              _c("input", {
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  placeholder: "Nombre/Numero Mesa",
+                  "aria-label": "Mesa"
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group col-md-6" }, [
+              _c("input", {
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  placeholder: "Cantidad de Mesas",
+                  "aria-label": "Mesas"
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "form-group col-md-12 mt-2 mb-3 text-center" },
+              [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary rounded-pill",
+                    attrs: {
+                      type: "button",
+                      "data-toggle": "modal",
+                      "data-target": "#staticBackdrop"
+                    }
+                  },
+                  [_vm._v("Agregar Categorias")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-success rounded-pill",
+                    attrs: { type: "button" }
+                  },
+                  [_vm._v("Guardar")]
+                )
+              ]
+            )
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row justify-center my-3" }, [
+      _c("div", { staticClass: "card col-md-12" }, [
+        _c("div", { staticClass: "row justify-center" }, [
+          _c("div", { staticClass: "col-md-12 my-1" }, [
+            _c("h3", { staticClass: "text-center" }, [_vm._v("Tabla")])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-12" }, [
+            _c("div", { staticClass: "table-responsive" }, [
+              _c("table", { staticClass: "table" }, [
+                _c("thead", { staticClass: "thead-dark" }, [
+                  _c("tr", [
+                    _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
+                    _vm._v(" "),
+                    _c("th", { attrs: { scope: "col" } }, [_vm._v("Mesa")]),
+                    _vm._v(" "),
+                    _c("th", { attrs: { scope: "col" } }, [_vm._v("Sucursal")]),
+                    _vm._v(" "),
+                    _c("th", { attrs: { scope: "col" } }, [_vm._v("Zona")]),
+                    _vm._v(" "),
+                    _c("th", { attrs: { scope: "col" } }, [
+                      _vm._v("Creada por:")
+                    ]),
+                    _vm._v(" "),
+                    _c("th", { attrs: { scope: "col" } }, [_vm._v("Creada:")]),
+                    _vm._v(" "),
+                    _c("th", { attrs: { scope: "col" } }, [_vm._v("Opciones")])
+                  ])
+                ])
+              ])
             ])
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "staticBackdropLabel" } },
+        [_vm._v("Categoria de insumos")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-12 mt-2" }, [
+      _c("table", { staticClass: "table" }, [
+        _c("thead", { staticClass: "thead-dark" }, [
+          _c("tr", [
+            _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
+            _vm._v(" "),
+            _c("th", { attrs: { scope: "col" } }, [_vm._v("Zona")]),
+            _vm._v(" "),
+            _c("th", { attrs: { scope: "col" } }, [_vm._v("Creada por:")]),
+            _vm._v(" "),
+            _c("th", { attrs: { scope: "col" } }, [_vm._v("Creada")]),
+            _vm._v(" "),
+            _c("th", { attrs: { scope: "col" } }, [_vm._v("Opciones")])
           ])
         ])
       ])
@@ -74604,7 +74833,7 @@ var render = function() {
                         "div",
                         {
                           key: mesa.id,
-                          staticClass: "col-sm-2 ",
+                          staticClass: "col-sm-2",
                           attrs: { prop: "mesa" }
                         },
                         [
@@ -74741,9 +74970,7 @@ var staticRenderFns = [
               "aria-label": "Zona"
             }
           })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-12 mt-2" })
+        ])
       ])
     ])
   },

@@ -7,6 +7,7 @@ export default {
             mesas: [],
             zonas: [],
             idMesa: null,
+            test: false,
         }
     },
     methods: {
