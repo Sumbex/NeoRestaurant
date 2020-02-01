@@ -18,6 +18,7 @@
         <span class="list-group-item bg-info text-white bg-primary text-center">
           <h6>Navegacion</h6>
         </span>
+        <a @click="url('POS')" class="list-group-item list-group-item-action bg-dark text-white">POS</a>
         <a
           data-toggle="collapse"
           href="#collapseSucursal"
@@ -28,17 +29,31 @@
         </a>
         <div class="collapse" id="collapseSucursal">
           <a
-            class="list-group-item list-group-item-action list-group-item-light" :class="[currentPage.includes('sucursales') ? activeClass : 'list-group-item-action']"
+            class="list-group-item list-group-item-action list-group-item-light"
+            :class="[currentPage.includes('sucursales') ? activeClass : 'list-group-item-action']"
             @click="url('Sucursal')"
           >Sucursales</a>
           <a
-            class="list-group-item list-group-item-action list-group-item-light" :class="[currentPage.includes('mesas') ? activeClass : 'list-group-item-action']"
+            class="list-group-item list-group-item-action list-group-item-light"
+            :class="[currentPage.includes('mesas') ? activeClass : 'list-group-item-action']"
             @click="url('Mesas')"
           >Mesas</a>
         </div>
-        <a href="#" class="list-group-item list-group-item-action bg-dark text-white">Usuarios</a>
-        <a href="#" class="list-group-item list-group-item-action bg-dark text-white">Almacen</a>
-        <a href="#" class="list-group-item list-group-item-action bg-dark text-white">Compras</a>
+        <a
+          data-toggle="collapse"
+          href="#collapseAlmacen"
+          class="list-group-item list-group-item-action bg-dark text-white"
+        >
+          Almacen
+          <i class="fa float-right"></i>
+        </a>
+        <div class="collapse" id="collapseAlmacen">
+          <a
+            class="list-group-item list-group-item-action list-group-item-light"
+            :class="[currentPage.includes('insumos') ? activeClass : 'list-group-item-action']"
+            @click="url('Insumos')"
+          >Insumos</a>
+        </div>
         <a href="#" class="list-group-item list-group-item-action bg-dark text-white">Productos</a>
         <a href="#" class="list-group-item list-group-item-action bg-dark text-white">Ventas</a>
         <a href="#" class="list-group-item list-group-item-action bg-dark text-white">Cajas</a>

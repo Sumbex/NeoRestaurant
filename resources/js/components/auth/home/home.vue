@@ -1,82 +1,116 @@
 <template>
-  <div class="row justify-center my-3">
-    <div class="col-sm-3">
-      <div class="card text-white bg-primary sm-3 my-3">
-        <div class="row px-2 no-gutters">
-          <div class="col-6 ml-4 mt-2">
-            <h3 class="card-title">0</h3>
-            <label>Compras</label>
+  <div>
+    <div class="row justify-center my-3">
+      <div class="col-sm-3">
+        <div class="card text-white bg-primary sm-3 my-3">
+          <div class="row px-2 no-gutters">
+            <div class="col-6 ml-4 mt-2">
+              <h3 class="card-title">0</h3>
+              <label>Compras</label>
+            </div>
+            <div class="col-4 mt-3">
+              <i class="fas fa-truck fa-3x"></i>
+            </div>
           </div>
-          <div class="col-4 mt-3">
-            <i class="fas fa-truck fa-3x"></i>
+          <div class="card-footer text-center">
+            Mas información
+            <i class="fas fa-arrow-alt-circle-right"></i>
           </div>
-        </div>
-        <div class="card-footer text-center">
-          Mas información
-          <i class="fas fa-arrow-alt-circle-right"></i>
         </div>
       </div>
-    </div>
-    <div class="col-sm-3">
-      <div class="card text-white bg-success sm-3 my-3">
-        <div class="row px-2 no-gutters">
-          <div class="col-6 ml-4 mt-2">
-            <h3 class="card-title">0</h3>
-            <label>Ventas</label>
+      <div class="col-sm-3">
+        <div class="card text-white bg-success sm-3 my-3">
+          <div class="row px-2 no-gutters">
+            <div class="col-6 ml-4 mt-2">
+              <h3 class="card-title">0</h3>
+              <label>Ventas</label>
+            </div>
+            <div class="col-4 mt-3">
+              <i class="fas fa-chart-line fa-3x"></i>
+            </div>
           </div>
-          <div class="col-4 mt-3">
-            <i class="fas fa-chart-line fa-3x"></i>
+          <div class="card-footer text-center">
+            Mas información
+            <i class="fas fa-arrow-alt-circle-right"></i>
           </div>
-        </div>
-        <div class="card-footer text-center">
-          Mas información
-          <i class="fas fa-arrow-alt-circle-right"></i>
         </div>
       </div>
-    </div>
-    <div class="col-sm-3">
-      <div class="card text-white bg-warning sm-3 my-3">
-        <div class="row px-2 no-gutters">
-          <div class="col-6 ml-4 mt-2">
-            <h3 class="card-title">0</h3>
-            <label>Productos</label>
+      <div class="col-sm-3">
+        <div class="card text-white bg-warning sm-3 my-3">
+          <div class="row px-2 no-gutters">
+            <div class="col-6 ml-4 mt-2">
+              <h3 class="card-title">0</h3>
+              <label>Productos</label>
+            </div>
+            <div class="col-4 mt-3">
+              <i class="fas fa-shopping-bag fa-3x"></i>
+            </div>
           </div>
-          <div class="col-4 mt-3">
-            <i class="fas fa-shopping-bag fa-3x"></i>
+          <div class="card-footer text-center">
+            Mas información
+            <i class="fas fa-arrow-alt-circle-right"></i>
           </div>
-        </div>
-        <div class="card-footer text-center">
-          Mas información
-          <i class="fas fa-arrow-alt-circle-right"></i>
         </div>
       </div>
-    </div>
-    <div class="col-sm-3">
-      <div class="card text-white bg-danger sm-3 my-3">
-        <div class="row px-2 no-gutters">
-          <div class="col-6 ml-4 mt-2">
-            <h3 class="card-title">0</h3>
-            <label>Stock Minimo</label>
+      <div class="col-sm-3">
+        <div class="card text-white bg-danger sm-3 my-3">
+          <div class="row px-2 no-gutters">
+            <div class="col-6 ml-4 mt-2">
+              <h3 class="card-title">0</h3>
+              <label>Stock Minimo</label>
+            </div>
+            <div class="col-4 mt-3">
+              <i class="fas fa-exclamation-circle fa-3x"></i>
+            </div>
           </div>
-          <div class="col-4 mt-3">
-            <i class="fas fa-exclamation-circle fa-3x"></i>
+          <div class="card-footer text-center">
+            Mas información
+            <i class="fas fa-arrow-alt-circle-right"></i>
           </div>
-        </div>
-        <div class="card-footer text-center">
-          Mas información
-          <i class="fas fa-arrow-alt-circle-right"></i>
         </div>
       </div>
-    </div>
 
-    <div class="col-sm-12">
+      <!-- tiendas -->
+
+      <!-- <div class="col-sm-12">
       <canvas ref="chart" width="300" height="100"></canvas>
+
+      </div>-->
+    </div>
+    <div class="container">
+      <div class="row justify-center my-3">
+        <div class="col-sm-12 text-center">
+          <h2>Sucursales</h2>
+        </div>
+        <div
+          class="col-sm-4 my-1"
+          v-for="sucursal in sucursales"
+          prop="sucursal"
+          :key="sucursal.id"
+        >
+          <div class="card text-white bg-info mb-3">
+            <!-- <a href="#" class="text-white" style="text-decoration:none"> -->
+            <div class="card-body">
+              <h5 class="card-title text-center">
+                <i class="fas fa-store-alt fa-3x"></i>
+              </h5>
+              <h4 class="card-text text-center">{{sucursal.sucursal}}</h4>
+              <p class="card-text text-center">{{sucursal.direccion}}</p>
+            </div>
+            <!-- </a> -->
+            <div class="card-footer text-center">
+              <button type="button" class="btn btn-success">Abierto/Cerrado</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import Chart from "chart.js";
+</script>
+/* import Chart from "chart.js";
 
 export default {
   name: "app",
@@ -92,7 +126,7 @@ export default {
           "Marzo",
           "Abril",
           "Mayo",
-          "Junio" /* , "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre" */
+          "Junio" , "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
         ],
         datasets: [
           {
@@ -147,8 +181,8 @@ export default {
       }
     });
   }
-};
-</script>
+}; */
+
 
 <style>
 #app {
@@ -166,3 +200,6 @@ export default {
   padding: 20px;
 }
 </style>
+
+
+<script src="./home.js"></script>

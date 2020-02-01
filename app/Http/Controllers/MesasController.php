@@ -16,4 +16,14 @@ class MesasController extends Controller
     {
         return Mesas::ingresarMesas($request);
     }
+
+    public function TraerMesas()
+    {
+        return Mesas::traerMesas();
+    }
+
+    public function TraerMesasSucursal($id)
+    {
+        return Mesas::traerMesasSucursal($id);
+    }
 }

@@ -27,7 +27,6 @@
                 >{{option.zona}}</option>
               </select>
             </div>
-            {{radio}}
             <div class="form-group col-md-12 text-center">
               <div class="custom-control custom-radio custom-control-inline">
                 <input
@@ -37,7 +36,7 @@
                   class="custom-control-input"
                   v-model="radio"
                   v-bind:value="true"
-                  @change="estado()"
+                  @change="estado(), cantMesa = null"
                 />
                 <label class="custom-control-label" for="customRadioInline1">Individual</label>
               </div>
@@ -49,7 +48,7 @@
                   class="custom-control-input"
                   v-model="radio"
                   v-bind:value="false"
-                  @change="estado()"
+                  @change="estado(), mesa = null"
                 />
                 <label class="custom-control-label" for="customRadioInline2">Multiple</label>
               </div>
@@ -82,7 +81,11 @@
                 data-target="#staticBackdrop"
                 @click="traerZonas()"
               >Agregar Zonas</button>
-              <button type="button" class="btn btn-success rounded-pill" @click="ingresarMesa()">Guardar</button>
+              <button
+                type="button"
+                class="btn btn-success rounded-pill"
+                @click="ingresarMesa()"
+              >Guardar</button>
             </div>
           </div>
         </div>
@@ -95,36 +98,31 @@
             <h3 class="text-center">Tabla</h3>
           </div>
           <div class="col-md-12">
-            <table class="table">
-              <thead class="thead-dark">
-                <tr>
-                  <th scope="col">#</th>
-                  <th scope="col">First</th>
-                  <th scope="col">Last</th>
-                  <th scope="col">Handle</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Mark</td>
-                  <td>Otto</td>
-                  <td>@mdo</td>
-                </tr>
-                <tr>
-                  <th scope="row">2</th>
-                  <td>Jacob</td>
-                  <td>Thornton</td>
-                  <td>@fat</td>
-                </tr>
-                <tr>
-                  <th scope="row">3</th>
-                  <td>Larry</td>
-                  <td>the Bird</td>
-                  <td>@twitter</td>
-                </tr>
-              </tbody>
-            </table>
+            <div class="table-responsive">
+              <table class="table">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Mesa</th>
+                    <th scope="col">Sucursal</th>
+                    <th scope="col">Zona</th>
+                    <th scope="col">Creada por:</th>
+                    <th scope="col">Creada:</th>
+                    <th scope="col">Opciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="mesa in mesas" :prop="mesa" :key="mesa.id">
+                    <th scope="row">{{mesa.id}}</th>
+                    <td>{{mesa.mesa}}</td>
+                    <td>{{mesa.sucursal}}</td>
+                    <td>{{mesa.zona}}</td>
+                    <td>{{mesa.nombre}}</td>
+                    <td>{{mesa.created_at}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>

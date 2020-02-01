@@ -14,6 +14,7 @@ export default {
             zona: null,
             mesa: null,
             cantMesa: null,
+            mesas: [],
             /* checkmul: false, */
         }
     },
@@ -84,12 +85,67 @@ export default {
         ingresarMesa() {
             const data = {
                 'mesa': this.mesa,
+                'cantMesa': this.cantMesa,
                 'sucursal': this.sucursal,
                 'zona': this.zonas,
                 'estado': this.radio
             }
             console.log(data);
-            /* axios.post('api/ingresar_mesa') */
+            axios.post('api/ingresar_mesa', data).then((res) => {
+                if (res.data.estado == 'success') {
+                    this.limpiar();
+                    this.traerMesas();
+                    this.$snotify.create({
+                        body: res.data.mensaje,
+                        config: {
+                            timeout: 2000,
+                            showProgressBar: true,
+                            closeOnClick: true,
+                            pauseOnHover: false,
+                            position: SnotifyPosition.centerBottom,
+                            type: SnotifyStyle.success,
+                        }
+                    })
+                } else {
+                    this.$snotify.create({
+                        body: res.data.mensaje,
+                        config: {
+                            timeout: 3000,
+                            showProgressBar: true,
+                            closeOnClick: true,
+                            pauseOnHover: false,
+                            position: SnotifyPosition.centerBottom,
+                            type: SnotifyStyle.error,
+                        }
+                    })
+                }
+            });
+        },
+        traerMesas() {
+            axios.get('api/traer_mesas').then((res) => {
+                if (res.data.estado == 'success') {
+                    this.mesas = res.data.mesas;
+                } else {
+                    this.$snotify.create({
+                        body: res.data.mensaje,
+                        config: {
+                            timeout: 3000,
+                            showProgressBar: true,
+                            closeOnClick: true,
+                            pauseOnHover: false,
+                            position: SnotifyPosition.centerBottom,
+                            type: SnotifyStyle.error,
+                        }
+                    })
+                }
+            });
+        },
+        limpiar() {
+            this.radio = true;
+            this.mesa = '';
+            this.cantMesa = '';
+            this.sucursal = 0;
+            this.zonas = 0;
         },
         traerZonas() {
             axios.get('api/traer_zonas').then((res) => {
@@ -135,6 +191,7 @@ export default {
     mounted() {
         this.traerSucursales();
         this.traerZonaSelect();
+        this.traerMesas();
     },
 
 };
