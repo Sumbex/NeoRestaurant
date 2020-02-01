@@ -8,31 +8,67 @@
           </div>
           <div class="input-group my-1">
             <div class="form-group col-md-6">
-              <!-- <select class="form-control" v-model="sucursal">
-                <option value="0">Seleccione una Sucursal</option>
-                <option
-                  v-for="option in select_sucursal"
-                  v-bind:value="option.id"
-                  :key="option.id"
-                >{{option.descripcion}}</option>
-              </select> -->
-            </div>
-            <div class="form-group col-md-6">
               <input
                 type="text"
                 class="form-control"
-                placeholder="Nombre/Numero Mesa"
-                aria-label="Mesa"
-                
+                placeholder="Nombre del Insumo"
+                aria-label="Insumo"
+                v-model="insumo"
               />
             </div>
             <div class="form-group col-md-6">
+              <select class="form-control" v-model="unidad">
+                <option value="0">Seleccione una Unidad</option>
+                <option value="1">Botella</option>
+                <option value="2">Lata</option>
+                <option value="3">Kilo</option>
+                <option value="4">Bolsa</option>
+                <option value="5">Unidad</option>
+              </select>
+            </div>
+            <div class="form-group col-md-6">
+              <select class="form-control" v-model="catInsumo">
+                <option value="0">Seleccione una Categoria</option>
+                <option
+                  v-for="option in catInsumoSelect"
+                  v-bind:value="option.id"
+                  :key="option.id"
+                >{{option.descripcion}}</option>
+              </select>
+            </div>
+            <div class="form-group col-md-6">
+              <select class="form-control" v-model="medida">
+                <option value="0">Seleccione una Medida</option>
+                <option value="1">ML</option>
+                <option value="2">CC</option>
+                <option value="3">GR</option>
+              </select>
+            </div>
+            <div class="form-group col-md-4">
               <input
                 type="text"
                 class="form-control"
-                placeholder="Cantidad de Mesas"
-                aria-label="Mesas"
-                
+                placeholder="Cantidad por Medida"
+                aria-label="Cantidad"
+                v-model="cantidad"
+              />
+            </div>
+            <div class="form-group col-md-4">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Stock Minimo"
+                aria-label="Stock"
+                v-model="stock"
+              />
+            </div>
+            <div class="form-group col-md-4">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Precio Compra"
+                aria-label="Precio"
+                v-model="precio"
               />
             </div>
             <div class="form-group col-md-12 mt-2 mb-3 text-center">
@@ -41,13 +77,9 @@
                 class="btn btn-primary rounded-pill"
                 data-toggle="modal"
                 data-target="#staticBackdrop"
-                
+                @click="traerCategorias()"
               >Agregar Categorias</button>
-              <button
-                type="button"
-                class="btn btn-success rounded-pill"
-                
-              >Guardar</button>
+              <button type="button" class="btn btn-success rounded-pill">Guardar</button>
             </div>
           </div>
         </div>
@@ -82,7 +114,7 @@
                     <td>{{mesa.nombre}}</td>
                     <td>{{mesa.created_at}}</td>
                   </tr>
-                </tbody> -->
+                </tbody>-->
               </table>
             </div>
           </div>
@@ -115,7 +147,7 @@
                   class="form-control"
                   placeholder="Tipo de Insumo"
                   aria-label="Insumo"
-                  v-model="tipo"
+                  v-model="categoria"
                 />
               </div>
               <div class="col-12 mt-2">
@@ -123,20 +155,20 @@
                   <thead class="thead-dark">
                     <tr>
                       <th scope="col">#</th>
-                      <th scope="col">Zona</th>
+                      <th scope="col">Categoria</th>
                       <th scope="col">Creada por:</th>
                       <th scope="col">Creada</th>
                       <th scope="col">Opciones</th>
                     </tr>
                   </thead>
-                  <!-- <tbody>
-                    <tr v-for="zonas in zonasModal" :prop="zonas" :key="zonas.id">
-                      <th scope="row">{{zonas.id}}</th>
-                      <td>{{zonas.zona}}</td>
-                      <td>{{zonas.nombre}}</td>
-                      <td>{{zonas.created_at}}</td>
+                  <tbody>
+                    <tr v-for="cat in categorias" :prop="cat" :key="cat.id">
+                      <th scope="row">{{cat.id}}</th>
+                      <td>{{cat.insumo}}</td>
+                      <td>{{cat.nombre}}</td>
+                      <td>{{cat.created_at}}</td>
                     </tr>
-                  </tbody> -->
+                  </tbody>
                 </table>
               </div>
             </div>
@@ -146,7 +178,7 @@
             <button
               type="button"
               class="btn btn-success rounded-pill"
-              @click="ingresarZonas()"
+              @click="ingresarCategorias()"
             >Guardar</button>
           </div>
         </div>

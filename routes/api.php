@@ -1,7 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -36,4 +34,11 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     Route::get('/traer_zonas', 'ZonasController@TraerZonasModal');
     Route::get('/traer_zonas_select', 'ZonasController@TraerZonas');
     /* <---Sucursal---> */
+
+    /* <---Almacen---> */
+    //Categoria Insumos
+    Route::post('/ingresar_categoria_insumo', 'InsumosController@IngresarCategoria');
+    Route::get('/traer_categoria_insumos', 'InsumosController@TraerCategoriasModal');
+    //Insumos
+    /* <---Almacen---> */
 });
