@@ -13,6 +13,7 @@ class Sucursal extends Model
 
     protected function ingresarSucursal($request)
     {
+        DB::beginTransaction();
         $sucursal = new Sucursal;
         $sucursal->sucursal = $request->sucursal;
         $sucursal->direccion = $request->direccion;
@@ -21,8 +22,16 @@ class Sucursal extends Model
         $sucursal->estado_id = 1;
         $sucursal->activo = 'S';
         if ($sucursal->save()) {
-            return ['estado' => 'success', 'mensaje' => 'Sucursal creada Correctamente.'];
+            $almacen = Almacen::crearAlmacen($sucursal->id);
+            if ($almacen == true) {
+                DB::commit();
+                return ['estado' => 'success', 'mensaje' => 'Sucursal creada Correctamente.'];
+            } else {
+                DB::rollBack();
+                return ['estado' => 'failed', 'mensaje' => 'A ocurrido un error, intenta nuevamente.'];
+            }
         } else {
+            DB::rollBack();
             return ['estado' => 'failed', 'mensaje' => 'A ocurrido un error, intenta nuevamente.'];
         }
     }

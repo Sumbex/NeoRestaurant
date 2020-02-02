@@ -7,7 +7,7 @@
             <h3 class="text-center">Formulario</h3>
           </div>
           <div class="input-group my-1">
-            <div class="form-group col-md-6">
+            <!-- <div class="form-group col-md-6">
               <input
                 type="text"
                 class="form-control"
@@ -66,7 +66,7 @@
               <input
                 type="text"
                 class="form-control"
-                placeholder="Precio Compra Sugerido"
+                placeholder="Precio Compra"
                 aria-label="Precio"
                 v-model="precio"
               />
@@ -84,12 +84,12 @@
                 class="btn btn-success rounded-pill"
                 @click="ingresarInsumos()"
               >Guardar</button>
-            </div>
+            </div>-->
           </div>
         </div>
       </div>
     </div>
-    <div class="row justify-center my-3">
+    <!-- <div class="row justify-center my-3">
       <div class="card col-md-12">
         <div class="row justify-center">
           <div class="col-md-12 my-1">
@@ -128,9 +128,9 @@
           </div>
         </div>
       </div>
-    </div>
+    </div>-->
     <!-- Modal -->
-    <div
+    <!-- <div
       class="modal fade"
       id="staticBackdrop"
       data-backdrop="static"
@@ -193,9 +193,9 @@
           </div>
         </div>
       </div>
-    </div>
+    </div>-->
   </div>
 </template>
 
-<style src="./insumos.css"></style>
-<script src="./insumos.js"></script>
+<style src="./registro_compra.css"></style>
+<script src="./registro_compra.js"></script>
