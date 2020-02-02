@@ -51,4 +51,23 @@ class CategoriaInsumos extends Model
             return ['estado' => 'failed', 'mensaje' => 'No se encuentran sucursales creadas.'];
         }
     }
+
+    protected function traerCategorias()
+    {
+        $categorias = DB::table('categoria_insumos')
+            ->select([
+                'id',
+                'insumo as descripcion',
+            ])
+            ->where([
+                'activo' => 'S'
+            ])
+            ->get();
+
+        if (!$categorias->isEmpty()) {
+            return ['estado' => 'success', 'categorias' => $categorias];
+        } else {
+            return ['estado' => 'failed', 'mensaje' => 'No se encuentran sucursales creadas.'];
+        }
+    }
 }

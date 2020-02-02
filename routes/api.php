@@ -39,6 +39,10 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     //Categoria Insumos
     Route::post('/ingresar_categoria_insumo', 'InsumosController@IngresarCategoria');
     Route::get('/traer_categoria_insumos', 'InsumosController@TraerCategoriasModal');
+    Route::get('/traer_categoria_insumos_select', 'InsumosController@TraerCategorias');
+
     //Insumos
+    Route::post('/ingresar_insumo', 'InsumosController@IngresarInsumo');
+    Route::get('/traer_insumos', 'InsumosController@TraerInsumos');
     /* <---Almacen---> */
 });

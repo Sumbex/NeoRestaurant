@@ -17,16 +17,6 @@
               />
             </div>
             <div class="form-group col-md-6">
-              <select class="form-control" v-model="unidad">
-                <option value="0">Seleccione una Unidad</option>
-                <option value="1">Botella</option>
-                <option value="2">Lata</option>
-                <option value="3">Kilo</option>
-                <option value="4">Bolsa</option>
-                <option value="5">Unidad</option>
-              </select>
-            </div>
-            <div class="form-group col-md-6">
               <select class="form-control" v-model="catInsumo">
                 <option value="0">Seleccione una Categoria</option>
                 <option
@@ -37,11 +27,21 @@
               </select>
             </div>
             <div class="form-group col-md-6">
+              <select class="form-control" v-model="unidad">
+                <option value="0">Seleccione una Unidad</option>
+                <option value="1">Botella</option>
+                <option value="2">Lata</option>
+                <option value="3">Kilo</option>
+                <option value="4">Bolsa</option>
+              </select>
+            </div>
+            <div class="form-group col-md-6">
               <select class="form-control" v-model="medida">
                 <option value="0">Seleccione una Medida</option>
                 <option value="1">ML</option>
                 <option value="2">CC</option>
                 <option value="3">GR</option>
+                <option value="4">UND</option>
               </select>
             </div>
             <div class="form-group col-md-4">
@@ -79,7 +79,11 @@
                 data-target="#staticBackdrop"
                 @click="traerCategorias()"
               >Agregar Categorias</button>
-              <button type="button" class="btn btn-success rounded-pill">Guardar</button>
+              <button
+                type="button"
+                class="btn btn-success rounded-pill"
+                @click="ingresarInsumos()"
+              >Guardar</button>
             </div>
           </div>
         </div>
@@ -97,24 +101,27 @@
                 <thead class="thead-dark">
                   <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Mesa</th>
-                    <th scope="col">Sucursal</th>
-                    <th scope="col">Zona</th>
+                    <th scope="col">Insumo</th>
+                    <th scope="col">Categoria</th>
+                    <th scope="col">Unidad</th>
+                    <th scope="col">Medida</th>
+                    <th scope="col">Cantidad Medida</th>
                     <th scope="col">Creada por:</th>
                     <th scope="col">Creada:</th>
                     <th scope="col">Opciones</th>
                   </tr>
                 </thead>
-                <!-- <tbody>
-                  <tr v-for="mesa in mesas" :prop="mesa" :key="mesa.id">
-                    <th scope="row">{{mesa.id}}</th>
-                    <td>{{mesa.mesa}}</td>
-                    <td>{{mesa.sucursal}}</td>
-                    <td>{{mesa.zona}}</td>
-                    <td>{{mesa.nombre}}</td>
-                    <td>{{mesa.created_at}}</td>
+                <tbody>
+                  <tr v-for="data in insumos" :prop="data" :key="data.id">
+                    <th scope="row">{{data.id}}</th>
+                    <td>{{data.insumo}}</td>
+                    <td>{{data.categoria}}</td>
+                    <td>{{data.medida}}</td>
+                    <td>{{data.medida}}</td>
+                    <td>{{data.cantidad}}</td>
+                    <td>{{data.created_at}}</td>
                   </tr>
-                </tbody>-->
+                </tbody>
               </table>
             </div>
           </div>
@@ -151,25 +158,27 @@
                 />
               </div>
               <div class="col-12 mt-2">
-                <table class="table">
-                  <thead class="thead-dark">
-                    <tr>
-                      <th scope="col">#</th>
-                      <th scope="col">Categoria</th>
-                      <th scope="col">Creada por:</th>
-                      <th scope="col">Creada</th>
-                      <th scope="col">Opciones</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="cat in categorias" :prop="cat" :key="cat.id">
-                      <th scope="row">{{cat.id}}</th>
-                      <td>{{cat.insumo}}</td>
-                      <td>{{cat.nombre}}</td>
-                      <td>{{cat.created_at}}</td>
-                    </tr>
-                  </tbody>
-                </table>
+                <div class="table-responsive">
+                  <table class="table">
+                    <thead class="thead-dark">
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Categoria</th>
+                        <th scope="col">Creada por:</th>
+                        <th scope="col">Creada</th>
+                        <th scope="col">Opciones</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="cat in categorias" :prop="cat" :key="cat.id">
+                        <th scope="row">{{cat.id}}</th>
+                        <td>{{cat.insumo}}</td>
+                        <td>{{cat.nombre}}</td>
+                        <td>{{cat.created_at}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
