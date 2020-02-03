@@ -50,6 +50,11 @@
         <div class="collapse" id="collapseAlmacen">
           <a
             class="list-group-item list-group-item-action list-group-item-light"
+            :class="[currentPage.includes('provedores') ? activeClass : 'list-group-item-action']"
+            @click="url('Provedores')"
+          >Provedores</a>
+          <a
+            class="list-group-item list-group-item-action list-group-item-light"
             :class="[currentPage.includes('insumos') ? activeClass : 'list-group-item-action']"
             @click="url('Insumos')"
           >Insumos</a>

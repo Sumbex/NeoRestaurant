@@ -36,6 +36,10 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     /* <---Sucursal---> */
 
     /* <---Almacen---> */
+    //Proveedores
+    Route::post('/ingresar_proveedor', 'ProveedoresController@IngresarProveedor');
+    Route::get('/traer_proveedores', 'ProveedoresController@TraerProveedores');
+
     //Categoria Insumos
     Route::post('/ingresar_categoria_insumo', 'InsumosController@IngresarCategoria');
     Route::get('/traer_categoria_insumos', 'InsumosController@TraerCategoriasModal');

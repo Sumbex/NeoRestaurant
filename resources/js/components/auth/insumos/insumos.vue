@@ -104,8 +104,8 @@
                     <th scope="col">Insumo</th>
                     <th scope="col">Categoria</th>
                     <th scope="col">Unidad</th>
-                    <th scope="col">Medida</th>
                     <th scope="col">Cantidad Medida</th>
+                    <th scope="col">Medida</th>
                     <th scope="col">Creada por:</th>
                     <th scope="col">Creada:</th>
                     <th scope="col">Opciones</th>
@@ -117,8 +117,8 @@
                     <td>{{data.insumo}}</td>
                     <td>{{data.categoria}}</td>
                     <td>{{data.unidad}}</td>
-                    <td>{{data.medida}}</td>
                     <td>{{data.cantidad}}</td>
+                    <td>{{data.medida}}</td>
                     <td>{{data.nombre}}</td>
                     <td>{{data.created_at}}</td>
                   </tr>

@@ -14,6 +14,8 @@ import POSMesas from './components/auth/pos/mesas/ver_mesas.vue';
 import Insumos from './components/auth/insumos/insumos.vue';
 import CompraInsumos from './components/auth/compras/registro_compra.vue';
 
+import Provedores from './components/auth/provedor/proveedor.vue';
+
 const routes = [{
     path: '/',
     component: Index,
@@ -63,6 +65,11 @@ const routes = [{
         name: 'RegistroInsumo',
         path: '/registro-compra',
         component: CompraInsumos
+    },
+    {
+        name: 'Provedores',
+        path: '/provedores',
+        component: Provedores
     }
     ]
 },

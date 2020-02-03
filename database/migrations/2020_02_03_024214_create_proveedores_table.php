@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDetalleAlmacenTable extends Migration
+class CreateProveedoresTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,15 @@ class CreateDetalleAlmacenTable extends Migration
      */
     public function up()
     {
-        Schema::create('detalle_almacen', function (Blueprint $table) {
+        Schema::create('proveedores', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('almacen_id');
-            $table->integer('insumo_id');
-            $table->integer('proveedor_id');
-            $table->integer('cantidad');
-            $table->integer('precio_compra');
+            $table->string('rut');
+            $table->string('razon_social');
+            $table->string('direccion');
+            $table->string('pagina')->nullable();
+            $table->string('contacto')->nullable();
+            $table->string('fono');
+            $table->string('correo')->nullable();
             $table->integer('creada_por');
             $table->integer('estado_id');
             $table->char('activo', 1);
@@ -34,6 +36,6 @@ class CreateDetalleAlmacenTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('detalle_almacen');
+        Schema::dropIfExists('proveedores');
     }
 }
