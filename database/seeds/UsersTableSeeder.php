@@ -22,5 +22,9 @@ class UsersTableSeeder extends Seeder
             'slug' => 'admin',
             'special' => 'all-access'
         ]);
+
+        DB::table('users')->insert([
+            ['id' => '2', 'rut' => '111111111', 'nombre' => 'Admin', 'password' => bcrypt(123456), 'activo' => 'S'],
+        ]);
     }
 }

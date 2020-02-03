@@ -3012,10 +3012,100 @@ module.exports = {
 /*!************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./resources/js/components/auth/compras/registro_compra.js?vue&type=script&lang=js& ***!
   \************************************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var vue_snotify__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-snotify */ "./node_modules/vue-snotify/vue-snotify.esm.js");
 
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      /* rut: null,
+      razon: null,
+      direccion: null,
+      pagina: null,
+      contacto: null,
+      fono: null,
+      correo: null,
+      proveedores: [], */
+    };
+  },
+  methods: {
+    /* limpiar() {
+        this.rut = '';
+        this.razon = '';
+        this.direccion = '';
+        this.pagina = '';
+        this.contacto = '';
+        this.fono = '';
+        this.correo = '';
+    },
+    ingresarProveedor() {
+        const data = {
+            'rut': this.rut,
+            'razon': this.razon,
+            'direccion': this.direccion,
+            'pagina': this.pagina,
+            'contacto': this.contacto,
+            'fono': this.fono,
+            'correo': this.correo,
+        }
+        axios.post('api/ingresar_proveedor', data).then((res) => {
+            if (res.data.estado == 'success') {
+                this.limpiar();
+                this.$snotify.create({
+                    body: res.data.mensaje,
+                    config: {
+                        timeout: 2000,
+                        showProgressBar: true,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        position: SnotifyPosition.centerBottom,
+                        type: SnotifyStyle.success,
+                    }
+                });
+                this.traerProveedores();
+            } else {
+                this.$snotify.create({
+                    body: res.data.mensaje,
+                    config: {
+                        timeout: 2000,
+                        showProgressBar: true,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        position: SnotifyPosition.centerBottom,
+                        type: SnotifyStyle.error,
+                    }
+                });
+            }
+        });
+    },
+    traerProveedores() {
+        axios.get('api/traer_proveedores').then((res) => {
+            if (res.data.estado == 'success') {
+                this.proveedores = res.data.proveedores;
+            } else {
+                this.$snotify.create({
+                    body: res.data.mensaje,
+                    config: {
+                        timeout: 3000,
+                        showProgressBar: true,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        position: SnotifyPosition.centerBottom,
+                        type: SnotifyStyle.error,
+                    }
+                })
+            }
+        });
+    }, */
+  },
+  mounted: function mounted() {
+    /* this.traerProveedores(); */
+  }
+});
 
 /***/ }),
 
@@ -74418,9 +74508,7 @@ var staticRenderFns = [
           _c("div", { staticClass: "form-row justify-center" }, [
             _c("div", { staticClass: "col-12 my-1" }, [
               _c("h3", { staticClass: "text-center" }, [_vm._v("Formulario")])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "input-group my-1" })
+            ])
           ])
         ])
       ])
@@ -93945,9 +94033,7 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_registro_compra_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!./registro_compra.js?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./resources/js/components/auth/compras/registro_compra.js?vue&type=script&lang=js&");
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_registro_compra_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_babel_loader_lib_index_js_ref_4_0_registro_compra_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__);
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_babel_loader_lib_index_js_ref_4_0_registro_compra_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_babel_loader_lib_index_js_ref_4_0_registro_compra_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
- /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_registro_compra_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0___default.a); 
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_registro_compra_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 

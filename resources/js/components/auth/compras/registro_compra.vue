@@ -6,8 +6,37 @@
           <div class="col-12 my-1">
             <h3 class="text-center">Formulario</h3>
           </div>
-          <div class="input-group my-1">
-            <!-- <div class="form-group col-md-6">
+          <!-- <div class="card col-md-8"></div>
+          <div class="card col-md-4">
+            <div class="col-md-4 my-1">
+              <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="customSwitch1" />
+                <label class="custom-control-label" for="customSwitch1">Neofox 01</label>
+              </div>
+              <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="customSwitch2" />
+                <label class="custom-control-label" for="customSwitch2">Neofox 02</label>
+              </div>
+            </div>
+          </div> -->
+          <!-- <div class="input-group my-1">
+            <div class="col-md-9 my-1">
+              <h3 class="text-center">Formulario</h3>
+            </div>
+            <div class="col-md-3 my-1">
+              
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="customSwitch1" />
+                  <label class="custom-control-label" for="customSwitch1">Neofox 01</label>
+                </div>
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id="customSwitch2" />
+                  <label class="custom-control-label" for="customSwitch2">Neofox 02</label>
+                </div>
+              
+          </div>-->
+
+          <!-- <div class="form-group col-md-6">
               <input
                 type="text"
                 class="form-control"
@@ -84,12 +113,12 @@
                 class="btn btn-success rounded-pill"
                 @click="ingresarInsumos()"
               >Guardar</button>
-            </div>-->
-          </div>
+          </div>-->
         </div>
       </div>
     </div>
-    <!-- <div class="row justify-center my-3">
+  </div>
+  <!-- <div class="row justify-center my-3">
       <div class="card col-md-12">
         <div class="row justify-center">
           <div class="col-md-12 my-1">
@@ -128,9 +157,9 @@
           </div>
         </div>
       </div>
-    </div>-->
-    <!-- Modal -->
-    <!-- <div
+  </div>-->
+  <!-- Modal -->
+  <!-- <div
       class="modal fade"
       id="staticBackdrop"
       data-backdrop="static"
@@ -193,8 +222,7 @@
           </div>
         </div>
       </div>
-    </div>-->
-  </div>
+  </div>-->
 </template>
 
 <style src="./registro_compra.css"></style>
