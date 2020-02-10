@@ -1,125 +1,119 @@
 <template>
   <div class="container">
-    <div class="row justify-center my-3">
-      <div class="card col-md-12">
-        <div class="form-row justify-center">
-          <div class="col-12 my-1">
+    <div class="row my-3">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="container-fluid">
             <h3 class="text-center">Formulario</h3>
-          </div>
-          <!-- <div class="card col-md-8"></div>
-          <div class="card col-md-4">
-            <div class="col-md-4 my-1">
-              <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" id="customSwitch1" />
-                <label class="custom-control-label" for="customSwitch1">Neofox 01</label>
-              </div>
-              <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" id="customSwitch2" />
-                <label class="custom-control-label" for="customSwitch2">Neofox 02</label>
-              </div>
-            </div>
-          </div> -->
-          <!-- <div class="input-group my-1">
-            <div class="col-md-9 my-1">
-              <h3 class="text-center">Formulario</h3>
-            </div>
-            <div class="col-md-3 my-1">
-              
-                <div class="custom-control custom-switch">
-                  <input type="checkbox" class="custom-control-input" id="customSwitch1" />
-                  <label class="custom-control-label" for="customSwitch1">Neofox 01</label>
-                </div>
-                <div class="custom-control custom-switch">
-                  <input type="checkbox" class="custom-control-input" id="customSwitch2" />
-                  <label class="custom-control-label" for="customSwitch2">Neofox 02</label>
-                </div>
-              
-          </div>-->
-
-          <!-- <div class="form-group col-md-6">
+            <div class="input-group my-1">
               <input
                 type="text"
                 class="form-control"
-                placeholder="Nombre del Insumo"
+                placeholder="Insumo"
                 aria-label="Insumo"
-                v-model="insumo"
+                aria-describedby="boton-modal-insumo"
+                disabled
               />
+              <div class="input-group-append">
+                <button
+                  class="btn btn-outline-secondary"
+                  data-toggle="modal"
+                  data-target="#staticBackdrop"
+                  type="button"
+                  id="boton-modal-insumo"
+                >
+                  Buscar
+                  insumo
+                </button>
+              </div>
             </div>
-            <div class="form-group col-md-6">
-              <select class="form-control" v-model="catInsumo">
-                <option value="0">Seleccione una Categoria</option>
-                <option
-                  v-for="option in catInsumoSelect"
-                  v-bind:value="option.id"
-                  :key="option.id"
-                >{{option.descripcion}}</option>
-              </select>
-            </div>
-            <div class="form-group col-md-6">
-              <select class="form-control" v-model="unidad">
-                <option value="0">Seleccione una Unidad</option>
-                <option value="1">Botella</option>
-                <option value="2">Lata</option>
-                <option value="3">Kilo</option>
-                <option value="4">Bolsa</option>
-              </select>
-            </div>
-            <div class="form-group col-md-6">
-              <select class="form-control" v-model="medida">
-                <option value="0">Seleccione una Medida</option>
-                <option value="1">ML</option>
-                <option value="2">CC</option>
-                <option value="3">GR</option>
-                <option value="4">UND</option>
-              </select>
-            </div>
-            <div class="form-group col-md-4">
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Cantidad por Medida"
-                aria-label="Cantidad"
-                v-model="cantidad"
-              />
-            </div>
-            <div class="form-group col-md-4">
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Stock Minimo"
-                aria-label="Stock"
-                v-model="stock"
-              />
-            </div>
-            <div class="form-group col-md-4">
-              <input
-                type="text"
-                class="form-control"
-                placeholder="Precio Compra"
-                aria-label="Precio"
-                v-model="precio"
-              />
+            <div class="row">
+              <div class="col-lg-6 mt-4">
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Cantidad"
+                    aria-label="Cantidad"
+                    aria-describedby="cantidad-label"
+                    v-model="cantidad"
+                  />
+                  <div class="input-group-append">
+                    <span class="input-group-text" id="cantidad-label">Unidad</span>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-6 mt-4">
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Precio"
+                    aria-label="Precio"
+                    v-model="precio"
+                  />
+                </div>
+              </div>
             </div>
             <div class="form-group col-md-12 mt-2 mb-3 text-center">
-              <button
-                type="button"
-                class="btn btn-primary rounded-pill"
-                data-toggle="modal"
-                data-target="#staticBackdrop"
-                @click="traerCategorias()"
-              >Agregar Categorias</button>
-              <button
-                type="button"
-                class="btn btn-success rounded-pill"
-                @click="ingresarInsumos()"
-              >Guardar</button>
-          </div>-->
+              <button type="button" class="btn btn-success rounded-pill">Añadir</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="card">
+          <div class="container-fluid">
+            <h3 class="text-center">Sucursales</h3>
+            <div class="col-lg-12">
+              <div
+                class="custom-control custom-switch"
+                v-for="data in almacenes"
+                :prop="data"
+                :key="data.id"
+              >
+                <input
+                  type="checkbox"
+                  class="custom-control-input"
+                  :id="data.sucursal"
+                  v-model="data.id"
+                />
+                <label class="custom-control-label" :for="data.sucursal">{{data.sucursal}}</label>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <!-- <div class="row justify-center my-3">
-      <div class="card col-md-12">
+
+    <!--     <div class="row justify-center my-3">
+      <div class="card col-md-4">
+        <div class="form-row justify-center">
+          <div class="col-12 my-1">
+            <h3 class="text-center">Sucursales</h3>
+          </div>
+          <div class="col-12 my-1">
+            <div
+              class="custom-control custom-switch"
+              v-for="data in almacenes"
+              :prop="data"
+              :key="data.id"
+            >
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                :id="data.sucursal"
+                v-model="data.id"
+              />
+              <label class="custom-control-label" :for="data.sucursal">{{data.sucursal}}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    -->
+    <div class="row justify-center my-3">
+      <div class="card col-md-8">
         <div class="row justify-center">
           <div class="col-md-12 my-1">
             <h3 class="text-center">Tabla</h3>
@@ -135,12 +129,10 @@
                     <th scope="col">Unidad</th>
                     <th scope="col">Medida</th>
                     <th scope="col">Cantidad Medida</th>
-                    <th scope="col">Creada por:</th>
-                    <th scope="col">Creada:</th>
                     <th scope="col">Opciones</th>
                   </tr>
                 </thead>
-                <tbody>
+                <!-- <tbody>
                   <tr v-for="data in insumos" :prop="data" :key="data.id">
                     <th scope="row">{{data.id}}</th>
                     <td>{{data.insumo}}</td>
@@ -151,15 +143,35 @@
                     <td>{{data.nombre}}</td>
                     <td>{{data.created_at}}</td>
                   </tr>
-                </tbody>
+                </tbody>-->
               </table>
             </div>
           </div>
         </div>
       </div>
-  </div>-->
-  <!-- Modal -->
-  <!-- <div
+    </div>
+
+    <!-- <div class="row justify-center my-3 ">
+      <div class="card col-md-4">
+        <div class="form-row justify-center">
+          <div class="col-12 my-1">
+            <h3 class="text-center">Sucursales</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row justify-center my-3">
+      <div class="card col-md-4">
+        <div class="form-row justify-center">
+          <div class="col-12 my-1">
+            <h3 class="text-center">Proveedor</h3>
+          </div>
+        </div>
+      </div>
+    </div>-->
+    <!-- Modal -->
+    <div
       class="modal fade"
       id="staticBackdrop"
       data-backdrop="static"
@@ -222,7 +234,8 @@
           </div>
         </div>
       </div>
-  </div>-->
+    </div>
+  </div>
 </template>
 
 <style src="./registro_compra.css"></style>

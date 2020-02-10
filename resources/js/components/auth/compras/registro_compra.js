@@ -3,6 +3,11 @@ import { SnotifyPosition, SnotifyStyle } from 'vue-snotify';
 export default {
     data() {
         return {
+            almacen: null,
+            almacenes: [],
+            precio: null,
+            cantidad: null,
+            /* almacen_select: [], */
             /* rut: null,
             razon: null,
             direccion: null,
@@ -14,6 +19,25 @@ export default {
         }
     },
     methods: {
+        traerAlmacenes() {
+            axios.get('api/traer_almacenes').then((res) => {
+                if (res.data.estado == 'success') {
+                    this.almacenes = res.data.almacenes;
+                } else {
+                    this.$snotify.create({
+                        body: res.data.mensaje,
+                        config: {
+                            timeout: 3000,
+                            showProgressBar: true,
+                            closeOnClick: true,
+                            pauseOnHover: false,
+                            position: SnotifyPosition.centerBottom,
+                            type: SnotifyStyle.error,
+                        }
+                    })
+                }
+            });
+        },
         /* limpiar() {
             this.rut = '';
             this.razon = '';
@@ -84,6 +108,7 @@ export default {
         }, */
     },
     mounted() {
+        this.traerAlmacenes();
         /* this.traerProveedores(); */
     }
 };
