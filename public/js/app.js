@@ -74527,6 +74527,84 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row my-3" }, [
+      _c("div", { staticClass: "col-md-4 order-md-2" }, [
+        _c("div", { staticClass: "card mb-3" }, [
+          _c("div", { staticClass: "container-fluid" }, [
+            _c("h3", { staticClass: "text-center" }, [_vm._v("Sucursales")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row justify-center" }, [
+              _c(
+                "div",
+                { staticClass: "col-lg-12 text-center mb-3" },
+                _vm._l(_vm.almacenes, function(data) {
+                  return _c(
+                    "div",
+                    {
+                      key: data.id,
+                      staticClass: "custom-control custom-switch",
+                      attrs: { prop: data }
+                    },
+                    [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: data.id,
+                            expression: "data.id"
+                          }
+                        ],
+                        staticClass: "custom-control-input",
+                        attrs: { type: "checkbox", id: data.sucursal },
+                        domProps: {
+                          checked: Array.isArray(data.id)
+                            ? _vm._i(data.id, null) > -1
+                            : data.id
+                        },
+                        on: {
+                          change: function($event) {
+                            var $$a = data.id,
+                              $$el = $event.target,
+                              $$c = $$el.checked ? true : false
+                            if (Array.isArray($$a)) {
+                              var $$v = null,
+                                $$i = _vm._i($$a, $$v)
+                              if ($$el.checked) {
+                                $$i < 0 &&
+                                  _vm.$set(data, "id", $$a.concat([$$v]))
+                              } else {
+                                $$i > -1 &&
+                                  _vm.$set(
+                                    data,
+                                    "id",
+                                    $$a.slice(0, $$i).concat($$a.slice($$i + 1))
+                                  )
+                              }
+                            } else {
+                              _vm.$set(data, "id", $$c)
+                            }
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "custom-control-label",
+                          attrs: { for: data.sucursal }
+                        },
+                        [_vm._v(_vm._s(data.sucursal))]
+                      )
+                    ]
+                  )
+                }),
+                0
+              )
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
       _c("div", { staticClass: "col-md-8" }, [
         _c("div", { staticClass: "card" }, [
           _c("div", { staticClass: "container-fluid" }, [
@@ -74602,81 +74680,6 @@ var render = function() {
             _vm._m(2)
           ])
         ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-4" }, [
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "container-fluid" }, [
-            _c("h3", { staticClass: "text-center" }, [_vm._v("Sucursales")]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-lg-12" },
-              _vm._l(_vm.almacenes, function(data) {
-                return _c(
-                  "div",
-                  {
-                    key: data.id,
-                    staticClass: "custom-control custom-switch",
-                    attrs: { prop: data }
-                  },
-                  [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: data.id,
-                          expression: "data.id"
-                        }
-                      ],
-                      staticClass: "custom-control-input",
-                      attrs: { type: "checkbox", id: data.sucursal },
-                      domProps: {
-                        checked: Array.isArray(data.id)
-                          ? _vm._i(data.id, null) > -1
-                          : data.id
-                      },
-                      on: {
-                        change: function($event) {
-                          var $$a = data.id,
-                            $$el = $event.target,
-                            $$c = $$el.checked ? true : false
-                          if (Array.isArray($$a)) {
-                            var $$v = null,
-                              $$i = _vm._i($$a, $$v)
-                            if ($$el.checked) {
-                              $$i < 0 && _vm.$set(data, "id", $$a.concat([$$v]))
-                            } else {
-                              $$i > -1 &&
-                                _vm.$set(
-                                  data,
-                                  "id",
-                                  $$a.slice(0, $$i).concat($$a.slice($$i + 1))
-                                )
-                            }
-                          } else {
-                            _vm.$set(data, "id", $$c)
-                          }
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      {
-                        staticClass: "custom-control-label",
-                        attrs: { for: data.sucursal }
-                      },
-                      [_vm._v(_vm._s(data.sucursal))]
-                    )
-                  ]
-                )
-              }),
-              0
-            )
-          ])
-        ])
       ])
     ]),
     _vm._v(" "),
@@ -74703,67 +74706,7 @@ var render = function() {
             _c("div", { staticClass: "modal-content" }, [
               _vm._m(4),
               _vm._v(" "),
-              _c("div", { staticClass: "modal-body" }, [
-                _c("div", { staticClass: "row justify-center" }, [
-                  _c("div", { staticClass: "col-12 my-1" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.categoria,
-                          expression: "categoria"
-                        }
-                      ],
-                      staticClass: "form-control",
-                      attrs: {
-                        type: "text",
-                        placeholder: "Tipo de Insumo",
-                        "aria-label": "Insumo"
-                      },
-                      domProps: { value: _vm.categoria },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.categoria = $event.target.value
-                        }
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-12 mt-2" }, [
-                    _c("div", { staticClass: "table-responsive" }, [
-                      _c("table", { staticClass: "table" }, [
-                        _vm._m(5),
-                        _vm._v(" "),
-                        _c(
-                          "tbody",
-                          _vm._l(_vm.categorias, function(cat) {
-                            return _c(
-                              "tr",
-                              { key: cat.id, attrs: { prop: cat } },
-                              [
-                                _c("th", { attrs: { scope: "row" } }, [
-                                  _vm._v(_vm._s(cat.id))
-                                ]),
-                                _vm._v(" "),
-                                _c("td", [_vm._v(_vm._s(cat.insumo))]),
-                                _vm._v(" "),
-                                _c("td", [_vm._v(_vm._s(cat.nombre))]),
-                                _vm._v(" "),
-                                _c("td", [_vm._v(_vm._s(cat.created_at))])
-                              ]
-                            )
-                          }),
-                          0
-                        )
-                      ])
-                    ])
-                  ])
-                ])
-              ]),
+              _vm._m(5),
               _vm._v(" "),
               _c("div", { staticClass: "modal-footer" }, [
                 _c(
@@ -74852,7 +74795,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c(
       "div",
-      { staticClass: "form-group col-md-12 mt-2 mb-3 text-center" },
+      { staticClass: "form-group col-md-12 mt-3 mb-3 text-center" },
       [
         _c(
           "button",
@@ -74869,14 +74812,12 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row justify-center my-3" }, [
-      _c("div", { staticClass: "card col-md-8" }, [
-        _c("div", { staticClass: "row justify-center" }, [
-          _c("div", { staticClass: "col-md-12 my-1" }, [
-            _c("h3", { staticClass: "text-center" }, [_vm._v("Tabla")])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-12" }, [
+    return _c("div", { staticClass: "row my-3" }, [
+      _c("div", { staticClass: "col-md-8" }, [
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "container-fluid" }, [
+            _c("h3", { staticClass: "text-center" }, [_vm._v("Tabla")]),
+            _vm._v(" "),
             _c("div", { staticClass: "table-responsive" }, [
               _c("table", { staticClass: "table" }, [
                 _c("thead", { staticClass: "thead-dark" }, [
@@ -74885,17 +74826,13 @@ var staticRenderFns = [
                     _vm._v(" "),
                     _c("th", { attrs: { scope: "col" } }, [_vm._v("Insumo")]),
                     _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [
-                      _vm._v("Categoria")
-                    ]),
-                    _vm._v(" "),
                     _c("th", { attrs: { scope: "col" } }, [_vm._v("Unidad")]),
                     _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [_vm._v("Medida")]),
+                    _c("th", { attrs: { scope: "col" } }, [_vm._v("Centidad")]),
                     _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [
-                      _vm._v("Cantidad Medida")
-                    ]),
+                    _c("th", { attrs: { scope: "col" } }, [_vm._v("Precio")]),
+                    _vm._v(" "),
+                    _c("th", { attrs: { scope: "col" } }, [_vm._v("Total")]),
                     _vm._v(" "),
                     _c("th", { attrs: { scope: "col" } }, [_vm._v("Opciones")])
                   ])
@@ -74915,7 +74852,7 @@ var staticRenderFns = [
       _c(
         "h5",
         { staticClass: "modal-title", attrs: { id: "staticBackdropLabel" } },
-        [_vm._v("Categoria de insumos")]
+        [_vm._v("Seleccionar Insumo")]
       ),
       _vm._v(" "),
       _c(
@@ -74936,17 +74873,35 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "thead-dark" }, [
-      _c("tr", [
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Categoria")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Creada por:")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Creada")]),
-        _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Opciones")])
+    return _c("div", { staticClass: "modal-body" }, [
+      _c("div", { staticClass: "row justify-center" }, [
+        _c("div", { staticClass: "col-12 mt-2" }, [
+          _c("div", { staticClass: "table-responsive" }, [
+            _c("table", { staticClass: "table" }, [
+              _c("thead", { staticClass: "thead-dark" }, [
+                _c("tr", [
+                  _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
+                  _vm._v(" "),
+                  _c("th", { attrs: { scope: "col" } }, [_vm._v("Insumo")]),
+                  _vm._v(" "),
+                  _c("th", { attrs: { scope: "col" } }, [_vm._v("Categoria")]),
+                  _vm._v(" "),
+                  _c("th", { attrs: { scope: "col" } }, [_vm._v("Unidad")]),
+                  _vm._v(" "),
+                  _c("th", { attrs: { scope: "col" } }, [_vm._v("Medida")]),
+                  _vm._v(" "),
+                  _c("th", { attrs: { scope: "col" } }, [
+                    _vm._v("Cent. Medida")
+                  ]),
+                  _vm._v(" "),
+                  _c("th", { attrs: { scope: "col" } }, [
+                    _vm._v("Precio Sugerido")
+                  ])
+                ])
+              ])
+            ])
+          ])
+        ])
       ])
     ])
   }
