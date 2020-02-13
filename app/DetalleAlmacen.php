@@ -54,6 +54,7 @@ class DetalleAlmacen extends Model
     {
         $insumos = DB::table('insumos as i')
             ->select([
+                'i.id',
                 'i.insumo',
                 'i.unidad_id',
                 'ci.insumo as categoria',
@@ -61,7 +62,7 @@ class DetalleAlmacen extends Model
                 'i.cantidad',
                 'i.precio_compra as precio'
             ])
-            ->join('categoria_insumos as ci', 'ci.id', 'c.categoria_id')
+            ->join('categoria_insumos as ci', 'ci.id', 'i.categoria_id')
             ->where([
                 'i.activo' => 'S'
             ])

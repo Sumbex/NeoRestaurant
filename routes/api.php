@@ -51,7 +51,7 @@ Route::group(['middleware' => 'auth.jwt'], function () {
 
     //Registro Compras
     Route::get('/traer_almacenes', 'DetalleAlmacenController@TraerAlmacenes');
-    /*     Route::get('/traer_insumos', 'DetalleAlmacenController@TraerInsumos'); */
+    Route::get('/traer_insumos_compra', 'DetalleAlmacenController@TraerInsumos');
     Route::get('/traer_proveedores_select', 'DetalleAlmacenController@TraerProveedores');
     /* <---Almacen---> */
 });

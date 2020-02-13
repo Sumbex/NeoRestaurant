@@ -3,19 +3,12 @@ import { SnotifyPosition, SnotifyStyle } from 'vue-snotify';
 export default {
     data() {
         return {
-            almacen: null,
+            checkAlmacen: [],
             almacenes: [],
-            precio: null,
-            cantidad: null,
-            /* almacen_select: [], */
-            /* rut: null,
-            razon: null,
-            direccion: null,
-            pagina: null,
-            contacto: null,
-            fono: null,
-            correo: null,
-            proveedores: [], */
+            insumo: [],
+            insumos: [],
+            carro: [],
+            activo: true,
         }
     },
     methods: {
@@ -23,6 +16,9 @@ export default {
             axios.get('api/traer_almacenes').then((res) => {
                 if (res.data.estado == 'success') {
                     this.almacenes = res.data.almacenes;
+                    for (let i = 0; i < this.almacenes.length; i++) {
+                        this.checkAlmacen.push(this.almacenes[i].id);
+                    }
                 } else {
                     this.$snotify.create({
                         body: res.data.mensaje,
@@ -38,59 +34,10 @@ export default {
                 }
             });
         },
-        /* limpiar() {
-            this.rut = '';
-            this.razon = '';
-            this.direccion = '';
-            this.pagina = '';
-            this.contacto = '';
-            this.fono = '';
-            this.correo = '';
-        },
-        ingresarProveedor() {
-            const data = {
-                'rut': this.rut,
-                'razon': this.razon,
-                'direccion': this.direccion,
-                'pagina': this.pagina,
-                'contacto': this.contacto,
-                'fono': this.fono,
-                'correo': this.correo,
-            }
-            axios.post('api/ingresar_proveedor', data).then((res) => {
+        traerInsumos() {
+            axios.get('api/traer_insumos_compra').then((res) => {
                 if (res.data.estado == 'success') {
-                    this.limpiar();
-                    this.$snotify.create({
-                        body: res.data.mensaje,
-                        config: {
-                            timeout: 2000,
-                            showProgressBar: true,
-                            closeOnClick: true,
-                            pauseOnHover: false,
-                            position: SnotifyPosition.centerBottom,
-                            type: SnotifyStyle.success,
-                        }
-                    });
-                    this.traerProveedores();
-                } else {
-                    this.$snotify.create({
-                        body: res.data.mensaje,
-                        config: {
-                            timeout: 2000,
-                            showProgressBar: true,
-                            closeOnClick: true,
-                            pauseOnHover: false,
-                            position: SnotifyPosition.centerBottom,
-                            type: SnotifyStyle.error,
-                        }
-                    });
-                }
-            });
-        },
-        traerProveedores() {
-            axios.get('api/traer_proveedores').then((res) => {
-                if (res.data.estado == 'success') {
-                    this.proveedores = res.data.proveedores;
+                    this.insumos = res.data.insumos;
                 } else {
                     this.$snotify.create({
                         body: res.data.mensaje,
@@ -105,10 +52,19 @@ export default {
                     })
                 }
             });
-        }, */
+        },
+        seleccionarInsumo(insumo) {
+            this.insumo = insumo;
+            this.activo = false;
+        },
+        añadirCarro() {
+            //verificar si existe un item sumar o actualizar este si no agrarlo
+            this.carro.push(this.insumo);
+            this.insumo = [];
+            console.log(this.carro);
+        },
     },
     mounted() {
         this.traerAlmacenes();
-        /* this.traerProveedores(); */
     }
 };

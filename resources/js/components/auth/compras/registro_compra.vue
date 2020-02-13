@@ -17,9 +17,11 @@
                     type="checkbox"
                     class="custom-control-input"
                     :id="data.sucursal"
-                    v-model="data.id"
+                    :value="data.id"
+                    v-model="checkAlmacen"
                   />
                   <label class="custom-control-label" :for="data.sucursal">{{data.sucursal}}</label>
+                  {{checkAlmacen}}
                 </div>
               </div>
             </div>
@@ -39,6 +41,7 @@
                 aria-label="Insumo"
                 aria-describedby="boton-modal-insumo"
                 disabled
+                v-model="insumo.insumo"
               />
               <div class="input-group-append">
                 <button
@@ -47,6 +50,7 @@
                   data-target="#staticBackdrop"
                   type="button"
                   id="boton-modal-insumo"
+                  @click="traerInsumos()"
                 >
                   Buscar
                   insumo
@@ -62,10 +66,15 @@
                     placeholder="Cantidad"
                     aria-label="Cantidad"
                     aria-describedby="cantidad-label"
-                    v-model="cantidad"
+                    v-model="insumo.cantidad"
                   />
                   <div class="input-group-append">
-                    <span class="input-group-text" id="cantidad-label">Unidad</span>
+                    <span class="input-group-text" v-show="activo" id="cantidad-label">Unidad</span>
+                    <span
+                      class="input-group-text"
+                      v-show="!activo"
+                      id="cantidad-label"
+                    >{{insumo.unidad_id}}</span>
                   </div>
                 </div>
               </div>
@@ -76,13 +85,22 @@
                     class="form-control"
                     placeholder="Precio"
                     aria-label="Precio"
-                    v-model="precio"
+                    v-model="insumo.precio"
                   />
                 </div>
               </div>
             </div>
             <div class="form-group col-md-12 mt-3 mb-3 text-center">
-              <button type="button" class="btn btn-success rounded-pill">Añadir</button>
+              <button
+                type="button"
+                class="btn btn-success rounded-pill"
+                @click="añadirCarro()"
+              >Añadir</button>
+              <button
+                type="button"
+                class="btn btn-danger rounded-pill"
+                @click="insumo = [], activo = !activo"
+              >Limpiar</button>
             </div>
           </div>
         </div>
@@ -102,10 +120,10 @@
                     <th scope="col">#</th>
                     <th scope="col">Insumo</th>
                     <th scope="col">Unidad</th>
-                    <th scope="col">Centidad</th>
+                    <th scope="col">Cantidad</th>
                     <th scope="col">Precio</th>
                     <th scope="col">Total</th>
-                    <th scope="col">Opciones</th>
+                    <th scope="col">Acciones</th>
                   </tr>
                 </thead>
                 <!-- <tbody>
@@ -179,19 +197,28 @@
                         <th scope="col">Insumo</th>
                         <th scope="col">Categoria</th>
                         <th scope="col">Unidad</th>
-                        <th scope="col">Medida</th>
                         <th scope="col">Cent. Medida</th>
                         <th scope="col">Precio Sugerido</th>
+                        <th scope="col">Accion</th>
                       </tr>
                     </thead>
-                    <!-- <tbody>
-                      <tr v-for="cat in categorias" :prop="cat" :key="cat.id">
-                        <th scope="row">{{cat.id}}</th>
-                        <td>{{cat.insumo}}</td>
-                        <td>{{cat.nombre}}</td>
-                        <td>{{cat.created_at}}</td>
+                    <tbody>
+                      <tr v-for="data in insumos" :prop="data" :key="data.id">
+                        <th scope="row">{{data.id}}</th>
+                        <td>{{data.insumo}}</td>
+                        <td>{{data.categoria}}</td>
+                        <td>{{data.unidad_id}}</td>
+                        <td>{{data.cantidad}}</td>
+                        <td>{{data.precio}}</td>
+                        <td>
+                          <button
+                            type="button"
+                            class="btn btn-success rounded-pill"
+                            @click="seleccionarInsumo(data)"
+                          >Agregar</button>
+                        </td>
                       </tr>
-                    </tbody>-->
+                    </tbody>
                   </table>
                 </div>
               </div>
@@ -199,11 +226,6 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary rounded-pill" data-dismiss="modal">Close</button>
-            <button
-              type="button"
-              class="btn btn-success rounded-pill"
-              @click="ingresarCategorias()"
-            >Guardar</button>
           </div>
         </div>
       </div>
