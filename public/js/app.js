@@ -3027,7 +3027,8 @@ __webpack_require__.r(__webpack_exports__);
       insumo: [],
       insumos: [],
       carro: [],
-      activo: true
+      activo: true,
+      cantidad: null
     };
   },
   methods: {
@@ -3078,18 +3079,81 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     seleccionarInsumo: function seleccionarInsumo(insumo) {
+      this.cantidad = 1;
       this.insumo = insumo;
       this.activo = false;
+      document.getElementById('cerrarModal').click();
     },
     añadirCarro: function aAdirCarro() {
-      //verificar si existe un item sumar o actualizar este si no agrarlo
-      this.carro.push(this.insumo);
-      this.insumo = [];
-      console.log(this.carro);
+      var existe = false;
+
+      for (var i = 0; i < this.carro.length; i++) {
+        if (this.insumo.id == this.carro[i].insumo_id) {
+          existe = true;
+          console.log('existe en la posicion: ' + i + ', existe: ' + existe);
+          break;
+        }
+      }
+
+      if (existe == true) {
+        this.insumo = [];
+        this.activo = true;
+        this.cantidad = null;
+        this.$snotify.create({
+          body: 'El insumo que has seleccionado ya se encuentra agregado.',
+          config: {
+            timeout: 4000,
+            showProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: false,
+            position: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyPosition"].centerBottom,
+            type: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyStyle"].warning
+          }
+        });
+      } else {
+        var total = this.cantidad * this.insumo.precio;
+        this.carro.push({
+          'insumo_id': this.insumo.id,
+          'insumo': this.insumo.insumo,
+          'unidad_id': this.insumo.unidad_id,
+          'cantidad': this.cantidad,
+          'precio': this.insumo.precio,
+          'total': total
+        });
+        localStorage.setItem("carro", JSON.stringify(this.carro));
+        this.insumo = [];
+        this.activo = true;
+        this.cantidad = null;
+      }
+    },
+    cargarCarro: function cargarCarro() {
+      if (localStorage.getItem("carro") != null) {
+        var carroGuardado = JSON.parse(localStorage.getItem("carro"));
+
+        for (var i = 0; i < carroGuardado.length; i++) {
+          this.carro.push(carroGuardado[i]);
+        }
+      }
+    },
+    eliminarItem: function eliminarItem(indice) {
+      this.carro.splice(indice, 1);
+      localStorage.removeItem('carro');
+      localStorage.setItem("carro", JSON.stringify(this.carro));
+    },
+    modificarItem: function modificarItem(item) {
+      console.log(item);
+      this.cantidad = 1;
+      this.insumo = item;
+      this.activo = false;
+    },
+    limpiarCarro: function limpiarCarro() {
+      localStorage.removeItem('carro');
+      this.carro = [];
     }
   },
   mounted: function mounted() {
     this.traerAlmacenes();
+    this.cargarCarro();
   }
 });
 
@@ -74632,9 +74696,10 @@ var render = function() {
                     directives: [
                       {
                         name: "model",
-                        rawName: "v-model",
-                        value: _vm.insumo.cantidad,
-                        expression: "insumo.cantidad"
+                        rawName: "v-model.number",
+                        value: _vm.cantidad,
+                        expression: "cantidad",
+                        modifiers: { number: true }
                       }
                     ],
                     staticClass: "form-control",
@@ -74644,13 +74709,16 @@ var render = function() {
                       "aria-label": "Cantidad",
                       "aria-describedby": "cantidad-label"
                     },
-                    domProps: { value: _vm.insumo.cantidad },
+                    domProps: { value: _vm.cantidad },
                     on: {
                       input: function($event) {
                         if ($event.target.composing) {
                           return
                         }
-                        _vm.$set(_vm.insumo, "cantidad", $event.target.value)
+                        _vm.cantidad = _vm._n($event.target.value)
+                      },
+                      blur: function($event) {
+                        return _vm.$forceUpdate()
                       }
                     }
                   }),
@@ -74762,7 +74830,91 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _vm._m(0),
+    _c("div", { staticClass: "row my-3" }, [
+      _c("div", { staticClass: "col-md-8" }, [
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "container-fluid" }, [
+            _c("h3", { staticClass: "text-center" }, [_vm._v("Tabla")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "table-responsive" }, [
+              _c("table", { staticClass: "table" }, [
+                _vm._m(0),
+                _vm._v(" "),
+                _c(
+                  "tbody",
+                  _vm._l(_vm.carro, function(data, index) {
+                    return _c("tr", { key: data.id, attrs: { prop: data } }, [
+                      _c("th", { attrs: { scope: "row" } }, [
+                        _vm._v(_vm._s(data.id))
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(data.insumo))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(data.cantidad))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(data.precio))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(data.total))]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary rounded-pill",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                return _vm.modificarItem(data)
+                              }
+                            }
+                          },
+                          [_vm._v("Modificar")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-danger rounded-pill",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                return _vm.eliminarItem(index)
+                              }
+                            }
+                          },
+                          [_vm._v("Quitar")]
+                        )
+                      ])
+                    ])
+                  }),
+                  0
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "form-group col-md-12 mt-3 mb-3 text-center" },
+              [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-danger rounded-pill",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.limpiarCarro()
+                      }
+                    }
+                  },
+                  [_vm._v("Quitar Todo")]
+                )
+              ]
+            )
+          ])
+        ])
+      ])
+    ]),
     _vm._v(" "),
     _c(
       "div",
@@ -74853,35 +75005,19 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row my-3" }, [
-      _c("div", { staticClass: "col-md-8" }, [
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "container-fluid" }, [
-            _c("h3", { staticClass: "text-center" }, [_vm._v("Tabla")]),
-            _vm._v(" "),
-            _c("div", { staticClass: "table-responsive" }, [
-              _c("table", { staticClass: "table" }, [
-                _c("thead", { staticClass: "thead-dark" }, [
-                  _c("tr", [
-                    _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [_vm._v("Insumo")]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [_vm._v("Unidad")]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [_vm._v("Cantidad")]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [_vm._v("Precio")]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [_vm._v("Total")]),
-                    _vm._v(" "),
-                    _c("th", { attrs: { scope: "col" } }, [_vm._v("Acciones")])
-                  ])
-                ])
-              ])
-            ])
-          ])
-        ])
+    return _c("thead", { staticClass: "thead-dark" }, [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Insumo")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Cantidad")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Precio")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Total")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Acciones")])
       ])
     ])
   },
@@ -74902,6 +75038,7 @@ var staticRenderFns = [
           staticClass: "close",
           attrs: {
             type: "button",
+            id: "cerrarModal",
             "data-dismiss": "modal",
             "aria-label": "Close"
           }

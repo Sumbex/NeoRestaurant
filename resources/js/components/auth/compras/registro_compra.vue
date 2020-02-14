@@ -66,7 +66,7 @@
                     placeholder="Cantidad"
                     aria-label="Cantidad"
                     aria-describedby="cantidad-label"
-                    v-model="insumo.cantidad"
+                    v-model.number="cantidad"
                   />
                   <div class="input-group-append">
                     <span class="input-group-text" v-show="activo" id="cantidad-label">Unidad</span>
@@ -119,26 +119,41 @@
                   <tr>
                     <th scope="col">#</th>
                     <th scope="col">Insumo</th>
-                    <th scope="col">Unidad</th>
                     <th scope="col">Cantidad</th>
                     <th scope="col">Precio</th>
                     <th scope="col">Total</th>
                     <th scope="col">Acciones</th>
                   </tr>
                 </thead>
-                <!-- <tbody>
-                  <tr v-for="data in insumos" :prop="data" :key="data.id">
+                <tbody>
+                  <tr v-for="(data,index) in carro" :prop="data" :key="data.id">
                     <th scope="row">{{data.id}}</th>
                     <td>{{data.insumo}}</td>
-                    <td>{{data.categoria}}</td>
-                    <td>{{data.unidad}}</td>
-                    <td>{{data.medida}}</td>
                     <td>{{data.cantidad}}</td>
-                    <td>{{data.nombre}}</td>
-                    <td>{{data.created_at}}</td>
+                    <td>{{data.precio}}</td>
+                    <td>{{data.total}}</td>
+                    <td>
+                      <button
+                        type="button"
+                        class="btn btn-primary rounded-pill"
+                        @click="modificarItem(data)"
+                      >Modificar</button>
+                      <button
+                        type="button"
+                        class="btn btn-danger rounded-pill"
+                        @click="eliminarItem(index)"
+                      >Quitar</button>
+                    </td>
                   </tr>
-                </tbody>-->
+                </tbody>
               </table>
+            </div>
+            <div class="form-group col-md-12 mt-3 mb-3 text-center">
+              <button
+                type="button"
+                class="btn btn-danger rounded-pill"
+                @click="limpiarCarro()"
+              >Quitar Todo</button>
             </div>
           </div>
         </div>
@@ -182,7 +197,13 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="staticBackdropLabel">Seleccionar Insumo</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button
+              type="button"
+              id="cerrarModal"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
