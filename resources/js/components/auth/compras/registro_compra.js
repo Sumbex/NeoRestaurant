@@ -10,6 +10,8 @@ export default {
             carro: [],
             activo: true,
             cantidad: null,
+            proveedor: 0,
+            prove_select: [],
         }
     },
     methods: {
@@ -39,6 +41,25 @@ export default {
             axios.get('api/traer_insumos_compra').then((res) => {
                 if (res.data.estado == 'success') {
                     this.insumos = res.data.insumos;
+                } else {
+                    this.$snotify.create({
+                        body: res.data.mensaje,
+                        config: {
+                            timeout: 3000,
+                            showProgressBar: true,
+                            closeOnClick: true,
+                            pauseOnHover: false,
+                            position: SnotifyPosition.centerBottom,
+                            type: SnotifyStyle.error,
+                        }
+                    })
+                }
+            });
+        },
+        traerProveedores() {
+            axios.get('api/traer_proveedores_select').then((res) => {
+                if (res.data.estado == 'success') {
+                    this.prove_select = res.data.proveedores;
                 } else {
                     this.$snotify.create({
                         body: res.data.mensaje,
@@ -123,5 +144,6 @@ export default {
     mounted() {
         this.traerAlmacenes();
         this.cargarCarro();
+        this.traerProveedores();
     }
 };

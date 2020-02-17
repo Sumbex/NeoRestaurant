@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="row my-3">
-      <div class="col-md-4 order-md-2">
+      <div class="col-md-5 order-md-2">
         <div class="card mb-3">
           <div class="container-fluid">
             <h3 class="text-center">Sucursales</h3>
@@ -29,7 +29,7 @@
         </div>
       </div>
 
-      <div class="col-md-8">
+      <div class="col-md-7">
         <div class="card">
           <div class="container-fluid">
             <h3 class="text-center">Formulario</h3>
@@ -108,8 +108,8 @@
     </div>
 
     <div class="row my-3">
-      <div class="col-md-8">
-        <div class="card">
+      <div class="col-md-7">
+        <div class="card mb-3">
           <div class="container-fluid">
             <h3 class="text-center">Tabla</h3>
 
@@ -158,29 +158,54 @@
           </div>
         </div>
       </div>
-      <!-- <div class="col-md-4">
+      <div class="col-md-5">
         <div class="card">
           <div class="container-fluid">
-            <h3 class="text-center">Sucursales</h3>
+            <h3 class="text-center">Registro</h3>
+
+          <div class="col-lg-12">
+            <h2 class="text-center">Total en N°</h2>
+          </div>
+
             <div class="col-lg-12">
-              <div
-                class="custom-control custom-switch"
-                v-for="data in almacenes"
-                :prop="data"
-                :key="data.id"
-              >
-                <input
-                  type="checkbox"
-                  class="custom-control-input"
-                  :id="data.sucursal"
-                  v-model="data.id"
-                />
-                <label class="custom-control-label" :for="data.sucursal">{{data.sucursal}}</label>
+              <div class="form-group">
+                <select class="form-control" v-model="proveedor">
+                  <option value="0">Seleccione un Proveedor</option>
+                  <option
+                    v-for="option in prove_select"
+                    v-bind:value="option.id"
+                    :key="option.id"
+                  >{{option.razon}}</option>
+                </select>
               </div>
+            </div>
+
+            <div class="col-lg-12">
+              <div class="form-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="exampleFormControlInput1"
+                  placeholder="Numero Comprobante"
+                />
+              </div>
+            </div>
+
+            <div class="col-lg-12">
+              <div class="form-group">
+                <input type="file" class="form-control-file" id="archivoComprobante" />
+              </div>
+            </div>
+
+            <div class="form-group col-md-12 mt-3 mb-3 text-center">
+              <button
+                type="button"
+                class="btn btn-success rounded-pill"
+              >Guardar</button>
             </div>
           </div>
         </div>
-      </div>-->
+      </div>
     </div>
 
     <!-- Modal -->

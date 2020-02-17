@@ -3028,7 +3028,9 @@ __webpack_require__.r(__webpack_exports__);
       insumos: [],
       carro: [],
       activo: true,
-      cantidad: null
+      cantidad: null,
+      proveedor: 0,
+      prove_select: []
     };
   },
   methods: {
@@ -3065,6 +3067,27 @@ __webpack_require__.r(__webpack_exports__);
           _this2.insumos = res.data.insumos;
         } else {
           _this2.$snotify.create({
+            body: res.data.mensaje,
+            config: {
+              timeout: 3000,
+              showProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: false,
+              position: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyPosition"].centerBottom,
+              type: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyStyle"].error
+            }
+          });
+        }
+      });
+    },
+    traerProveedores: function traerProveedores() {
+      var _this3 = this;
+
+      axios.get('api/traer_proveedores_select').then(function (res) {
+        if (res.data.estado == 'success') {
+          _this3.prove_select = res.data.proveedores;
+        } else {
+          _this3.$snotify.create({
             body: res.data.mensaje,
             config: {
               timeout: 3000,
@@ -3154,6 +3177,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     this.traerAlmacenes();
     this.cargarCarro();
+    this.traerProveedores();
   }
 });
 
@@ -74547,7 +74571,7 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row my-3" }, [
-      _c("div", { staticClass: "col-md-4 order-md-2" }, [
+      _c("div", { staticClass: "col-md-5 order-md-2" }, [
         _c("div", { staticClass: "card mb-3" }, [
           _c("div", { staticClass: "container-fluid" }, [
             _c("h3", { staticClass: "text-center" }, [_vm._v("Sucursales")]),
@@ -74629,7 +74653,7 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-md-8" }, [
+      _c("div", { staticClass: "col-md-7" }, [
         _c("div", { staticClass: "card" }, [
           _c("div", { staticClass: "container-fluid" }, [
             _c("h3", { staticClass: "text-center" }, [_vm._v("Formulario")]),
@@ -74831,8 +74855,8 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "row my-3" }, [
-      _c("div", { staticClass: "col-md-8" }, [
-        _c("div", { staticClass: "card" }, [
+      _c("div", { staticClass: "col-md-7" }, [
+        _c("div", { staticClass: "card mb-3" }, [
           _c("div", { staticClass: "container-fluid" }, [
             _c("h3", { staticClass: "text-center" }, [_vm._v("Tabla")]),
             _vm._v(" "),
@@ -74913,6 +74937,70 @@ var render = function() {
             )
           ])
         ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-md-5" }, [
+        _c("div", { staticClass: "card" }, [
+          _c("div", { staticClass: "container-fluid" }, [
+            _c("h3", { staticClass: "text-center" }, [_vm._v("Registro")]),
+            _vm._v(" "),
+            _vm._m(1),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-12" }, [
+              _c("div", { staticClass: "form-group" }, [
+                _c(
+                  "select",
+                  {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.proveedor,
+                        expression: "proveedor"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    on: {
+                      change: function($event) {
+                        var $$selectedVal = Array.prototype.filter
+                          .call($event.target.options, function(o) {
+                            return o.selected
+                          })
+                          .map(function(o) {
+                            var val = "_value" in o ? o._value : o.value
+                            return val
+                          })
+                        _vm.proveedor = $event.target.multiple
+                          ? $$selectedVal
+                          : $$selectedVal[0]
+                      }
+                    }
+                  },
+                  [
+                    _c("option", { attrs: { value: "0" } }, [
+                      _vm._v("Seleccione un Proveedor")
+                    ]),
+                    _vm._v(" "),
+                    _vm._l(_vm.prove_select, function(option) {
+                      return _c(
+                        "option",
+                        { key: option.id, domProps: { value: option.id } },
+                        [_vm._v(_vm._s(option.razon))]
+                      )
+                    })
+                  ],
+                  2
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _vm._m(2),
+            _vm._v(" "),
+            _vm._m(3),
+            _vm._v(" "),
+            _vm._m(4)
+          ])
+        ])
       ])
     ]),
     _vm._v(" "),
@@ -74935,14 +75023,14 @@ var render = function() {
           { staticClass: "modal-dialog modal-lg", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(1),
+              _vm._m(5),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _c("div", { staticClass: "row justify-center" }, [
                   _c("div", { staticClass: "col-12 mt-2" }, [
                     _c("div", { staticClass: "table-responsive" }, [
                       _c("table", { staticClass: "table" }, [
-                        _vm._m(2),
+                        _vm._m(6),
                         _vm._v(" "),
                         _c(
                           "tbody",
@@ -74992,7 +75080,7 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(3)
+              _vm._m(7)
             ])
           ]
         )
@@ -75020,6 +75108,63 @@ var staticRenderFns = [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Acciones")])
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-12" }, [
+      _c("h2", { staticClass: "text-center" }, [_vm._v("Total en N°")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-12" }, [
+      _c("div", { staticClass: "form-group" }, [
+        _c("input", {
+          staticClass: "form-control",
+          attrs: {
+            type: "text",
+            id: "exampleFormControlInput1",
+            placeholder: "Numero Comprobante"
+          }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-12" }, [
+      _c("div", { staticClass: "form-group" }, [
+        _c("input", {
+          staticClass: "form-control-file",
+          attrs: { type: "file", id: "archivoComprobante" }
+        })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "div",
+      { staticClass: "form-group col-md-12 mt-3 mb-3 text-center" },
+      [
+        _c(
+          "button",
+          {
+            staticClass: "btn btn-success rounded-pill",
+            attrs: { type: "button" }
+          },
+          [_vm._v("Guardar")]
+        )
+      ]
+    )
   },
   function() {
     var _vm = this
