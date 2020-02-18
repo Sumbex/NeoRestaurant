@@ -50,6 +50,7 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     Route::get('/traer_insumos', 'InsumosController@TraerInsumos');
 
     //Registro Compras
+    Route::post('/registrar_compra', 'CompraDetalleAlmacenController@RegistrarCompra');
     Route::get('/traer_almacenes', 'DetalleAlmacenController@TraerAlmacenes');
     Route::get('/traer_insumos_compra', 'DetalleAlmacenController@TraerInsumos');
     Route::get('/traer_proveedores_select', 'DetalleAlmacenController@TraerProveedores');

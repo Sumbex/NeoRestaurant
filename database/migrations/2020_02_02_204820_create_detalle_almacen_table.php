@@ -15,9 +15,10 @@ class CreateDetalleAlmacenTable extends Migration
     {
         Schema::create('detalle_almacen', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('almacen_id');
+            /* $table->integer('almacen_id'); */
+            $table->integer('compra_detalle_almacen_id');
             $table->integer('insumo_id');
-            $table->integer('proveedor_id');
+            /* $table->integer('proveedor_id'); */
             $table->integer('cantidad');
             $table->integer('precio_compra');
             $table->integer('creada_por');

@@ -67,6 +67,7 @@
         <a href="#" class="list-group-item list-group-item-action bg-dark text-white">Productos</a>
         <a href="#" class="list-group-item list-group-item-action bg-dark text-white">Ventas</a>
         <a href="#" class="list-group-item list-group-item-action bg-dark text-white">Cajas</a>
+        <a href="#" class="list-group-item list-group-item-action bg-dark text-white">Configuracion</a>
       </div>
     </div>
     <!-- /#sidebar-wrapper -->

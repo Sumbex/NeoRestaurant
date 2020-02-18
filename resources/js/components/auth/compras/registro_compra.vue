@@ -66,7 +66,7 @@
                     placeholder="Cantidad"
                     aria-label="Cantidad"
                     aria-describedby="cantidad-label"
-                    v-model.number="cantidad"
+                    v-model.number="insumo.cantidad"
                   />
                   <div class="input-group-append">
                     <span class="input-group-text" v-show="activo" id="cantidad-label">Unidad</span>
@@ -161,11 +161,9 @@
       <div class="col-md-5">
         <div class="card">
           <div class="container-fluid">
-            <h3 class="text-center">Registro</h3>
-
-          <div class="col-lg-12">
-            <h2 class="text-center">Total en N°</h2>
-          </div>
+            <div class="col-lg-12 mt-2">
+              <h2 class="text-center">{{total}} Pesos.</h2>
+            </div>
 
             <div class="col-lg-12">
               <div class="form-group">
@@ -187,13 +185,19 @@
                   class="form-control"
                   id="exampleFormControlInput1"
                   placeholder="Numero Comprobante"
+                  v-model="comprobante"
                 />
               </div>
             </div>
 
             <div class="col-lg-12">
               <div class="form-group">
-                <input type="file" class="form-control-file" id="archivoComprobante" />
+                <input
+                  @change="onFileChange"
+                  type="file"
+                  class="form-control-file"
+                  id="archivoComprobante"
+                />
               </div>
             </div>
 
@@ -201,6 +205,7 @@
               <button
                 type="button"
                 class="btn btn-success rounded-pill"
+                @click="ingresarInsumos()"
               >Guardar</button>
             </div>
           </div>

@@ -73,4 +73,6 @@ class DetalleAlmacen extends Model
             return ['estado' => 'failed', 'mensaje' => 'No se encuentran insumos creados.'];
         }
     }
+
+    
 }
