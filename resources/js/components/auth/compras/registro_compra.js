@@ -15,6 +15,7 @@ export default {
             total: 0,
             comprobante: null,
             archivo: null,
+            boton: false,
         }
     },
     methods: {
@@ -187,6 +188,7 @@ export default {
                     this.insumo = [];
                     this.activo = true;
                     this.cantidad = null;
+                    this.boton = false;
                 } else {
                     let total = (this.insumo.cantidad * this.insumo.precio);
                     this.carro.push({ 'insumo_id': this.insumo.id, 'insumo': this.insumo.insumo, 'unidad_id': this.insumo.unidad_id, 'cantidad': this.insumo.cantidad, 'precio': this.insumo.precio, 'total': total });
@@ -227,6 +229,7 @@ export default {
             this.insumo = this.carro[indice];
             /* console.log(this.insumo); */
             this.activo = false;
+            this.boton = true;
 
             this.carro[indice].cantidad = this.insumo.cantidad;
             localStorage.removeItem('carro');

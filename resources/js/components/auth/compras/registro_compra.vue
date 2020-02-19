@@ -91,11 +91,10 @@
               </div>
             </div>
             <div class="form-group col-md-12 mt-3 mb-3 text-center">
-              <button
-                type="button"
-                class="btn btn-success rounded-pill"
-                @click="añadirCarro()"
-              >Añadir</button>
+              <button type="button" class="btn btn-success rounded-pill" @click="añadirCarro()">
+                <span v-show="!boton">Añadir</span>
+                <span v-show="boton">Guardar</span>
+              </button>
               <button
                 type="button"
                 class="btn btn-danger rounded-pill"
