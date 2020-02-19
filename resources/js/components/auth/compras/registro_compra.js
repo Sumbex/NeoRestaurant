@@ -149,11 +149,15 @@ export default {
         },
         añadirCarro() {
             let existe = false;
+            let mod = false;
             for (let i = 0; i < this.carro.length; i++) {
                 if (this.insumo.id == this.carro[i].insumo_id) {
                     existe = true;
                     console.log('existe en la posicion: ' + i + ', existe: ' + existe);
                     break;
+                } else if (this.insumo.insumo_id == this.carro[i].insumo_id) {
+                    this.eliminarItem(i);
+                    mod = true;
                 }
             }
             if (existe == true) {
@@ -172,16 +176,30 @@ export default {
                     }
                 });
             } else {
-                let total = (this.insumo.cantidad * this.insumo.precio);
-                this.carro.push({ 'insumo_id': this.insumo.id, 'insumo': this.insumo.insumo, 'unidad_id': this.insumo.unidad_id, 'cantidad': this.insumo.cantidad, 'precio': this.insumo.precio, 'total': total });
-                this.total = 0;
-                for (let i = 0; i < this.carro.length; i++) {
-                    this.total = this.total + this.carro[i].total;
+                if (mod == true) {
+                    let total = (this.insumo.cantidad * this.insumo.precio);
+                    this.carro.push({ 'insumo_id': this.insumo.insumo_id, 'insumo': this.insumo.insumo, 'unidad_id': this.insumo.unidad_id, 'cantidad': this.insumo.cantidad, 'precio': this.insumo.precio, 'total': total });
+                    this.total = 0;
+                    for (let i = 0; i < this.carro.length; i++) {
+                        this.total = this.total + this.carro[i].total;
+                    }
+                    localStorage.setItem("carro", JSON.stringify(this.carro));
+                    this.insumo = [];
+                    this.activo = true;
+                    this.cantidad = null;
+                } else {
+                    let total = (this.insumo.cantidad * this.insumo.precio);
+                    this.carro.push({ 'insumo_id': this.insumo.id, 'insumo': this.insumo.insumo, 'unidad_id': this.insumo.unidad_id, 'cantidad': this.insumo.cantidad, 'precio': this.insumo.precio, 'total': total });
+                    this.total = 0;
+                    for (let i = 0; i < this.carro.length; i++) {
+                        this.total = this.total + this.carro[i].total;
+                    }
+                    localStorage.setItem("carro", JSON.stringify(this.carro));
+                    this.insumo = [];
+                    this.activo = true;
+                    this.cantidad = null;
                 }
-                localStorage.setItem("carro", JSON.stringify(this.carro));
-                this.insumo = [];
-                this.activo = true;
-                this.cantidad = null;
+
 
             }
         },
@@ -205,11 +223,16 @@ export default {
             localStorage.setItem("carro", JSON.stringify(this.carro));
 
         },
-        modificarItem(item) {
-            console.log(item);
-            /* this.cantidad = 1; */
-            this.insumo = item;
+        modificarItem(indice) {
+            this.insumo = this.carro[indice];
+            /* console.log(this.insumo); */
             this.activo = false;
+
+            this.carro[indice].cantidad = this.insumo.cantidad;
+            localStorage.removeItem('carro');
+            localStorage.setItem("carro", JSON.stringify(this.carro));
+
+
         },
         limpiarCarro() {
             localStorage.removeItem('carro');

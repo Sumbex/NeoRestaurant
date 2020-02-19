@@ -63,6 +63,11 @@
             :class="[currentPage.includes('registro-compra') ? activeClass : 'list-group-item-action']"
             @click="url('RegistroInsumo')"
           >Registro Compras "Stock"</a>
+          <a
+            class="list-group-item list-group-item-action list-group-item-light"
+            :class="[currentPage.includes('ver-compras') ? activeClass : 'list-group-item-action']"
+            @click="url('VerCompraInsumos')"
+          >Ver Compras</a>
         </div>
         <a href="#" class="list-group-item list-group-item-action bg-dark text-white">Productos</a>
         <a href="#" class="list-group-item list-group-item-action bg-dark text-white">Ventas</a>

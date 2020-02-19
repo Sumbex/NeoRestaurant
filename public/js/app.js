@@ -3179,12 +3179,16 @@ __webpack_require__.r(__webpack_exports__);
     },
     añadirCarro: function aAdirCarro() {
       var existe = false;
+      var mod = false;
 
       for (var i = 0; i < this.carro.length; i++) {
         if (this.insumo.id == this.carro[i].insumo_id) {
           existe = true;
           console.log('existe en la posicion: ' + i + ', existe: ' + existe);
           break;
+        } else if (this.insumo.insumo_id == this.carro[i].insumo_id) {
+          this.eliminarItem(i);
+          mod = true;
         }
       }
 
@@ -3204,25 +3208,48 @@ __webpack_require__.r(__webpack_exports__);
           }
         });
       } else {
-        var total = this.insumo.cantidad * this.insumo.precio;
-        this.carro.push({
-          'insumo_id': this.insumo.id,
-          'insumo': this.insumo.insumo,
-          'unidad_id': this.insumo.unidad_id,
-          'cantidad': this.insumo.cantidad,
-          'precio': this.insumo.precio,
-          'total': total
-        });
-        this.total = 0;
+        if (mod == true) {
+          var total = this.insumo.cantidad * this.insumo.precio;
+          this.carro.push({
+            'insumo_id': this.insumo.insumo_id,
+            'insumo': this.insumo.insumo,
+            'unidad_id': this.insumo.unidad_id,
+            'cantidad': this.insumo.cantidad,
+            'precio': this.insumo.precio,
+            'total': total
+          });
+          this.total = 0;
 
-        for (var _i = 0; _i < this.carro.length; _i++) {
-          this.total = this.total + this.carro[_i].total;
+          for (var _i = 0; _i < this.carro.length; _i++) {
+            this.total = this.total + this.carro[_i].total;
+          }
+
+          localStorage.setItem("carro", JSON.stringify(this.carro));
+          this.insumo = [];
+          this.activo = true;
+          this.cantidad = null;
+        } else {
+          var _total = this.insumo.cantidad * this.insumo.precio;
+
+          this.carro.push({
+            'insumo_id': this.insumo.id,
+            'insumo': this.insumo.insumo,
+            'unidad_id': this.insumo.unidad_id,
+            'cantidad': this.insumo.cantidad,
+            'precio': this.insumo.precio,
+            'total': _total
+          });
+          this.total = 0;
+
+          for (var _i2 = 0; _i2 < this.carro.length; _i2++) {
+            this.total = this.total + this.carro[_i2].total;
+          }
+
+          localStorage.setItem("carro", JSON.stringify(this.carro));
+          this.insumo = [];
+          this.activo = true;
+          this.cantidad = null;
         }
-
-        localStorage.setItem("carro", JSON.stringify(this.carro));
-        this.insumo = [];
-        this.activo = true;
-        this.cantidad = null;
       }
     },
     cargarCarro: function cargarCarro() {
@@ -3246,12 +3273,14 @@ __webpack_require__.r(__webpack_exports__);
       localStorage.removeItem('carro');
       localStorage.setItem("carro", JSON.stringify(this.carro));
     },
-    modificarItem: function modificarItem(item) {
-      console.log(item);
-      /* this.cantidad = 1; */
+    modificarItem: function modificarItem(indice) {
+      this.insumo = this.carro[indice];
+      /* console.log(this.insumo); */
 
-      this.insumo = item;
       this.activo = false;
+      this.carro[indice].cantidad = this.insumo.cantidad;
+      localStorage.removeItem('carro');
+      localStorage.setItem("carro", JSON.stringify(this.carro));
     },
     limpiarCarro: function limpiarCarro() {
       localStorage.removeItem('carro');
@@ -75097,7 +75126,7 @@ var render = function() {
                             attrs: { type: "button" },
                             on: {
                               click: function($event) {
-                                return _vm.modificarItem(data)
+                                return _vm.modificarItem(index)
                               }
                             }
                           },
@@ -76234,6 +76263,25 @@ var render = function() {
                     }
                   },
                   [_vm._v('Registro Compras "Stock"')]
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  {
+                    staticClass:
+                      "list-group-item list-group-item-action list-group-item-light",
+                    class: [
+                      _vm.currentPage.includes("ver-compras")
+                        ? _vm.activeClass
+                        : "list-group-item-action"
+                    ],
+                    on: {
+                      click: function($event) {
+                        return _vm.url("VerCompraInsumos")
+                      }
+                    }
+                  },
+                  [_vm._v("Ver Compras")]
                 )
               ]
             ),
@@ -94907,6 +94955,38 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/auth/compras/ver_compras/ver_compras.vue":
+/*!**************************************************************************!*\
+  !*** ./resources/js/components/auth/compras/ver_compras/ver_compras.vue ***!
+  \**************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+var render, staticRenderFns
+var script = {}
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_0__["default"])(
+  script,
+  render,
+  staticRenderFns,
+  false,
+  null,
+  null,
+  null
+  
+)
+
+component.options.__file = "resources/js/components/auth/compras/ver_compras/ver_compras.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
 /***/ "./resources/js/components/auth/home/home.js?vue&type=script&lang=js&":
 /*!****************************************************************************!*\
   !*** ./resources/js/components/auth/home/home.js?vue&type=script&lang=js& ***!
@@ -95745,7 +95825,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_auth_pos_mesas_ver_mesas_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/auth/pos/mesas/ver_mesas.vue */ "./resources/js/components/auth/pos/mesas/ver_mesas.vue");
 /* harmony import */ var _components_auth_insumos_insumos_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/auth/insumos/insumos.vue */ "./resources/js/components/auth/insumos/insumos.vue");
 /* harmony import */ var _components_auth_compras_registro_compra_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/auth/compras/registro_compra.vue */ "./resources/js/components/auth/compras/registro_compra.vue");
-/* harmony import */ var _components_auth_provedor_proveedor_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/auth/provedor/proveedor.vue */ "./resources/js/components/auth/provedor/proveedor.vue");
+/* harmony import */ var _components_auth_compras_ver_compras_ver_compras_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/auth/compras/ver_compras/ver_compras.vue */ "./resources/js/components/auth/compras/ver_compras/ver_compras.vue");
+/* harmony import */ var _components_auth_provedor_proveedor_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/auth/provedor/proveedor.vue */ "./resources/js/components/auth/provedor/proveedor.vue");
+
 
 
 
@@ -95804,9 +95886,13 @@ var routes = [{
     path: '/registro-compra',
     component: _components_auth_compras_registro_compra_vue__WEBPACK_IMPORTED_MODULE_10__["default"]
   }, {
+    name: 'VerCompraInsumos',
+    path: '/ver-compras',
+    component: _components_auth_compras_ver_compras_ver_compras_vue__WEBPACK_IMPORTED_MODULE_11__["default"]
+  }, {
     name: 'Provedores',
     path: '/provedores',
-    component: _components_auth_provedor_proveedor_vue__WEBPACK_IMPORTED_MODULE_11__["default"]
+    component: _components_auth_provedor_proveedor_vue__WEBPACK_IMPORTED_MODULE_12__["default"]
   }]
 }, {
   path: '/404',

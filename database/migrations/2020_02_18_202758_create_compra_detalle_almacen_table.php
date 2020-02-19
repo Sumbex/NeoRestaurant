@@ -17,6 +17,9 @@ class CreateCompraDetalleAlmacenTable extends Migration
             $table->bigIncrements('id');
             $table->integer('almacen_id');
             $table->integer('proveedor_id');
+            $table->integer('anio_id');
+            $table->integer('mes_id');
+            $table->integer('dia');
             $table->string('numero_comprobante');
             $table->text('archivo');
             $table->integer('total');

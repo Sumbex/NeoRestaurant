@@ -189,7 +189,7 @@
                       <button
                         type="button"
                         class="btn btn-primary rounded-pill"
-                        @click="modificarItem(data)"
+                        @click="modificarItem(index)"
                       >Modificar</button>
                       <button
                         type="button"
