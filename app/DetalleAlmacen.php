@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
 
 class DetalleAlmacen extends Model
@@ -74,5 +75,30 @@ class DetalleAlmacen extends Model
         }
     }
 
-    
+    protected function ingresarDetalleAlmacen($carro, $cda_id)
+    {
+        $count = 0;
+        DB::beginTransaction();
+        for ($i = 0; $i < count($carro); $i++) {
+            $detalle = new DetalleAlmacen;
+            $detalle->compra_detalle_almacen_id = $cda_id;
+            $detalle->insumo_id = $carro[$i]['insumo_id'];
+            $detalle->cantidad = $carro[$i]['cantidad'];
+            $detalle->precio_compra = $carro[$i]['precio'];
+            $detalle->creada_por = Auth::user()->id;
+            $detalle->estado_id = 1;
+            $detalle->activo = 'S';
+            if ($detalle->save()) {
+                $count++;
+            }
+        }
+
+        if (count($carro) == $count) {
+            DB::commit();
+            return true;
+        } else {
+            DB::rollBack();
+            return false;
+        }
+    }
 }

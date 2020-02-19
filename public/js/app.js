@@ -3057,7 +3057,11 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (res) {
         if (res.data.estado == 'success') {
-          /* this.limpiar(); */
+          _this.limpiarCarro();
+
+          _this.comprobante = '';
+          _this.archivo = null;
+
           _this.$snotify.create({
             body: res.data.mensaje,
             config: {
@@ -95818,8 +95822,8 @@ var routes = [{
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\NeoRestaurant\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\NeoRestaurant\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\bryan\Desktop\NeoRestaurant\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\bryan\Desktop\NeoRestaurant\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

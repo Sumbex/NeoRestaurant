@@ -31,40 +31,41 @@ export default {
             formData.append('comprobante', this.comprobante);
             formData.append('archivo', this.archivo[0]);
 
-            axios.post('api/registrar_compra', formData,
-                {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                }).then((res) => {
-                    if (res.data.estado == 'success') {
-                        /* this.limpiar(); */
-                        this.$snotify.create({
-                            body: res.data.mensaje,
-                            config: {
-                                timeout: 2000,
-                                showProgressBar: true,
-                                closeOnClick: true,
-                                pauseOnHover: false,
-                                position: SnotifyPosition.centerBottom,
-                                type: SnotifyStyle.success,
-                            }
-                        });
-                        this.traerInsumos();
-                    } else {
-                        this.$snotify.create({
-                            body: res.data.mensaje,
-                            config: {
-                                timeout: 2000,
-                                showProgressBar: true,
-                                closeOnClick: true,
-                                pauseOnHover: false,
-                                position: SnotifyPosition.centerBottom,
-                                type: SnotifyStyle.error,
-                            }
-                        });
-                    }
-                });
+            axios.post('api/registrar_compra', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }).then((res) => {
+                if (res.data.estado == 'success') {
+                    this.limpiarCarro();
+                    this.comprobante = '';
+                    this.archivo = null;
+                    this.$snotify.create({
+                        body: res.data.mensaje,
+                        config: {
+                            timeout: 2000,
+                            showProgressBar: true,
+                            closeOnClick: true,
+                            pauseOnHover: false,
+                            position: SnotifyPosition.centerBottom,
+                            type: SnotifyStyle.success,
+                        }
+                    });
+                    this.traerInsumos();
+                } else {
+                    this.$snotify.create({
+                        body: res.data.mensaje,
+                        config: {
+                            timeout: 2000,
+                            showProgressBar: true,
+                            closeOnClick: true,
+                            pauseOnHover: false,
+                            position: SnotifyPosition.centerBottom,
+                            type: SnotifyStyle.error,
+                        }
+                    });
+                }
+            });
         },
         traerAlmacenes() {
             axios.get('api/traer_almacenes').then((res) => {
@@ -188,7 +189,7 @@ export default {
             }
             localStorage.removeItem('carro');
             localStorage.setItem("carro", JSON.stringify(this.carro));
-            
+
         },
         modificarItem(item) {
             console.log(item);
