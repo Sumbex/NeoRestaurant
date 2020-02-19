@@ -74642,8 +74642,8 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row my-3" }, [
-      _c("div", { staticClass: "col-md-5 order-md-2" }, [
-        _c("div", { staticClass: "card mb-3" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("div", { staticClass: "card" }, [
           _c("div", { staticClass: "container-fluid" }, [
             _c("h3", { staticClass: "text-center" }, [_vm._v("Sucursales")]),
             _vm._v(" "),
@@ -74656,7 +74656,8 @@ var render = function() {
                     "div",
                     {
                       key: data.id,
-                      staticClass: "custom-control custom-switch",
+                      staticClass:
+                        "custom-control custom-switch custom-control-inline",
                       attrs: { prop: data }
                     },
                     [
@@ -74708,11 +74709,6 @@ var render = function() {
                           attrs: { for: data.sucursal }
                         },
                         [_vm._v(_vm._s(data.sucursal))]
-                      ),
-                      _vm._v(
-                        "\n                " +
-                          _vm._s(_vm.checkAlmacen) +
-                          "\n              "
                       )
                     ]
                   )
@@ -74722,12 +74718,16 @@ var render = function() {
             ])
           ])
         ])
-      ]),
-      _vm._v(" "),
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row my-3" }, [
       _c("div", { staticClass: "col-md-7" }, [
-        _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "card mb-3" }, [
           _c("div", { staticClass: "container-fluid" }, [
-            _c("h3", { staticClass: "text-center" }, [_vm._v("Formulario")]),
+            _c("h3", { staticClass: "text-center mt-2" }, [
+              _vm._v("Formulario")
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "input-group my-1" }, [
               _c("input", {
@@ -74926,92 +74926,6 @@ var render = function() {
             )
           ])
         ])
-      ])
-    ]),
-    _vm._v(" "),
-    _c("div", { staticClass: "row my-3" }, [
-      _c("div", { staticClass: "col-md-7" }, [
-        _c("div", { staticClass: "card mb-3" }, [
-          _c("div", { staticClass: "container-fluid" }, [
-            _c("h3", { staticClass: "text-center" }, [_vm._v("Tabla")]),
-            _vm._v(" "),
-            _c("div", { staticClass: "table-responsive" }, [
-              _c("table", { staticClass: "table" }, [
-                _vm._m(0),
-                _vm._v(" "),
-                _c(
-                  "tbody",
-                  _vm._l(_vm.carro, function(data, index) {
-                    return _c("tr", { key: data.id, attrs: { prop: data } }, [
-                      _c("th", { attrs: { scope: "row" } }, [
-                        _vm._v(_vm._s(data.id))
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(data.insumo))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(data.cantidad))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(data.precio))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(data.total))]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-primary rounded-pill",
-                            attrs: { type: "button" },
-                            on: {
-                              click: function($event) {
-                                return _vm.modificarItem(data)
-                              }
-                            }
-                          },
-                          [_vm._v("Modificar")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-danger rounded-pill",
-                            attrs: { type: "button" },
-                            on: {
-                              click: function($event) {
-                                return _vm.eliminarItem(index)
-                              }
-                            }
-                          },
-                          [_vm._v("Quitar")]
-                        )
-                      ])
-                    ])
-                  }),
-                  0
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "form-group col-md-12 mt-3 mb-3 text-center" },
-              [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-danger rounded-pill",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        return _vm.limpiarCarro()
-                      }
-                    }
-                  },
-                  [_vm._v("Quitar Todo")]
-                )
-              ]
-            )
-          ])
-        ])
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-md-5" }, [
@@ -75127,6 +75041,92 @@ var render = function() {
                     }
                   },
                   [_vm._v("Guardar")]
+                )
+              ]
+            )
+          ])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row my-3" }, [
+      _c("div", { staticClass: "col-md-12" }, [
+        _c("div", { staticClass: "card mb-3" }, [
+          _c("div", { staticClass: "container-fluid" }, [
+            _c("h3", { staticClass: "text-center" }, [_vm._v("Tabla")]),
+            _vm._v(" "),
+            _c("div", { staticClass: "table-responsive" }, [
+              _c("table", { staticClass: "table" }, [
+                _vm._m(0),
+                _vm._v(" "),
+                _c(
+                  "tbody",
+                  _vm._l(_vm.carro, function(data, index) {
+                    return _c("tr", { key: data.id, attrs: { prop: data } }, [
+                      _c("th", { attrs: { scope: "row" } }, [
+                        _vm._v(_vm._s(data.id))
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(data.insumo))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(data.cantidad))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(data.precio))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(data.total))]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary rounded-pill",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                return _vm.modificarItem(data)
+                              }
+                            }
+                          },
+                          [_vm._v("Modificar")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-danger rounded-pill",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                return _vm.eliminarItem(index)
+                              }
+                            }
+                          },
+                          [_vm._v("Quitar")]
+                        )
+                      ])
+                    ])
+                  }),
+                  0
+                )
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              { staticClass: "form-group col-md-12 mt-3 mb-3 text-center" },
+              [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-danger rounded-pill",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.limpiarCarro()
+                      }
+                    }
+                  },
+                  [_vm._v("Quitar Todo")]
                 )
               ]
             )

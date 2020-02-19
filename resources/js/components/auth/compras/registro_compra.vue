@@ -1,14 +1,14 @@
 <template>
   <div class="container">
     <div class="row my-3">
-      <div class="col-md-5 order-md-2">
-        <div class="card mb-3">
+      <div class="col-md-12">
+        <div class="card">
           <div class="container-fluid">
             <h3 class="text-center">Sucursales</h3>
             <div class="row justify-center">
               <div class="col-lg-12 text-center mb-3">
                 <div
-                  class="custom-control custom-switch"
+                  class="custom-control custom-switch custom-control-inline"
                   v-for="data in almacenes"
                   :prop="data"
                   :key="data.id"
@@ -21,18 +21,18 @@
                     v-model="checkAlmacen"
                   />
                   <label class="custom-control-label" :for="data.sucursal">{{data.sucursal}}</label>
-                  {{checkAlmacen}}
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-
+    </div>
+    <div class="row my-3">
       <div class="col-md-7">
-        <div class="card">
+        <div class="card mb-3">
           <div class="container-fluid">
-            <h3 class="text-center">Formulario</h3>
+            <h3 class="text-center mt-2">Formulario</h3>
             <div class="input-group my-1">
               <input
                 type="text"
@@ -105,59 +105,6 @@
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="row my-3">
-      <div class="col-md-7">
-        <div class="card mb-3">
-          <div class="container-fluid">
-            <h3 class="text-center">Tabla</h3>
-
-            <div class="table-responsive">
-              <table class="table">
-                <thead class="thead-dark">
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Insumo</th>
-                    <th scope="col">Cantidad</th>
-                    <th scope="col">Precio</th>
-                    <th scope="col">Total</th>
-                    <th scope="col">Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="(data,index) in carro" :prop="data" :key="data.id">
-                    <th scope="row">{{data.id}}</th>
-                    <td>{{data.insumo}}</td>
-                    <td>{{data.cantidad}}</td>
-                    <td>{{data.precio}}</td>
-                    <td>{{data.total}}</td>
-                    <td>
-                      <button
-                        type="button"
-                        class="btn btn-primary rounded-pill"
-                        @click="modificarItem(data)"
-                      >Modificar</button>
-                      <button
-                        type="button"
-                        class="btn btn-danger rounded-pill"
-                        @click="eliminarItem(index)"
-                      >Quitar</button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="form-group col-md-12 mt-3 mb-3 text-center">
-              <button
-                type="button"
-                class="btn btn-danger rounded-pill"
-                @click="limpiarCarro()"
-              >Quitar Todo</button>
-            </div>
-          </div>
-        </div>
-      </div>
       <div class="col-md-5">
         <div class="card">
           <div class="container-fluid">
@@ -207,6 +154,59 @@
                 class="btn btn-success rounded-pill"
                 @click="ingresarInsumos()"
               >Guardar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row my-3">
+      <div class="col-md-12">
+        <div class="card mb-3">
+          <div class="container-fluid">
+            <h3 class="text-center">Tabla</h3>
+
+            <div class="table-responsive">
+              <table class="table">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Insumo</th>
+                    <th scope="col">Cantidad</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Total</th>
+                    <th scope="col">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="(data,index) in carro" :prop="data" :key="data.id">
+                    <th scope="row">{{data.id}}</th>
+                    <td>{{data.insumo}}</td>
+                    <td>{{data.cantidad}}</td>
+                    <td>{{data.precio}}</td>
+                    <td>{{data.total}}</td>
+                    <td>
+                      <button
+                        type="button"
+                        class="btn btn-primary rounded-pill"
+                        @click="modificarItem(data)"
+                      >Modificar</button>
+                      <button
+                        type="button"
+                        class="btn btn-danger rounded-pill"
+                        @click="eliminarItem(index)"
+                      >Quitar</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="form-group col-md-12 mt-3 mb-3 text-center">
+              <button
+                type="button"
+                class="btn btn-danger rounded-pill"
+                @click="limpiarCarro()"
+              >Quitar Todo</button>
             </div>
           </div>
         </div>
