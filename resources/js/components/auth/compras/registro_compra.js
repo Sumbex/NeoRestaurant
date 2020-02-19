@@ -23,49 +23,63 @@ export default {
             console.log(this.archivo[0]);
         },
         ingresarInsumos() {
-            let formData = new FormData();
-            formData.append('carro', JSON.stringify(this.carro));
-            formData.append('almacenes', this.checkAlmacen);
-            formData.append('proveedor', this.proveedor);
-            formData.append('total', this.total);
-            formData.append('comprobante', this.comprobante);
-            formData.append('archivo', this.archivo[0]);
+            if (this.checkAlmacen.length < 2) {
+                let formData = new FormData();
+                formData.append('carro', JSON.stringify(this.carro));
+                formData.append('almacenes', this.checkAlmacen);
+                formData.append('proveedor', this.proveedor);
+                formData.append('total', this.total);
+                formData.append('comprobante', this.comprobante);
+                formData.append('archivo', this.archivo[0]);
 
-            axios.post('api/registrar_compra', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            }).then((res) => {
-                if (res.data.estado == 'success') {
-                    this.limpiarCarro();
-                    this.comprobante = '';
-                    this.archivo = null;
-                    this.$snotify.create({
-                        body: res.data.mensaje,
-                        config: {
-                            timeout: 2000,
-                            showProgressBar: true,
-                            closeOnClick: true,
-                            pauseOnHover: false,
-                            position: SnotifyPosition.centerBottom,
-                            type: SnotifyStyle.success,
-                        }
-                    });
-                    this.traerInsumos();
-                } else {
-                    this.$snotify.create({
-                        body: res.data.mensaje,
-                        config: {
-                            timeout: 2000,
-                            showProgressBar: true,
-                            closeOnClick: true,
-                            pauseOnHover: false,
-                            position: SnotifyPosition.centerBottom,
-                            type: SnotifyStyle.error,
-                        }
-                    });
-                }
-            });
+                axios.post('api/registrar_compra', formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }).then((res) => {
+                    if (res.data.estado == 'success') {
+                        this.limpiarCarro();
+                        this.comprobante = '';
+                        this.archivo = null;
+                        this.$snotify.create({
+                            body: res.data.mensaje,
+                            config: {
+                                timeout: 2000,
+                                showProgressBar: true,
+                                closeOnClick: true,
+                                pauseOnHover: false,
+                                position: SnotifyPosition.centerBottom,
+                                type: SnotifyStyle.success,
+                            }
+                        });
+                        this.traerInsumos();
+                    } else {
+                        this.$snotify.create({
+                            body: res.data.mensaje,
+                            config: {
+                                timeout: 2000,
+                                showProgressBar: true,
+                                closeOnClick: true,
+                                pauseOnHover: false,
+                                position: SnotifyPosition.centerBottom,
+                                type: SnotifyStyle.error,
+                            }
+                        });
+                    }
+                });
+            } else {
+                this.$snotify.create({
+                    body: 'Solo puede registrar la compra de una sucursal individualmente.',
+                    config: {
+                        timeout: 3000,
+                        showProgressBar: true,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        position: SnotifyPosition.centerBottom,
+                        type: SnotifyStyle.warning,
+                    }
+                });
+            }
         },
         traerAlmacenes() {
             axios.get('api/traer_almacenes').then((res) => {

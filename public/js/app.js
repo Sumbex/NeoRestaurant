@@ -3044,51 +3044,65 @@ __webpack_require__.r(__webpack_exports__);
     ingresarInsumos: function ingresarInsumos() {
       var _this = this;
 
-      var formData = new FormData();
-      formData.append('carro', JSON.stringify(this.carro));
-      formData.append('almacenes', this.checkAlmacen);
-      formData.append('proveedor', this.proveedor);
-      formData.append('total', this.total);
-      formData.append('comprobante', this.comprobante);
-      formData.append('archivo', this.archivo[0]);
-      axios.post('api/registrar_compra', formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      }).then(function (res) {
-        if (res.data.estado == 'success') {
-          _this.limpiarCarro();
+      if (this.checkAlmacen.length < 2) {
+        var formData = new FormData();
+        formData.append('carro', JSON.stringify(this.carro));
+        formData.append('almacenes', this.checkAlmacen);
+        formData.append('proveedor', this.proveedor);
+        formData.append('total', this.total);
+        formData.append('comprobante', this.comprobante);
+        formData.append('archivo', this.archivo[0]);
+        axios.post('api/registrar_compra', formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }).then(function (res) {
+          if (res.data.estado == 'success') {
+            _this.limpiarCarro();
 
-          _this.comprobante = '';
-          _this.archivo = null;
+            _this.comprobante = '';
+            _this.archivo = null;
 
-          _this.$snotify.create({
-            body: res.data.mensaje,
-            config: {
-              timeout: 2000,
-              showProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: false,
-              position: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyPosition"].centerBottom,
-              type: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyStyle"].success
-            }
-          });
+            _this.$snotify.create({
+              body: res.data.mensaje,
+              config: {
+                timeout: 2000,
+                showProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: false,
+                position: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyPosition"].centerBottom,
+                type: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyStyle"].success
+              }
+            });
 
-          _this.traerInsumos();
-        } else {
-          _this.$snotify.create({
-            body: res.data.mensaje,
-            config: {
-              timeout: 2000,
-              showProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: false,
-              position: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyPosition"].centerBottom,
-              type: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyStyle"].error
-            }
-          });
-        }
-      });
+            _this.traerInsumos();
+          } else {
+            _this.$snotify.create({
+              body: res.data.mensaje,
+              config: {
+                timeout: 2000,
+                showProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: false,
+                position: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyPosition"].centerBottom,
+                type: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyStyle"].error
+              }
+            });
+          }
+        });
+      } else {
+        this.$snotify.create({
+          body: 'Solo puede registrar la compra de una sucursal individualmente.',
+          config: {
+            timeout: 3000,
+            showProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: false,
+            position: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyPosition"].centerBottom,
+            type: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyStyle"].warning
+          }
+        });
+      }
     },
     traerAlmacenes: function traerAlmacenes() {
       var _this2 = this;
