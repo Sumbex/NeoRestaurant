@@ -177,31 +177,21 @@ export default {
                     }
                 });
             } else {
+                let total = (this.insumo.cantidad * this.insumo.precio);
                 if (mod == true) {
-                    let total = (this.insumo.cantidad * this.insumo.precio);
                     this.carro.push({ 'insumo_id': this.insumo.insumo_id, 'insumo': this.insumo.insumo, 'unidad_id': this.insumo.unidad_id, 'cantidad': this.insumo.cantidad, 'precio': this.insumo.precio, 'total': total });
-                    this.total = 0;
-                    for (let i = 0; i < this.carro.length; i++) {
-                        this.total = this.total + this.carro[i].total;
-                    }
-                    localStorage.setItem("carro", JSON.stringify(this.carro));
-                    this.insumo = [];
-                    this.activo = true;
-                    this.cantidad = null;
                     this.boton = false;
                 } else {
-                    let total = (this.insumo.cantidad * this.insumo.precio);
                     this.carro.push({ 'insumo_id': this.insumo.id, 'insumo': this.insumo.insumo, 'unidad_id': this.insumo.unidad_id, 'cantidad': this.insumo.cantidad, 'precio': this.insumo.precio, 'total': total });
-                    this.total = 0;
-                    for (let i = 0; i < this.carro.length; i++) {
-                        this.total = this.total + this.carro[i].total;
-                    }
-                    localStorage.setItem("carro", JSON.stringify(this.carro));
-                    this.insumo = [];
-                    this.activo = true;
-                    this.cantidad = null;
                 }
-
+                this.total = 0;
+                for (let i = 0; i < this.carro.length; i++) {
+                    this.total = this.total + this.carro[i].total;
+                }
+                localStorage.setItem("carro", JSON.stringify(this.carro));
+                this.insumo = [];
+                this.activo = true;
+                this.cantidad = null;
 
             }
         },

@@ -3209,8 +3209,9 @@ __webpack_require__.r(__webpack_exports__);
           }
         });
       } else {
+        var total = this.insumo.cantidad * this.insumo.precio;
+
         if (mod == true) {
-          var total = this.insumo.cantidad * this.insumo.precio;
           this.carro.push({
             'insumo_id': this.insumo.insumo_id,
             'insumo': this.insumo.insumo,
@@ -3219,39 +3220,28 @@ __webpack_require__.r(__webpack_exports__);
             'precio': this.insumo.precio,
             'total': total
           });
-          this.total = 0;
-
-          for (var _i = 0; _i < this.carro.length; _i++) {
-            this.total = this.total + this.carro[_i].total;
-          }
-
-          localStorage.setItem("carro", JSON.stringify(this.carro));
-          this.insumo = [];
-          this.activo = true;
-          this.cantidad = null;
           this.boton = false;
         } else {
-          var _total = this.insumo.cantidad * this.insumo.precio;
-
           this.carro.push({
             'insumo_id': this.insumo.id,
             'insumo': this.insumo.insumo,
             'unidad_id': this.insumo.unidad_id,
             'cantidad': this.insumo.cantidad,
             'precio': this.insumo.precio,
-            'total': _total
+            'total': total
           });
-          this.total = 0;
-
-          for (var _i2 = 0; _i2 < this.carro.length; _i2++) {
-            this.total = this.total + this.carro[_i2].total;
-          }
-
-          localStorage.setItem("carro", JSON.stringify(this.carro));
-          this.insumo = [];
-          this.activo = true;
-          this.cantidad = null;
         }
+
+        this.total = 0;
+
+        for (var _i = 0; _i < this.carro.length; _i++) {
+          this.total = this.total + this.carro[_i].total;
+        }
+
+        localStorage.setItem("carro", JSON.stringify(this.carro));
+        this.insumo = [];
+        this.activo = true;
+        this.cantidad = null;
       }
     },
     cargarCarro: function cargarCarro() {
@@ -95955,8 +95945,8 @@ var routes = [{
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\bryan\Desktop\NeoRestaurant\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\bryan\Desktop\NeoRestaurant\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\NeoRestaurant\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\NeoRestaurant\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
