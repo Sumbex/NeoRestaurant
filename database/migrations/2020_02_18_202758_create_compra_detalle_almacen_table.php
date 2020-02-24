@@ -23,6 +23,9 @@ class CreateCompraDetalleAlmacenTable extends Migration
             $table->string('numero_comprobante');
             $table->text('archivo');
             $table->integer('total');
+            $table->integer('creada_por');
+            $table->integer('estado_id');
+            $table->char('activo', 1);
             $table->timestamps();
         });
     }

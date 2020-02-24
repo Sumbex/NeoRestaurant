@@ -12,8 +12,13 @@ class CompraDetalleAlmacenController extends Controller
         return CompraDetalleAlmacen::registrarCompra($request);
     }
 
-    public function TraerCompras($anio, $mes)
+    public function TraerCompras($anio, $mes, $sucursal_id)
     {
-        return CompraDetalleAlmacen::traerCompras($anio, $mes);
+        return CompraDetalleAlmacen::traerCompras($anio, $mes, $sucursal_id);
+    }
+
+    public function TraerDetalleCompra($compra_id)
+    {
+        return CompraDetalleAlmacen::traerDetalleCompra($compra_id);
     }
 }

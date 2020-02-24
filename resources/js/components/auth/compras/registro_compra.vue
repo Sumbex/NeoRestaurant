@@ -111,6 +111,18 @@
               <h2 class="text-center">{{total}} Pesos.</h2>
             </div>
 
+          <div class="col-lg-12">
+              <div class="form-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="exampleFormControlInput1"
+                  placeholder="Numero Comprobante"
+                  v-model="fecha"
+                />
+              </div>
+            </div>
+
             <div class="col-lg-12">
               <div class="form-group">
                 <select class="form-control" v-model="proveedor">

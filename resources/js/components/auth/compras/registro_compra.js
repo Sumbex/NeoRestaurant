@@ -15,6 +15,7 @@ export default {
             total: 0,
             comprobante: null,
             archivo: null,
+            fecha: null,
             boton: false,
         }
     },
@@ -30,6 +31,7 @@ export default {
                 formData.append('almacenes', this.checkAlmacen);
                 formData.append('proveedor', this.proveedor);
                 formData.append('total', this.total);
+                formData.append('fecha', this.fecha);
                 formData.append('comprobante', this.comprobante);
                 formData.append('archivo', this.archivo[0]);
 
@@ -41,6 +43,7 @@ export default {
                     if (res.data.estado == 'success') {
                         this.limpiarCarro();
                         this.comprobante = '';
+                        this.fecha = '';
                         this.archivo = null;
                         this.$snotify.create({
                             body: res.data.mensaje,

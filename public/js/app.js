@@ -3034,6 +3034,7 @@ __webpack_require__.r(__webpack_exports__);
       total: 0,
       comprobante: null,
       archivo: null,
+      fecha: null,
       boton: false
     };
   },
@@ -3051,6 +3052,7 @@ __webpack_require__.r(__webpack_exports__);
         formData.append('almacenes', this.checkAlmacen);
         formData.append('proveedor', this.proveedor);
         formData.append('total', this.total);
+        formData.append('fecha', this.fecha);
         formData.append('comprobante', this.comprobante);
         formData.append('archivo', this.archivo[0]);
         axios.post('api/registrar_compra', formData, {
@@ -3062,6 +3064,7 @@ __webpack_require__.r(__webpack_exports__);
             _this.limpiarCarro();
 
             _this.comprobante = '';
+            _this.fecha = '';
             _this.archivo = null;
 
             _this.$snotify.create({
@@ -75005,6 +75008,36 @@ var render = function() {
             _vm._v(" "),
             _c("div", { staticClass: "col-lg-12" }, [
               _c("div", { staticClass: "form-group" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.fecha,
+                      expression: "fecha"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "text",
+                    id: "exampleFormControlInput1",
+                    placeholder: "Numero Comprobante"
+                  },
+                  domProps: { value: _vm.fecha },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.fecha = $event.target.value
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-lg-12" }, [
+              _c("div", { staticClass: "form-group" }, [
                 _c(
                   "select",
                   {
@@ -95945,8 +95978,8 @@ var routes = [{
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\NeoRestaurant\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\NeoRestaurant\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\bryan\Desktop\NeoRestaurant\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\bryan\Desktop\NeoRestaurant\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
