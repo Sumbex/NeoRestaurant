@@ -57,4 +57,14 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     Route::get('/traer_insumos_compra', 'DetalleAlmacenController@TraerInsumos');
     Route::get('/traer_proveedores_select', 'DetalleAlmacenController@TraerProveedores');
     /* <---Almacen---> */
+
+    /* <---Productos---> */
+    //Categoria Productos
+    Route::post('/ingresar_categoria_productos', 'ProductosController@IngresarCategoria');
+    Route::get('/traer_categoria_productos', 'ProductosController@TraerCategoriasModal');
+    Route::get('/traer_categoria_productos_select', 'ProductosController@TraerCategorias');
+
+    //Productos
+    Route::post('/ingresar_producto','ProductosController@IngresarProducto');
+    /* <---Productos---> */
 });

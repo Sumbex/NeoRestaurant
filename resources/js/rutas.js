@@ -17,6 +17,8 @@ import VerCompraInsumos from './components/auth/compras/ver_compras/ver_compras.
 
 import Provedores from './components/auth/provedor/proveedor.vue';
 
+import Productos from './components/auth/productos/producto.vue';
+
 const routes = [{
         path: '/',
         component: Index,
@@ -76,6 +78,11 @@ const routes = [{
                 name: 'Provedores',
                 path: '/provedores',
                 component: Provedores
+            },
+            {
+                name: 'Productos',
+                path: '/productos',
+                component: Productos
             }
         ]
     },

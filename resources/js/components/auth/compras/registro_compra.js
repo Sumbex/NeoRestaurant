@@ -24,6 +24,12 @@ export default {
             this.archivo = e.target.files || e.dataTransfer.files;
             console.log(this.archivo[0]);
         },
+        limpiar() {
+            this.comprobante = '';
+            this.fecha = '';
+            this.archivo = null;
+            this.proveedor = 0;
+        },
         ingresarInsumos() {
             if (this.checkAlmacen.length < 2) {
                 let formData = new FormData();
@@ -42,9 +48,7 @@ export default {
                 }).then((res) => {
                     if (res.data.estado == 'success') {
                         this.limpiarCarro();
-                        this.comprobante = '';
-                        this.fecha = '';
-                        this.archivo = null;
+                        this.limpiar();
                         this.$snotify.create({
                             body: res.data.mensaje,
                             config: {

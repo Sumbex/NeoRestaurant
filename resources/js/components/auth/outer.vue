@@ -58,6 +58,36 @@
             :class="[currentPage.includes('insumos') ? activeClass : 'list-group-item-action']"
             @click="url('Insumos')"
           >Insumos</a>
+        </div>
+        <a
+          data-toggle="collapse"
+          href="#collapseProductos"
+          class="list-group-item list-group-item-action bg-dark text-white"
+        >
+          Productos
+          <i class="fa float-right"></i>
+        </a>
+        <div class="collapse" id="collapseProductos">
+          <a
+            class="list-group-item list-group-item-action list-group-item-light"
+            :class="[currentPage.includes('productos') ? activeClass : 'list-group-item-action']"
+            @click="url('Productos')"
+          >Productos</a>
+          <a
+            class="list-group-item list-group-item-action list-group-item-light"
+            :class="[currentPage.includes('productos') ? activeClass : 'list-group-item-action']"
+            @click="url('Productos')"
+          >Ver Productos</a>
+        </div>
+        <a
+          data-toggle="collapse"
+          href="#collapseCompras"
+          class="list-group-item list-group-item-action bg-dark text-white"
+        >
+          Compras
+          <i class="fa float-right"></i>
+        </a>
+        <div class="collapse" id="collapseCompras">
           <a
             class="list-group-item list-group-item-action list-group-item-light"
             :class="[currentPage.includes('registro-compra') ? activeClass : 'list-group-item-action']"
@@ -69,8 +99,6 @@
             @click="url('VerCompraInsumos')"
           >Ver Compras</a>
         </div>
-        <a href="#" class="list-group-item list-group-item-action bg-dark text-white">Productos</a>
-        <a href="#" class="list-group-item list-group-item-action bg-dark text-white">Ventas</a>
         <a href="#" class="list-group-item list-group-item-action bg-dark text-white">Cajas</a>
         <a href="#" class="list-group-item list-group-item-action bg-dark text-white">Configuracion</a>
       </div>
