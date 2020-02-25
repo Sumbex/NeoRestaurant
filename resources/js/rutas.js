@@ -19,6 +19,8 @@ import Provedores from './components/auth/provedor/proveedor.vue';
 
 import Productos from './components/auth/productos/producto.vue';
 
+import Cajas from './components/auth/caja/caja.vue';
+
 const routes = [{
         path: '/',
         component: Index,
@@ -83,6 +85,11 @@ const routes = [{
                 name: 'Productos',
                 path: '/productos',
                 component: Productos
+            },
+            {
+                name: 'Cajas',
+                path: '/cajas',
+                component: Cajas
             }
         ]
     },

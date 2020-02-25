@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCajaTable extends Migration
+class CreateEstadosCajaTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,10 @@ class CreateCajaTable extends Migration
      */
     public function up()
     {
-        Schema::create('caja', function (Blueprint $table) {
+        Schema::create('estados_caja', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('sucursal_id');
-            $table->string('nombre');
-            $table->bigInteger('monto')/* ->nullable() */;
-            $table->integer('creada_por');
-            $table->integer('estado_id');
-            $table->char('activo', 1);
+            $table->string('descripcion');
+            $table->char('activo');
             $table->timestamps();
         });
     }
@@ -32,6 +28,6 @@ class CreateCajaTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('caja');
+        Schema::dropIfExists('estados_caja');
     }
 }

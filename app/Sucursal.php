@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Caja;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -24,8 +25,14 @@ class Sucursal extends Model
         if ($sucursal->save()) {
             $almacen = Almacen::crearAlmacen($sucursal->id);
             if ($almacen == true) {
-                DB::commit();
-                return ['estado' => 'success', 'mensaje' => 'Sucursal creada Correctamente.'];
+                $caja = Caja::ingresarCaja($sucursal->id);
+                if ($caja == true) {
+                    DB::commit();
+                    return ['estado' => 'success', 'mensaje' => 'Sucursal creada Correctamente.'];
+                } else {
+                    DB::rollBack();
+                    return ['estado' => 'failed', 'mensaje' => 'A ocurrido un error, intenta nuevamente.'];
+                }
             } else {
                 DB::rollBack();
                 return ['estado' => 'failed', 'mensaje' => 'A ocurrido un error, intenta nuevamente.'];

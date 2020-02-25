@@ -99,7 +99,26 @@
             @click="url('VerCompraInsumos')"
           >Ver Compras</a>
         </div>
-        <a href="#" class="list-group-item list-group-item-action bg-dark text-white">Cajas</a>
+        <a
+          data-toggle="collapse"
+          href="#collapseCajas"
+          class="list-group-item list-group-item-action bg-dark text-white"
+        >
+          Cajas
+          <i class="fa float-right"></i>
+        </a>
+        <div class="collapse" id="collapseCajas">
+          <a
+            class="list-group-item list-group-item-action list-group-item-light"
+            :class="[currentPage.includes('cajas') ? activeClass : 'list-group-item-action']"
+            @click="url('Cajas')"
+          >Cajas</a>
+          <!-- <a
+            class="list-group-item list-group-item-action list-group-item-light"
+            :class="[currentPage.includes('ver-compras') ? activeClass : 'list-group-item-action']"
+            @click="url('VerCompraInsumos')"
+          >Ver Compras</a>-->
+        </div>
         <a href="#" class="list-group-item list-group-item-action bg-dark text-white">Configuracion</a>
       </div>
     </div>

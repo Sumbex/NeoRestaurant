@@ -65,6 +65,11 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     Route::get('/traer_categoria_productos_select', 'ProductosController@TraerCategorias');
 
     //Productos
-    Route::post('/ingresar_producto','ProductosController@IngresarProducto');
+    Route::post('/ingresar_producto', 'ProductosController@IngresarProducto');
     /* <---Productos---> */
+
+    /* <---Caja---> */
+    Route::post('/ingresar_caja', 'CajaController@CrearCaja');
+    Route::get('/traer_cajas', 'CajaController@TraerCajas');
+    /* <---Caja---> */
 });
