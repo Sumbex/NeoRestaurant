@@ -55,14 +55,49 @@
             </button>
           </div>
           <div class="modal-body">
-            <div class="row justify-center">
-              <div class="col-12 my-1">
-                <input
-                  type="text"
-                  class="form-control"
-                  placeholder="Zona de la Mesa"
-                  aria-label="Zona"
-                />
+            <div class="row">
+              <div class="col-md-5">
+                <div class="card mb-3">
+                  <div class="container-fluid">
+                    <div class="container testimonial-group">
+                      <div class="row text-center">
+                        <div class="col-mb-4">Mesa 1</div>
+                        <!--
+                        -->
+                        <div class="col-mb-4">Mesa 2</div>
+                        <!--
+                        -->
+                        <div class="col-mb-4">Mesa 3</div>
+                        <!--
+                        -->
+                        <div class="col-mb-4">Mesa 4</div>
+                        <!--
+                        -->
+                        <div class="col-mb-4">Mesa 5</div>
+                        <!--
+                        -->
+                        <div class="col-mb-4">Mesa 6</div>
+                        <!--
+                        -->
+                        <div class="col-mb-4">Mesa 7</div>
+                        <!--
+                        -->
+                        <div class="col-mb-4">Mesa 8</div>
+                        <!--
+                        -->
+                        <div class="col-mb-4">Mesa 9</div>
+                      </div>
+                    </div>
+                    <div class="form-group col-md-12 mt-3 mb-3 text-center">
+                      <button type="button" class="btn btn-success rounded-pill">Guardar</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-7">
+                <div class="card">
+                  <div class="container-fluid">E2</div>
+                </div>
               </div>
             </div>
           </div>
@@ -77,4 +112,4 @@
 </template>
 
 <style src="./ver_mesas.css"></style>
-<script src="./ver_mesas.js"></scri+pt>
+<script src="./ver_mesas.js"></script>

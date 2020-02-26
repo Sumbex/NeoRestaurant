@@ -72,4 +72,8 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     Route::post('/ingresar_caja', 'CajaController@CrearCaja');
     Route::get('/traer_cajas', 'CajaController@TraerCajas');
     /* <---Caja---> */
+
+    /* <---Movimientos Caja---> */
+    Route::post('/abrir_caja', 'CajaController@abrirCerrarCaja'); 
+    /* <---Movimientos Caja---> */
 });

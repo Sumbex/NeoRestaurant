@@ -19,7 +19,7 @@ class Caja extends Model
         $caja->nombre = 'Caja Principal';
         $caja->monto = 0;
         $caja->creada_por = Auth::user()->id;
-        $caja->estado_id = 1;
+        $caja->estado_id = 2;
         $caja->activo = 'S';
         if ($caja->save()) {
             DB::commit();
@@ -36,7 +36,7 @@ class Caja extends Model
         $caja->nombre = $request->caja;
         $caja->monto = 0;
         $caja->creada_por = Auth::user()->id;
-        $caja->estado_id = 1;
+        $caja->estado_id = 2;
         $caja->activo = 'S';
         if ($caja->save()) {
             return ['estado' => 'success', 'mensaje' => 'Caja creada Correctamente.'];
@@ -53,9 +53,12 @@ class Caja extends Model
                 'c.sucursal_id',
                 'c.nombre as caja',
                 'c.created_at',
-                'u.nombre'
+                'u.nombre',
+                'ec.descripcion as estado',
+                'c.estado_id'
             ])
             ->join('users as u', 'u.id', 'c.creada_por')
+            ->join('estados_caja as ec', 'ec.id', 'c.estado_id')
             ->where([
                 'c.activo' => 'S',
             ])
@@ -72,4 +75,21 @@ class Caja extends Model
         }
     }
 
+    protected function abrirCerrarCaja($caja_id, $estado)
+    {
+        DB::beginTransaction();
+        $caja = Caja::find($caja_id);
+        if ($estado == 2) {
+            $caja->estado_id = 1;
+        } else {
+            $caja->estado_id = 2;
+        }
+        if ($caja->save()) {
+            DB::commit();
+            return true;
+        } else {
+            DB::rollBack();
+            return false;
+        }
+    }
 }

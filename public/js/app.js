@@ -3026,13 +3026,21 @@ __webpack_require__.r(__webpack_exports__);
       sucursal_select: [],
       nombre: null,
       cajas: [],
-      guardar: true
+      guardar: true,
+      monto: null,
+      idCaja: null,
+      idEstado: null,
+      pass: null
     };
   },
   methods: {
     limpiar: function limpiar() {
       this.sucursal = 0;
       this.nombre = '';
+    },
+    setDatosCaja: function setDatosCaja(cajaId, estadoId) {
+      this.idCaja = cajaId;
+      this.idEstado = estadoId;
     },
     ingresarCaja: function ingresarCaja() {
       var _this = this;
@@ -3103,7 +3111,6 @@ __webpack_require__.r(__webpack_exports__);
     traerSucursales: function traerSucursales() {
       var _this3 = this;
 
-      //
       axios.get('api/traer_sucursales_select').then(function (res) {
         if (res.data.estado == 'success') {
           _this3.sucursal_select = res.data.sucursales;
@@ -3112,6 +3119,44 @@ __webpack_require__.r(__webpack_exports__);
             body: res.data.mensaje,
             config: {
               timeout: 3000,
+              showProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: false,
+              position: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyPosition"].centerBottom,
+              type: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyStyle"].error
+            }
+          });
+        }
+      });
+    },
+    abrirCerrarCaja: function abrirCerrarCaja() {
+      var _this4 = this;
+
+      var data = {
+        'caja': this.idCaja,
+        'estado': this.idEstado,
+        'monto': this.monto
+      };
+      axios.post('api/abrir_caja', data).then(function (res) {
+        if (res.data.estado == 'success') {
+          _this4.traerCajas();
+
+          _this4.$snotify.create({
+            body: res.data.mensaje,
+            config: {
+              timeout: 2000,
+              showProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: false,
+              position: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyPosition"].centerBottom,
+              type: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyStyle"].success
+            }
+          });
+        } else {
+          _this4.$snotify.create({
+            body: res.data.mensaje,
+            config: {
+              timeout: 2000,
               showProgressBar: true,
               closeOnClick: true,
               pauseOnHover: false,
@@ -25676,7 +25721,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../../node_module
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, "/* The heart of the matter */\n.testimonial-group>.row {\r\n    overflow-x: auto;\r\n    white-space: nowrap;\n}\n.testimonial-group>.row>.col-mb-4 {\r\n    display: inline-block;\r\n    float: none;\n}\r\n\r\n\r\n/* Decorations */\n.col-mb-4 {\r\n    color: #fff;\r\n    font-size: 48px;\r\n    padding-bottom: 20px;\r\n    padding-top: 18px;\n}\n.col-mb-4:nth-child(3n+1) {\r\n    background: #c69;\n}\n.col-mb-4:nth-child(3n+2) {\r\n    background: #9c6;\n}\n.col-mb-4:nth-child(3n+3) {\r\n    background: #69c;\n}", ""]);
 
 // exports
 
@@ -75357,11 +75402,67 @@ var render = function() {
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(caja.caja))]),
                       _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(caja.estado))]),
+                      _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(caja.nombre))]),
                       _vm._v(" "),
                       _c("td", [_vm._v(_vm._s(caja.created_at))]),
                       _vm._v(" "),
-                      _vm._m(1, true)
+                      _c("td", [
+                        _c(
+                          "button",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: caja.estado_id == 2,
+                                expression: "caja.estado_id == 2"
+                              }
+                            ],
+                            staticClass: "btn btn-primary rounded-pill",
+                            attrs: {
+                              type: "button",
+                              "data-toggle": "modal",
+                              "data-target": "#staticBackdrop",
+                              id: "boton-modal-insumo"
+                            },
+                            on: {
+                              click: function($event) {
+                                return _vm.setDatosCaja(caja.id, caja.estado_id)
+                              }
+                            }
+                          },
+                          [_vm._v("Abrir")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: caja.estado_id == 1,
+                                expression: "caja.estado_id == 1"
+                              }
+                            ],
+                            staticClass: "btn btn-danger rounded-pill",
+                            attrs: {
+                              type: "button",
+                              "data-toggle": "modal",
+                              "data-target": "#staticBackdrop",
+                              id: "boton-modal-insumo"
+                            },
+                            on: {
+                              click: function($event) {
+                                return _vm.setDatosCaja(caja.id, caja.estado_id)
+                              }
+                            }
+                          },
+                          [_vm._v("Cerrar")]
+                        )
+                      ])
                     ])
                   }),
                   0
@@ -75371,7 +75472,97 @@ var render = function() {
           ])
         ])
       ])
-    ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "staticBackdrop",
+          "data-backdrop": "static",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "staticBackdropLabel",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog modal-md", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c("div", { staticClass: "row justify-center" }, [
+                  _c("div", { staticClass: "col-12 mb-3" }, [
+                    _c("div", { staticClass: "input-group" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model.number",
+                            value: _vm.monto,
+                            expression: "monto",
+                            modifiers: { number: true }
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          placeholder: "Monto de la Caja",
+                          "aria-label": "Monto",
+                          "aria-describedby": "monto-label"
+                        },
+                        domProps: { value: _vm.monto },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.monto = _vm._n($event.target.value)
+                          },
+                          blur: function($event) {
+                            return _vm.$forceUpdate()
+                          }
+                        }
+                      })
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary rounded-pill",
+                    attrs: { type: "button", "data-dismiss": "modal" }
+                  },
+                  [_vm._v("Close")]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-success rounded-pill",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.abrirCerrarCaja()
+                      }
+                    }
+                  },
+                  [_vm._v("Abrir/Cerrar")]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -75385,6 +75576,8 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Caja")]),
         _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Estado")]),
+        _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Creada por:")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col" } }, [_vm._v("Creada")]),
@@ -75397,14 +75590,25 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", [
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "staticBackdropLabel" } },
+        [_vm._v("Abrir/Cerrar Caja")]
+      ),
+      _vm._v(" "),
       _c(
         "button",
         {
-          staticClass: "btn btn-primary rounded-pill",
-          attrs: { type: "button" }
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            id: "cerrarModal",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
         },
-        [_vm._v("NO se aun")]
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
       )
     ])
   }
@@ -77591,16 +77795,54 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "modal-body" }, [
-      _c("div", { staticClass: "row justify-center" }, [
-        _c("div", { staticClass: "col-12 my-1" }, [
-          _c("input", {
-            staticClass: "form-control",
-            attrs: {
-              type: "text",
-              placeholder: "Zona de la Mesa",
-              "aria-label": "Zona"
-            }
-          })
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "col-md-5" }, [
+          _c("div", { staticClass: "card mb-3" }, [
+            _c("div", { staticClass: "container-fluid" }, [
+              _c("div", { staticClass: "container testimonial-group" }, [
+                _c("div", { staticClass: "row text-center" }, [
+                  _c("div", { staticClass: "col-mb-4" }, [_vm._v("Mesa 1")]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-mb-4" }, [_vm._v("Mesa 2")]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-mb-4" }, [_vm._v("Mesa 3")]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-mb-4" }, [_vm._v("Mesa 4")]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-mb-4" }, [_vm._v("Mesa 5")]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-mb-4" }, [_vm._v("Mesa 6")]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-mb-4" }, [_vm._v("Mesa 7")]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-mb-4" }, [_vm._v("Mesa 8")]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-mb-4" }, [_vm._v("Mesa 9")])
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "form-group col-md-12 mt-3 mb-3 text-center" },
+                [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-success rounded-pill",
+                      attrs: { type: "button" }
+                    },
+                    [_vm._v("Guardar")]
+                  )
+                ]
+              )
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "col-md-7" }, [
+          _c("div", { staticClass: "card" }, [
+            _c("div", { staticClass: "container-fluid" }, [_vm._v("E2")])
+          ])
         ])
       ])
     ])
@@ -97381,7 +97623,7 @@ __webpack_require__.r(__webpack_exports__);
 /*!*************************************************************************************!*\
   !*** ./resources/js/components/auth/productos/producto.js?vue&type=script&lang=js& ***!
   \*************************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -97395,15 +97637,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!*************************************************************!*\
   !*** ./resources/js/components/auth/productos/producto.vue ***!
   \*************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _producto_vue_vue_type_template_id_6e923ea8___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./producto.vue?vue&type=template&id=6e923ea8& */ "./resources/js/components/auth/productos/producto.vue?vue&type=template&id=6e923ea8&");
 /* harmony import */ var _producto_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./producto.js?vue&type=script&lang=js& */ "./resources/js/components/auth/productos/producto.js?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _producto_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _producto_js_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _producto_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./producto.css?vue&type=style&index=0&lang=css& */ "./resources/js/components/auth/productos/producto.css?vue&type=style&index=0&lang=css&");
+/* empty/unused harmony star reexport *//* harmony import */ var _producto_css_vue_type_style_index_0_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./producto.css?vue&type=style&index=0&lang=css& */ "./resources/js/components/auth/productos/producto.css?vue&type=style&index=0&lang=css&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 

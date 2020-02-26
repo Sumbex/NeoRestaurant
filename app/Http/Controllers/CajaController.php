@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Caja;
+use App\MovimientosCaja;
 use Illuminate\Http\Request;
 
 class CajaController extends Controller
@@ -17,4 +18,8 @@ class CajaController extends Controller
         return Caja::traerCajas();
     }
 
+    public function abrirCerrarCaja(Request $request)
+    {
+        return MovimientosCaja::abrirCerrarCaja($request);
+    }
 }
