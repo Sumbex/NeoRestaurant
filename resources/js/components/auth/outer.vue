@@ -75,8 +75,8 @@
           >Productos</a>
           <a
             class="list-group-item list-group-item-action list-group-item-light"
-            :class="[currentPage.includes('productos') ? activeClass : 'list-group-item-action']"
-            @click="url('Productos')"
+            :class="[currentPage.includes('ver-productos') ? activeClass : 'list-group-item-action']"
+            @click="url('VerProductos')"
           >Ver Productos</a>
         </div>
         <a

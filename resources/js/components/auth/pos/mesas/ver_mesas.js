@@ -6,6 +6,7 @@ export default {
             id: this.$route.params.id,
             mesas: [],
             zonas: [],
+            productos: [],
             idMesa: null,
             test: false,
         }
@@ -32,8 +33,28 @@ export default {
                 }
             });
         },
+        traerProductos() {
+            axios.get('/api/traer_productos_pedidos/' + this.id).then((res) => {
+                if (res.data.estado == 'success') {
+                    this.productos = res.data.productos;
+                } else {
+                    this.$snotify.create({
+                        body: res.data.mensaje,
+                        config: {
+                            timeout: 3000,
+                            showProgressBar: true,
+                            closeOnClick: true,
+                            pauseOnHover: false,
+                            position: SnotifyPosition.centerBottom,
+                            type: SnotifyStyle.error,
+                        }
+                    })
+                }
+            });
+        },
     },
     mounted() {
         this.traerMesas();
+        this.traerProductos();
     }
 };

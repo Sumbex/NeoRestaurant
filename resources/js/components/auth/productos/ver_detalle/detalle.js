@@ -6,45 +6,37 @@ export default {
             id: null,
             almacen: 0,
             almacenes: [],
-            anio: 0,
-            anios: [],
-            mes: 0,
-            meses: [],
-            compras: [],
+            productos: [],
             detalles: [],
-            total: null,
 
         }
     },
     methods: {
-        traerCompras() {
-            if (this.anio != 0 && this.mes != 0 && this.almacen != 0) {
-                axios.get('api/traer_compras/' + this.anio + '/' + this.mes + '/' + this.almacen).then((res) => {
-                    if (res.data.estado == 'success') {
-                        this.compras = res.data.compras;
-                    } else {
-                        this.$snotify.create({
-                            body: res.data.mensaje,
-                            config: {
-                                timeout: 3000,
-                                showProgressBar: true,
-                                closeOnClick: true,
-                                pauseOnHover: false,
-                                position: SnotifyPosition.centerBottom,
-                                type: SnotifyStyle.error,
-                            }
-                        })
-                    }
-                });
-            }
-
+        traerProductos() {
+            axios.get('api/traer_productos/' + this.almacen).then((res) => {
+                if (res.data.estado == 'success') {
+                    this.productos = res.data.productos;
+                } else {
+                    this.$snotify.create({
+                        body: res.data.mensaje,
+                        config: {
+                            timeout: 3000,
+                            showProgressBar: true,
+                            closeOnClick: true,
+                            pauseOnHover: false,
+                            position: SnotifyPosition.centerBottom,
+                            type: SnotifyStyle.error,
+                        }
+                    })
+                }
+            });
         },
         traerDetalle(id) {
             this.id = id;
-            axios.get('api/traer_detalle_compra/' + this.id).then((res) => {
+            axios.get('api/traer_detalle_producto/' + this.id).then((res) => {
                 if (res.data.estado == 'success') {
-                    this.detalles = res.data.detalles;
-                    this.total = res.data.total;
+                    this.detalles = res.data.detalle;
+                    
                 } else {
                     this.$snotify.create({
                         body: res.data.mensaje,
@@ -79,36 +71,9 @@ export default {
                 }
             });
         },
-        traerAnios() {
-            axios.get('api/traer_anios').then((res) => {
-                if (res.data.estado == 'success') {
-                    this.anios = res.data.anios;
-                }
-            });
-        },
-        traerMeses() {
-            axios.get('api/traer_meses').then((res) => {
-                if (res.data.estado == 'success') {
-                    this.meses = res.data.meses;
-                } else {
-                    this.$snotify.create({
-                        body: res.data.mensaje,
-                        config: {
-                            timeout: 3000,
-                            showProgressBar: true,
-                            closeOnClick: true,
-                            pauseOnHover: false,
-                            position: SnotifyPosition.centerBottom,
-                            type: SnotifyStyle.error,
-                        }
-                    })
-                }
-            });
-        },
     },
     mounted() {
-        this.traerAnios();
-        this.traerMeses();
+        /* this.traerProductos(); */
         this.traerAlmacenes();
     }
 };

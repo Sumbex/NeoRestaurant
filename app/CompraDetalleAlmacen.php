@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use App\DetalleAlmacen;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -102,10 +103,13 @@ class CompraDetalleAlmacen extends Model
                 'cda.numero_comprobante as comprobante',
                 'cda.archivo',
                 'cda.total',
-                'p.razon_social as proveedor'
+                'p.razon_social as proveedor',
+                'cda.created_at',
+                'u.nombre'
 
             ])
-            ->join('proveedores as p', 'p.i', 'cda.proveedor_id')
+            ->join('users as u', 'u.id', 'cda.creada_por')
+            ->join('proveedores as p', 'p.id', 'cda.proveedor_id')
             ->where([
                 'cda.activo' => 'S',
                 'cda.anio_id' => $anio,
@@ -114,6 +118,11 @@ class CompraDetalleAlmacen extends Model
             ])
             ->get();
         if (!$compras->isEmpty()) {
+            Carbon::setLocale('es');
+            foreach ($compras as $key) {
+                $fecha = ucwords(Carbon::parse($key->created_at)->diffForHumans());
+                $key->created_at = $fecha;
+            }
             return ['estado' => 'success', 'compras' => $compras];
         } else {
             return ['estado' => 'failed', 'mensaje' => 'No se encuentran compras registradas.'];
@@ -128,17 +137,19 @@ class CompraDetalleAlmacen extends Model
                 'i.insumo',
                 'da.cantidad',
                 'da.precio_compra as precio',
-                DB::raw("SUM(da.cantidad*da.precio_compra) as subtotal")
+                /* DB::raw("SUM(da.cantidad*da.precio_compra) as subtotal"), */
             ])
-            ->join('insumo as i', 'i.id', 'da.insumo_id')
+            ->join('insumos as i', 'i.id', 'da.insumo_id')
             ->where([
                 'da.activo' => 'S',
-                'da.id' => $compra_id
+                'da.compra_detalle_almacen_id' => $compra_id
             ])
             ->get();
+        /* dd($detalles); */
         if (!$detalles->isEmpty()) {
             $total = 0;
             foreach ($detalles as $key) {
+                $key->subtotal = $key->cantidad * $key->precio;
                 $total = $total + $key->subtotal;
             }
             return ['estado' => 'success', 'detalles' => $detalles, 'total' => $total];

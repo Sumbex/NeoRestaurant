@@ -20,6 +20,13 @@ Route::post('auth/login', 'AuthController@Login');
 Route::group(['middleware' => 'auth.jwt'], function () {
     Route::post('auth/logout', 'AuthController@Logout');
 
+    /* <---DatosBasicos---> */
+    Route::get('/traer_anios', 'TraerDatosBasicosController@TraerAnios');
+    /* Route::get('/traer_anio_actual', 'TraerDatosBasicosController@traerAnioActual'); */
+    Route::get('/traer_meses', 'TraerDatosBasicosController@TraerMeses');
+    /* Route::get('/traer_mes_actual', 'TraerDatosBasicosController@traerMesActual'); */
+    /* <---DatosBasicos---> */
+
     /* <---Sucursal---> */
     //Sucursales
     Route::post('/ingresar_sucursal', 'SucursalController@IngresarSucursal');
@@ -66,6 +73,10 @@ Route::group(['middleware' => 'auth.jwt'], function () {
 
     //Productos
     Route::post('/ingresar_producto', 'ProductosController@IngresarProducto');
+    Route::get('/traer_productos/{almacen}', 'ProductosController@TraerProductos');
+    Route::get('/traer_productos_pedidos/{sucursal}', 'ProductosController@TraerProductosParaPedidos');
+    Route::get('/traer_detalle_producto/{producto}', 'ProductosController@TraerDetalleProducto');
+
     /* <---Productos---> */
 
     /* <---Caja---> */
@@ -74,6 +85,6 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     /* <---Caja---> */
 
     /* <---Movimientos Caja---> */
-    Route::post('/abrir_caja', 'CajaController@abrirCerrarCaja'); 
+    Route::post('/abrir_caja', 'CajaController@abrirCerrarCaja');
     /* <---Movimientos Caja---> */
 });
