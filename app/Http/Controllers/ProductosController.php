@@ -39,8 +39,8 @@ class ProductosController extends Controller
         return DetalleProducto::traerDetalleProducto($producto_id);
     }
 
-    public function TraerProductosParaPedidos($sucursal_id)
+    public function TraerProductosParaPedidos($sucursal_id, $categoria_id)
     {
-        return Productos::traerProductosParaPedidos($sucursal_id);
+        return Productos::traerProductosParaPedidos($sucursal_id, $categoria_id);
     }
 }

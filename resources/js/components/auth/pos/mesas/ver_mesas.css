@@ -1,9 +1,17 @@
-.horizontal-scrollable > .row { 
-    overflow-x: auto; 
-    white-space: nowrap; 
-} 
-  
-.horizontal-scrollable > .row > .col-xs-4 { 
-    float: none; 
-} 
+.horizontal-scrollable>.row {
+    overflow-x: auto;
+    white-space: nowrap;
+}
 
+.horizontal-scrollable>.row>.col-xs-4 {
+    float: none;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.tamañoTarjeta {
+    width: 50%;
+    height: 50%;
+}

@@ -8,10 +8,14 @@ export default {
             almacenes: [],
             productos: [],
             detalles: [],
+            foto: null,
 
         }
     },
     methods: {
+        setFoto(foto) {
+            this.foto = foto;
+        },
         traerProductos() {
             axios.get('api/traer_productos/' + this.almacen).then((res) => {
                 if (res.data.estado == 'success') {
@@ -36,7 +40,7 @@ export default {
             axios.get('api/traer_detalle_producto/' + this.id).then((res) => {
                 if (res.data.estado == 'success') {
                     this.detalles = res.data.detalle;
-                    
+
                 } else {
                     this.$snotify.create({
                         body: res.data.mensaje,

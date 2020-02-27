@@ -74,7 +74,7 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     //Productos
     Route::post('/ingresar_producto', 'ProductosController@IngresarProducto');
     Route::get('/traer_productos/{almacen}', 'ProductosController@TraerProductos');
-    Route::get('/traer_productos_pedidos/{sucursal}', 'ProductosController@TraerProductosParaPedidos');
+    Route::get('/traer_productos_pedidos/{sucursal}/{categoria}', 'ProductosController@TraerProductosParaPedidos');
     Route::get('/traer_detalle_producto/{producto}', 'ProductosController@TraerDetalleProducto');
 
     /* <---Productos---> */

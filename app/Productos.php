@@ -102,21 +102,41 @@ class Productos extends Model
             return ['estado' => 'failed', 'mensaje' => 'No se encuentran productos creados.'];
         }
     }
-    protected function traerProductosParaPedidos($sucursal_id)
+    protected function traerProductosParaPedidos($sucursal_id, $categoria_id)
     {
-        $productos = DB::table('productos as p')
-            ->select([
-                'p.id',
-                'p.producto',
-                'p.precio_venta',
-            ])
-            ->join('almacen as a', 'a.id', 'p.almacen_id')
-            ->join('sucursal as s', 's.id', 'a.sucursal_id')
-            ->where([
-                'p.activo' => 'S',
-                's.id' => $sucursal_id
-            ])
-            ->get();
+        if ($categoria_id == 0) {
+            $productos = DB::table('productos as p')
+                ->select([
+                    'p.id',
+                    'p.producto',
+                    'p.precio_venta',
+                    'p.foto'
+                ])
+                ->join('almacen as a', 'a.id', 'p.almacen_id')
+                ->join('sucursal as s', 's.id', 'a.sucursal_id')
+                ->where([
+                    'p.activo' => 'S',
+                    's.id' => $sucursal_id
+                ])
+                ->get();
+        } else {
+            $productos = DB::table('productos as p')
+                ->select([
+                    'p.id',
+                    'p.producto',
+                    'p.precio_venta',
+                    'p.foto'
+                ])
+                ->join('almacen as a', 'a.id', 'p.almacen_id')
+                ->join('sucursal as s', 's.id', 'a.sucursal_id')
+                ->where([
+                    'p.activo' => 'S',
+                    's.id' => $sucursal_id,
+                    'p.categoria_id' => $categoria_id
+                ])
+                ->get();
+        }
+
         if (!$productos->isEmpty()) {
             return ['estado' => 'success', 'productos' => $productos];
         } else {

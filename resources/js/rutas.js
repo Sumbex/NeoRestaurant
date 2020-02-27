@@ -22,89 +22,96 @@ import VerProductos from './components/auth/productos/ver_detalle/detalle.vue';
 
 import Cajas from './components/auth/caja/caja.vue';
 
-const routes = [{
-    path: '/',
-    component: Index,
-    name: 'Index',
-    iconCls: 'el-icon-message',
-    meta: { auth: false },
-},
-{
-    path: '/',
-    component: Auth,
-    name: 'Auth',
-    redirect: 'Home',
-    iconCls: 'el-icon-message',
-    meta: { auth: true },
+import Test from './components/auth/test.vue';
 
-    children: [{
-        name: 'Home',
-        path: '/home',
-        component: Home
+const routes = [{
+        path: '/',
+        component: Index,
+        name: 'Index',
+        iconCls: 'el-icon-message',
+        meta: { auth: false },
     },
     {
-        name: 'Sucursal',
-        path: '/sucursales',
-        component: Sucursal
+        path: '/',
+        component: Auth,
+        name: 'Auth',
+        redirect: 'Home',
+        iconCls: 'el-icon-message',
+        meta: { auth: true },
+
+        children: [{
+                name: 'Home',
+                path: '/home',
+                component: Home
+            },
+            {
+                name: 'Sucursal',
+                path: '/sucursales',
+                component: Sucursal
+            },
+            {
+                name: 'Mesas',
+                path: '/mesas',
+                component: Mesas
+            },
+            {
+                name: 'POS',
+                path: 'pos',
+                component: POS
+            },
+            {
+                name: 'POSMesas',
+                path: '/pos/mesas/:id',
+                component: POSMesas
+            },
+            {
+                name: 'Insumos',
+                path: '/insumos',
+                component: Insumos
+            },
+            {
+                name: 'RegistroInsumo',
+                path: '/registro-compra',
+                component: CompraInsumos
+            },
+            {
+                name: 'VerCompraInsumos',
+                path: '/ver-compras',
+                component: VerCompraInsumos
+            },
+            {
+                name: 'Provedores',
+                path: '/provedores',
+                component: Provedores
+            },
+            {
+                name: 'Productos',
+                path: '/productos',
+                component: Productos
+            },
+            {
+                name: 'VerProductos',
+                path: '/ver-productos',
+                component: VerProductos
+            },
+            {
+                name: 'Cajas',
+                path: '/cajas',
+                component: Cajas
+            },
+            {
+                name: 'Test',
+                path: '/test',
+                component: Test
+            },
+        ]
     },
     {
-        name: 'Mesas',
-        path: '/mesas',
-        component: Mesas
+        path: '/404',
+        component: NotFound,
+        name: '',
+        hidden: true
     },
-    {
-        name: 'POS',
-        path: 'pos',
-        component: POS
-    },
-    {
-        name: 'POSMesas',
-        path: '/pos/mesas/:id',
-        component: POSMesas
-    },
-    {
-        name: 'Insumos',
-        path: '/insumos',
-        component: Insumos
-    },
-    {
-        name: 'RegistroInsumo',
-        path: '/registro-compra',
-        component: CompraInsumos
-    },
-    {
-        name: 'VerCompraInsumos',
-        path: '/ver-compras',
-        component: VerCompraInsumos
-    },
-    {
-        name: 'Provedores',
-        path: '/provedores',
-        component: Provedores
-    },
-    {
-        name: 'Productos',
-        path: '/productos',
-        component: Productos
-    },
-    {
-        name: 'VerProductos',
-        path: '/ver-productos',
-        component: VerProductos
-    },
-    {
-        name: 'Cajas',
-        path: '/cajas',
-        component: Cajas
-    }
-    ]
-},
-{
-    path: '/404',
-    component: NotFound,
-    name: '',
-    hidden: true
-},
 
 ];
 
