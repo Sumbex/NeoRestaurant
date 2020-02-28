@@ -33,6 +33,7 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     Route::get('/traer_sucursales', 'SucursalController@TraerSucursales');
     //Mesas
     Route::post('/ingresar_mesa', 'MesasController@IngresarMesas');
+    Route::post('/abrir_cerrar_mesa', 'MesasController@AbrirCerrarMesa');
     Route::get('/traer_mesas', 'MesasController@TraerMesas');
     Route::get('/traer_mesas_sucursal/{id}', 'MesasController@TraerMesasSucursal');
     Route::get('/traer_sucursales_select', 'MesasController@TraerSucursales');

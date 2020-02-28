@@ -1,29 +1,54 @@
 <template>
-  <div class="container">
-    <div class="row justify-center my-3">
-      <div class="col-sm-12 text-center">
-        <h2>Seleccione una Mesa</h2>
-      </div>
+  <div class="container-fluid">
+    <div class="wrapper">
+      <div class="row justify-center my-3">
+        <!-- sidebar -->
+        <div class="column col-md-4 order-md-2" id="sidebar">
+          <div class="card mb-3">
+            <div class="container-fluid">
+              <h3 class="text-center mt-2">Apertura de Mesa</h3>
+              <div class="row justify-center">
+                <div class="col-lg-12 mb-3">
+                  <h5 class="text-center">Mesa # {{mesa.mesa}}</h5>
+                </div>
+              </div>
+              <div class="form-group col-md-12 mb-3 text-center">
+                <button
+                  type="button"
+                  class="btn btn-primary btn-sm btn-block"
+                  @click="abrirCerrarMesa()"
+                >Abrir Mesa</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- main -->
+        <div class="column col-md-8 " id="main">
+          <div class="col-sm-12 text-center">
+            <h2>Mesas</h2>
+          </div>
 
-      <div class="col-sm-12 my-1" v-for="zona in zonas" prop="zona" :key="zona">
-        <div class="card mb-3">
-          <div class="card-body">
-            <h3 class="card-title text-center">{{zona}}</h3>
-            <div class="row justify-center my-3">
-              <div class="col-sm-2" v-for="mesa in mesas[zona]" prop="mesa" :key="mesa.id">
-                <div class="card border-info mb-3">
-                  <a
-                    class="text-white"
-                    style="text-decoration:none"
-                    data-toggle="modal"
-                    data-target="#staticBackdrop"
-                    @click="idMesa = mesa.id"
-                  >
-                    <div class="card-body text-info">
-                      <img class="card-img-top" src="/images/silla.png" />
-                      <h4 class="card-text text-center">{{mesa.mesa}}</h4>
+          <div class="col-sm-12 my-1" v-for="zona in zonas" prop="zona" :key="zona">
+            <div class="card mb-3">
+              <div class="card-body">
+                <h3 class="card-title text-center">{{zona}}</h3>
+                <div class="row justify-center my-3">
+                  <div class="col-sm-2" v-for="data in mesas[zona]" prop="data" :key="data.id">
+                    <div class="card border-info mb-3">
+                      <!-- data-toggle="modal"
+                      data-target="#staticBackdrop"-->
+                      <a
+                        class="text-white"
+                        style="text-decoration:none"
+                        @click="seleccionarMesa(data)"
+                      >
+                        <div class="card-body text-info">
+                          <img class="card-img-top" src="/images/silla.png" />
+                          <h4 class="card-text text-center">{{data.mesa}}</h4>
+                        </div>
+                      </a>
                     </div>
-                  </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -49,7 +74,7 @@
       <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="staticBackdropLabel">Realizar Orden {{idMesa}}</h5>
+            <h5 class="modal-title" id="staticBackdropLabel">Nuevo Pedido</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -57,7 +82,7 @@
           <div class="modal-body">
             <div class="row">
               <div class="col-md-5">
-                <div class="card mb-3">
+                <div class="card">
                   <div class="container-fluid">
                     <div class="row justify-center mt-3 mb-1">
                       <div class="col-lg-12">
@@ -75,43 +100,55 @@
                         <label>
                           <strong>Hora del Pedido:</strong>
                         </label>
-                        <label class="text-right">15:25</label>
+                        <!-- <label class="text-right">15:25</label> -->
                       </div>
                       <div class="col-sm-12">
                         <label>
                           <strong>Estado del Pedido:</strong>
                         </label>
-                        <label class="text-right">Atendido</label>
+                        <!-- <label class="text-right">Atendido</label> -->
                       </div>
-                      <div class="col-sm-12">
+                      <div class="col-sm-12 text-center">
                         <label>
-                          <strong>Pedido</strong>
+                          <h5>
+                            <strong>Pedido</strong>
+                          </h5>
                         </label>
                       </div>
+                    </div>
+                    <div
+                      class="row justify-center mb-2"
+                      v-for="pedido in pedidos"
+                      prop="pedido"
+                      :key="pedido.id"
+                    >
                       <!-- array del pedido -->
                       <div class="col-sm-12">
                         <label>
-                          <strong>1</strong>
-                          x Producto
+                          <strong>{{pedido.cantidad}}</strong>
+                          x {{pedido.producto}}
                         </label>
-                        <label class="text-right">$2990 c/u</label>
+                        <label class="text-right">${{pedido.precio}} c/u</label>
                       </div>
                       <!-- array del pedido -->
+                    </div>
+
+                    <div class="row justify-center mb-2">
                       <div class="col-sm-12">
                         <label>
                           <strong>Total</strong>
                         </label>
-                        <label class="text-right">$2990 c/u</label>
+                        <label class="text-right">${{total}}</label>
                       </div>
                     </div>
+
                     <div class="form-group col-md-12 mb-3 text-center">
-                      <button
+                      <button type="button" class="btn btn-primary btn-sm btn-block">Realizar Pedido</button>
+                      <!-- <button
                         type="button"
                         class="btn btn-primary btn-sm btn-block"
                       >Actualizar Pedido</button>
-                      <button type="button" class="btn btn-secondary btn-sm btn-block">Pagar</button>
-                      <!-- <button type="button" class="btn btn-primary rounded-pill"></button>
-                      <button type="button" class="btn btn-success rounded-pill"></button>-->
+                      <button type="button" class="btn btn-secondary btn-sm btn-block">Pagar</button>-->
                     </div>
                   </div>
                 </div>
@@ -155,6 +192,7 @@
                         v-for="producto in productos"
                         prop="producto"
                         :key="producto.id"
+                        @click="agregarProducto(producto)"
                       >
                         <div class="card bg-dark text-white">
                           <img :src="'/'+producto.foto" class="card-img" :alt="producto.producto" />
@@ -169,9 +207,9 @@
               </div>
             </div>
           </div>
-          <div class="modal-footer">
+          <!-- <div class="modal-footer">
             <button type="button" class="btn btn-secondary rounded-pill" data-dismiss="modal">Close</button>
-          </div>
+          </div>-->
         </div>
       </div>
     </div>

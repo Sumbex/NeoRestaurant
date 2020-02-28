@@ -26,4 +26,9 @@ class MesasController extends Controller
     {
         return Mesas::traerMesasSucursal($id);
     }
+
+    public function AbrirCerrarMesa(Request $request)
+    {
+        return Mesas::abrirCerrarMesa($request);
+    }
 }

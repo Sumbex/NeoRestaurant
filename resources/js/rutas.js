@@ -22,8 +22,6 @@ import VerProductos from './components/auth/productos/ver_detalle/detalle.vue';
 
 import Cajas from './components/auth/caja/caja.vue';
 
-import Test from './components/auth/test.vue';
-
 const routes = [{
         path: '/',
         component: Index,
@@ -98,11 +96,6 @@ const routes = [{
                 name: 'Cajas',
                 path: '/cajas',
                 component: Cajas
-            },
-            {
-                name: 'Test',
-                path: '/test',
-                component: Test
             },
         ]
     },

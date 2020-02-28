@@ -1,12 +1,3 @@
-.horizontal-scrollable>.row {
-    overflow-x: auto;
-    white-space: nowrap;
-}
-
-.horizontal-scrollable>.row>.col-xs-4 {
-    float: none;
-}
-
 .pointer {
     cursor: pointer;
 }
@@ -14,4 +5,29 @@
 .tamañoTarjeta {
     width: 50%;
     height: 50%;
+}
+
+.wrapper,
+.row {
+    height: 100%;
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.wrapper:before,
+.wrapper:after,
+.column:before,
+.column:after {
+    content: "";
+    display: table;
+}
+
+.wrapper:after,
+.column:after {
+    clear: both;
+}
+
+#sidebar {
+    height: 100%;
+    right: 0;
 }

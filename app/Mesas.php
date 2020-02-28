@@ -77,6 +77,7 @@ class Mesas extends Model
             ->select([
                 'm.id',
                 'm.mesa',
+                'm.estado_id',
                 's.sucursal',
                 'z.zona',
                 'u.nombre',
@@ -110,7 +111,8 @@ class Mesas extends Model
                 'm.id',
                 'm.mesa',
                 'm.zona_id',
-                'z.zona'
+                'z.zona',
+                'm.estado_id'
             ])
             ->join('zonas as z', 'z.id', 'm.zona_id')
             ->where([
@@ -133,23 +135,19 @@ class Mesas extends Model
         }
     }
 
-    /* protected function traerZonas($sucursal_id)
+    protected function abrirCerrarMesa($request)
     {
-        $zonas = DB::table('zonas as z')
-            ->select([
-                'z.id',
-                'z.zona',
-            ])
-            ->join('mesa as s', '', '')
-            ->where([
-                'activo' => 'S'
-            ])
-            ->get();
-
-        if (!$zonas->isEmpty()) {
-            return ['estado' => 'success', 'zonas' => $zonas];
+        /* dd($request->all()); */
+        $mesa = Mesas::find($request->mesa);
+        if ($request->estado == 2) {
+            $mesa->estado_id = 1;
         } else {
-            return ['estado' => 'failed', 'mensaje' => 'No se encuentran zonas creadas.'];
+            $mesa->estado_id = 2;
         }
-    } */
+        if ($mesa->save()) {
+            return ['estado' => 'success', 'mensaje' => 'Mesa Abierta Correctamente.'];
+        } else {
+            return ['estado' => 'failed', 'mensaje' => 'A ocurrido un error, intenta nuevamente o pruebe creando las mesas individualmente.'];
+        }
+    }
 }
