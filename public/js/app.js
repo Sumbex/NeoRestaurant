@@ -78615,6 +78615,10 @@ var render = function() {
                                       staticStyle: {
                                         "text-decoration": "none"
                                       },
+                                      attrs: {
+                                        "data-toggle": "modal",
+                                        "data-target": "#staticBackdrop"
+                                      },
                                       on: {
                                         click: function($event) {
                                           return _vm.seleccionarMesa(data)

@@ -35,9 +35,10 @@
                 <div class="row justify-center my-3">
                   <div class="col-sm-2" v-for="data in mesas[zona]" prop="data" :key="data.id">
                     <div class="card border-info mb-3">
-                      <!-- data-toggle="modal"
-                      data-target="#staticBackdrop"-->
+                     
                       <a
+                       data-toggle="modal"
+                      data-target="#staticBackdrop"
                         class="text-white"
                         style="text-decoration:none"
                         @click="seleccionarMesa(data)"
