@@ -5,7 +5,7 @@
         <!-- sidebar -->
         <div class="column col-md-4 order-md-2" id="sidebar">
           <div class="card mb-3">
-            <div class="container-fluid">
+            <div class="container-fluid" v-show="!estado">
               <h3 class="text-center mt-2">Apertura de Mesa</h3>
               <div class="row justify-center">
                 <div class="col-lg-12 mb-3">
@@ -20,10 +20,53 @@
                 >Abrir Mesa</button>
               </div>
             </div>
+            <div class="container-fluid" v-show="estado">
+              <h3 class="text-center mt-2">Toma de Pedido</h3>
+              <div class="row justify-center">
+                <div class="col-lg-12 mb-3">
+                  <h5 class="text-center">Mesa # {{mesa.mesa}}</h5>
+                </div>
+              </div>
+              <div class="row justify-center mt-3 mb-1">
+                <div class="col-sm-12">
+                  <label>
+                    <strong>Hora del Pedido:</strong>
+                  </label>
+                  <!-- <label class="text-right">15:25</label> -->
+                </div>
+                <div class="col-sm-12">
+                  <label>
+                    <strong>Estado del Pedido:</strong>
+                  </label>
+                  <!-- <label class="text-right">Atendido</label> -->
+                </div>
+                <div class="col-sm-12 text-center">
+                  <label>
+                    <h5>
+                      <strong>Pedido</strong>
+                    </h5>
+                  </label>
+                </div>
+                <div class="form-group col-md-12 mb-3 text-center">
+                  <button
+                    type="button"
+                    class="btn btn-primary btn-sm btn-block"
+                    data-toggle="modal"
+                    data-target="#staticBackdrop"
+                    @click="añadirMesa(true, null)"
+                  >Tomar Pedido</button>
+                  <button
+                    type="button"
+                    class="btn btn-danger btn-sm btn-block"
+                    @click="abrirCerrarMesa()"
+                  >Cerrar Mesa</button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <!-- main -->
-        <div class="column col-md-8 " id="main">
+        <div class="column col-md-8" id="main">
           <div class="col-sm-12 text-center">
             <h2>Mesas</h2>
           </div>
@@ -35,13 +78,10 @@
                 <div class="row justify-center my-3">
                   <div class="col-sm-2" v-for="data in mesas[zona]" prop="data" :key="data.id">
                     <div class="card border-info mb-3">
-                     
                       <a
-                       data-toggle="modal"
-                      data-target="#staticBackdrop"
                         class="text-white"
                         style="text-decoration:none"
-                        @click="seleccionarMesa(data)"
+                        @click="seleccionarMesa(data), idMesa = data.id"
                       >
                         <div class="card-body text-info">
                           <img class="card-img-top" src="/images/silla.png" />
@@ -75,7 +115,7 @@
       <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="staticBackdropLabel">Nuevo Pedido</h5>
+            <h5 class="modal-title" id="staticBackdropLabel">Nuevo Pedido {{idMesa}}</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -87,10 +127,60 @@
                   <div class="container-fluid">
                     <div class="row justify-center mt-3 mb-1">
                       <div class="col-lg-12">
-                        <button type="button" class="btn btn-primary">Mesa 1</button>
-                        <button type="button" class="btn btn-primary">Mesa 2</button>
-                        <button type="button" class="btn btn-info">Agregar Mesa</button>
-                        <button type="button" class="btn btn-info">Quitar Mesa</button>
+                        <!-- pedidoMesas -->
+                        <button
+                          type="button"
+                          class="btn btn-primary"
+                          disabled
+                          v-for="data in pedidoMesas"
+                          prop="data"
+                          :key="data.id"
+                        >Mesa {{data.mesa}}</button>
+                      </div>
+                      <div class="col-lg-12">
+                        <div class="dropdown">
+                          <a
+                            class="btn btn-primary dropdown-toggle"
+                            href="#"
+                            role="button"
+                            id="dropdownAgregar"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                          >Agregar Mesa</a>
+
+                          <div class="dropdown-menu" aria-labelledby="dropdownAgregar">
+                            <a
+                              class="dropdown-item"
+                              v-for="data in mesasDrop"
+                              prop="data"
+                              :key="data.id"
+                              @click="añadirMesa(false, data)"
+                            >Mesa {{data.mesa}}</a>
+                          </div>
+                        </div>
+
+                        <div class="dropdown">
+                          <a
+                            class="btn btn-danger dropdown-toggle"
+                            href="#"
+                            role="button"
+                            id="dropdownQuitar"
+                            data-toggle="dropdown"
+                            aria-haspopup="true"
+                            aria-expanded="false"
+                          >Quitar Mesa</a>
+
+                          <div class="dropdown-menu" aria-labelledby="dropdownQuitar">
+                            <a
+                              class="dropdown-item"
+                              v-for="data in mesasDrop"
+                              prop="data"
+                              :key="data.id"
+                              @click="quitarMesa(data.id)"
+                            >Mesa {{data.mesa}}</a>
+                          </div>
+                        </div>
                       </div>
                     </div>
                     <div class="row justify-center mt-3 mb-1">
@@ -144,7 +234,11 @@
                     </div>
 
                     <div class="form-group col-md-12 mb-3 text-center">
-                      <button type="button" class="btn btn-primary btn-sm btn-block">Realizar Pedido</button>
+                      <button
+                        type="button"
+                        class="btn btn-primary btn-sm btn-block"
+                        @click="ingresarPedido()"
+                      >Realizar Pedido</button>
                       <!-- <button
                         type="button"
                         class="btn btn-primary btn-sm btn-block"

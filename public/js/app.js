@@ -3995,13 +3995,70 @@ __webpack_require__.r(__webpack_exports__);
       idMesa: null,
       buscar: null,
       cantidad: 1,
-      total: 0
+      total: 0,
+      estado: false,
+      pedidoMesas: [],
+      mesasDrop: []
     };
   },
   methods: {
     seleccionarMesa: function seleccionarMesa(mesa) {
       this.mesa = mesa;
+
+      if (this.mesa.estado_id == 1) {
+        this.estado = true;
+      } else {
+        this.estado = false;
+      }
+
       console.log(this.mesa);
+    },
+    añadirMesa: function aAdirMesa(estado, mesa) {
+      if (estado == true) {
+        this.pedidoMesas = [];
+        this.pedidoMesas.push({
+          'id': this.mesa.id,
+          'mesa': this.mesa.mesa
+        });
+      } else {
+        var existe = false;
+
+        for (var i = 0; i < this.pedidoMesas.length; i++) {
+          if (mesa.id == this.pedidoMesas[i].id) {
+            existe = true;
+            console.log('existe en la posicion: ' + i + ', existe: ' + existe);
+            break;
+          }
+        }
+
+        if (existe == true) {
+          this.$snotify.create({
+            body: 'La mesa que intentas agregar ya se encuentra seleccionada.',
+            config: {
+              timeout: 4000,
+              showProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: false,
+              position: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyPosition"].centerBottom,
+              type: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyStyle"].warning
+            }
+          });
+        } else {
+          this.pedidoMesas.push({
+            'id': mesa.id,
+            'mesa': mesa.mesa
+          });
+        }
+      }
+
+      console.log(this.pedidoMesas);
+    },
+    quitarMesa: function quitarMesa(id) {
+      for (var i = 0; i < this.pedidoMesas.length; i++) {
+        if (this.pedidoMesas[i].id == id) {
+          this.pedidoMesas.splice(i, 1);
+        }
+      }
     },
     abrirCerrarMesa: function abrirCerrarMesa() {
       var _this = this;
@@ -4024,6 +4081,12 @@ __webpack_require__.r(__webpack_exports__);
             }
           });
 
+          if (_this.mesa.estado_id == 2) {
+            _this.estado = true;
+          } else {
+            _this.estado = false;
+          }
+
           _this.traerMesas();
         } else {
           _this.$snotify.create({
@@ -4040,12 +4103,31 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
+    guardarMesas: function guardarMesas(res) {
+      this.mesasDrop = [];
+      var mesas = res.mesas;
+      var zonas = res.zonas;
+
+      for (var i = 0; i < zonas.length; i++) {
+        for (var q = 0; q < mesas[zonas[i]].length; q++) {
+          if (mesas[zonas[i]][q].estado_id == 2) {
+            this.mesasDrop.push({
+              'id': mesas[zonas[i]][q].id,
+              'mesa': mesas[zonas[i]][q].mesa
+            });
+          }
+        }
+      }
+    },
     traerMesas: function traerMesas() {
       var _this2 = this;
 
       axios.get('/api/traer_mesas_sucursal/' + this.id).then(function (res) {
         if (res.data.estado == 'success') {
+          _this2.guardarMesas(res.data);
+
           _this2.mesas = res.data.mesas;
+          console.log(_this2.mesas);
           _this2.zonas = res.data.zonas;
         } else {
           _this2.$snotify.create({
@@ -4143,6 +4225,44 @@ __webpack_require__.r(__webpack_exports__);
     },
     toggle: function toggle() {
       $("#wrapper").toggleClass("toggled");
+    },
+    ingresarPedido: function ingresarPedido() {
+      var _this5 = this;
+
+      var data = {
+        'mesas': this.pedidoMesas,
+        'pedidos': this.pedidos,
+        'total': this.total
+      };
+      axios.post('/api/ingresar_pedido', data).then(function (res) {
+        if (res.data.estado == 'success') {
+          _this5.$snotify.create({
+            body: res.data.mensaje,
+            config: {
+              timeout: 2000,
+              showProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: false,
+              position: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyPosition"].centerBottom,
+              type: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyStyle"].success
+            }
+          });
+
+          _this5.traerMesas();
+        } else {
+          _this5.$snotify.create({
+            body: res.data.mensaje,
+            config: {
+              timeout: 2000,
+              showProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: false,
+              position: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyPosition"].centerBottom,
+              type: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyStyle"].error
+            }
+          });
+        }
+      });
     }
   },
   mounted: function mounted() {
@@ -78534,48 +78654,136 @@ var render = function() {
           },
           [
             _c("div", { staticClass: "card mb-3" }, [
-              _c("div", { staticClass: "container-fluid" }, [
-                _c("h3", { staticClass: "text-center mt-2" }, [
-                  _vm._v("Apertura de Mesa")
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "row justify-center" }, [
-                  _c("div", { staticClass: "col-lg-12 mb-3" }, [
-                    _c("h5", { staticClass: "text-center" }, [
-                      _vm._v("Mesa # " + _vm._s(_vm.mesa.mesa))
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: !_vm.estado,
+                      expression: "!estado"
+                    }
+                  ],
+                  staticClass: "container-fluid"
+                },
+                [
+                  _c("h3", { staticClass: "text-center mt-2" }, [
+                    _vm._v("Apertura de Mesa")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row justify-center" }, [
+                    _c("div", { staticClass: "col-lg-12 mb-3" }, [
+                      _c("h5", { staticClass: "text-center" }, [
+                        _vm._v("Mesa # " + _vm._s(_vm.mesa.mesa))
+                      ])
                     ])
-                  ])
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  { staticClass: "form-group col-md-12 mb-3 text-center" },
-                  [
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-primary btn-sm btn-block",
-                        attrs: { type: "button" },
-                        on: {
-                          click: function($event) {
-                            return _vm.abrirCerrarMesa()
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "form-group col-md-12 mb-3 text-center" },
+                    [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary btn-sm btn-block",
+                          attrs: { type: "button" },
+                          on: {
+                            click: function($event) {
+                              return _vm.abrirCerrarMesa()
+                            }
                           }
-                        }
-                      },
-                      [_vm._v("Abrir Mesa")]
+                        },
+                        [_vm._v("Abrir Mesa")]
+                      )
+                    ]
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.estado,
+                      expression: "estado"
+                    }
+                  ],
+                  staticClass: "container-fluid"
+                },
+                [
+                  _c("h3", { staticClass: "text-center mt-2" }, [
+                    _vm._v("Toma de Pedido")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row justify-center" }, [
+                    _c("div", { staticClass: "col-lg-12 mb-3" }, [
+                      _c("h5", { staticClass: "text-center" }, [
+                        _vm._v("Mesa # " + _vm._s(_vm.mesa.mesa))
+                      ])
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row justify-center mt-3 mb-1" }, [
+                    _vm._m(0),
+                    _vm._v(" "),
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _vm._m(2),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "form-group col-md-12 mb-3 text-center" },
+                      [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-primary btn-sm btn-block",
+                            attrs: {
+                              type: "button",
+                              "data-toggle": "modal",
+                              "data-target": "#staticBackdrop"
+                            },
+                            on: {
+                              click: function($event) {
+                                _vm.añadirMesa(true, null)
+                              }
+                            }
+                          },
+                          [_vm._v("Tomar Pedido")]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-danger btn-sm btn-block",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                return _vm.abrirCerrarMesa()
+                              }
+                            }
+                          },
+                          [_vm._v("Cerrar Mesa")]
+                        )
+                      ]
                     )
-                  ]
-                )
-              ])
+                  ])
+                ]
+              )
             ])
           ]
         ),
         _vm._v(" "),
         _c(
           "div",
-          { staticClass: "column col-md-8 ", attrs: { id: "main" } },
+          { staticClass: "column col-md-8", attrs: { id: "main" } },
           [
-            _vm._m(0),
+            _vm._m(3),
             _vm._v(" "),
             _vm._l(_vm.zonas, function(zona) {
               return _c(
@@ -78615,13 +78823,10 @@ var render = function() {
                                       staticStyle: {
                                         "text-decoration": "none"
                                       },
-                                      attrs: {
-                                        "data-toggle": "modal",
-                                        "data-target": "#staticBackdrop"
-                                      },
                                       on: {
                                         click: function($event) {
-                                          return _vm.seleccionarMesa(data)
+                                          _vm.seleccionarMesa(data),
+                                            (_vm.idMesa = data.id)
                                         }
                                       }
                                     },
@@ -78684,7 +78889,18 @@ var render = function() {
           { staticClass: "modal-dialog modal-xl", attrs: { role: "document" } },
           [
             _c("div", { staticClass: "modal-content" }, [
-              _vm._m(1),
+              _c("div", { staticClass: "modal-header" }, [
+                _c(
+                  "h5",
+                  {
+                    staticClass: "modal-title",
+                    attrs: { id: "staticBackdropLabel" }
+                  },
+                  [_vm._v("Nuevo Pedido " + _vm._s(_vm.idMesa))]
+                ),
+                _vm._v(" "),
+                _vm._m(4)
+              ]),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
                 _c("div", { staticClass: "row" }, [
@@ -78694,9 +78910,128 @@ var render = function() {
                         "div",
                         { staticClass: "container-fluid" },
                         [
-                          _vm._m(2),
+                          _c(
+                            "div",
+                            { staticClass: "row justify-center mt-3 mb-1" },
+                            [
+                              _c(
+                                "div",
+                                { staticClass: "col-lg-12" },
+                                _vm._l(_vm.pedidoMesas, function(data) {
+                                  return _c(
+                                    "button",
+                                    {
+                                      key: data.id,
+                                      staticClass: "btn btn-primary",
+                                      attrs: {
+                                        type: "button",
+                                        disabled: "",
+                                        prop: "data"
+                                      }
+                                    },
+                                    [_vm._v("Mesa " + _vm._s(data.mesa))]
+                                  )
+                                }),
+                                0
+                              ),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-lg-12" }, [
+                                _c("div", { staticClass: "dropdown" }, [
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass:
+                                        "btn btn-primary dropdown-toggle",
+                                      attrs: {
+                                        href: "#",
+                                        role: "button",
+                                        id: "dropdownAgregar",
+                                        "data-toggle": "dropdown",
+                                        "aria-haspopup": "true",
+                                        "aria-expanded": "false"
+                                      }
+                                    },
+                                    [_vm._v("Agregar Mesa")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "dropdown-menu",
+                                      attrs: {
+                                        "aria-labelledby": "dropdownAgregar"
+                                      }
+                                    },
+                                    _vm._l(_vm.mesasDrop, function(data) {
+                                      return _c(
+                                        "a",
+                                        {
+                                          key: data.id,
+                                          staticClass: "dropdown-item",
+                                          attrs: { prop: "data" },
+                                          on: {
+                                            click: function($event) {
+                                              _vm.añadirMesa(false, data)
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("Mesa " + _vm._s(data.mesa))]
+                                      )
+                                    }),
+                                    0
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("div", { staticClass: "dropdown" }, [
+                                  _c(
+                                    "a",
+                                    {
+                                      staticClass:
+                                        "btn btn-danger dropdown-toggle",
+                                      attrs: {
+                                        href: "#",
+                                        role: "button",
+                                        id: "dropdownQuitar",
+                                        "data-toggle": "dropdown",
+                                        "aria-haspopup": "true",
+                                        "aria-expanded": "false"
+                                      }
+                                    },
+                                    [_vm._v("Quitar Mesa")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass: "dropdown-menu",
+                                      attrs: {
+                                        "aria-labelledby": "dropdownQuitar"
+                                      }
+                                    },
+                                    _vm._l(_vm.mesasDrop, function(data) {
+                                      return _c(
+                                        "a",
+                                        {
+                                          key: data.id,
+                                          staticClass: "dropdown-item",
+                                          attrs: { prop: "data" },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.quitarMesa(data.id)
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("Mesa " + _vm._s(data.mesa))]
+                                      )
+                                    }),
+                                    0
+                                  )
+                                ])
+                              ])
+                            ]
+                          ),
                           _vm._v(" "),
-                          _vm._m(3),
+                          _vm._m(5),
                           _vm._v(" "),
                           _vm._l(_vm.pedidos, function(pedido) {
                             return _c(
@@ -78732,7 +79067,7 @@ var render = function() {
                             { staticClass: "row justify-center mb-2" },
                             [
                               _c("div", { staticClass: "col-sm-12" }, [
-                                _vm._m(4),
+                                _vm._m(6),
                                 _vm._v(" "),
                                 _c("label", { staticClass: "text-right" }, [
                                   _vm._v("$" + _vm._s(_vm.total))
@@ -78741,7 +79076,29 @@ var render = function() {
                             ]
                           ),
                           _vm._v(" "),
-                          _vm._m(5)
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "form-group col-md-12 mb-3 text-center"
+                            },
+                            [
+                              _c(
+                                "button",
+                                {
+                                  staticClass:
+                                    "btn btn-primary btn-sm btn-block",
+                                  attrs: { type: "button" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.ingresarPedido()
+                                    }
+                                  }
+                                },
+                                [_vm._v("Realizar Pedido")]
+                              )
+                            ]
+                          )
                         ],
                         2
                       )
@@ -78917,6 +79274,30 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-sm-12" }, [
+      _c("label", [_c("strong", [_vm._v("Hora del Pedido:")])])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-sm-12" }, [
+      _c("label", [_c("strong", [_vm._v("Estado del Pedido:")])])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-sm-12 text-center" }, [
+      _c("label", [_c("h5", [_c("strong", [_vm._v("Pedido")])])])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-sm-12 text-center" }, [
       _c("h2", [_vm._v("Mesas")])
     ])
@@ -78925,58 +79306,18 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "h5",
-        { staticClass: "modal-title", attrs: { id: "staticBackdropLabel" } },
-        [_vm._v("Nuevo Pedido")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: {
-            type: "button",
-            "data-dismiss": "modal",
-            "aria-label": "Close"
-          }
-        },
-        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row justify-center mt-3 mb-1" }, [
-      _c("div", { staticClass: "col-lg-12" }, [
-        _c(
-          "button",
-          { staticClass: "btn btn-primary", attrs: { type: "button" } },
-          [_vm._v("Mesa 1")]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          { staticClass: "btn btn-primary", attrs: { type: "button" } },
-          [_vm._v("Mesa 2")]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          { staticClass: "btn btn-info", attrs: { type: "button" } },
-          [_vm._v("Agregar Mesa")]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          { staticClass: "btn btn-info", attrs: { type: "button" } },
-          [_vm._v("Quitar Mesa")]
-        )
-      ])
-    ])
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
   },
   function() {
     var _vm = this
@@ -79005,21 +79346,6 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("label", [_c("strong", [_vm._v("Total")])])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group col-md-12 mb-3 text-center" }, [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-primary btn-sm btn-block",
-          attrs: { type: "button" }
-        },
-        [_vm._v("Realizar Pedido")]
-      )
-    ])
   }
 ]
 render._withStripped = true

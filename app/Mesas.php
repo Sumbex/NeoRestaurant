@@ -145,9 +145,33 @@ class Mesas extends Model
             $mesa->estado_id = 2;
         }
         if ($mesa->save()) {
-            return ['estado' => 'success', 'mensaje' => 'Mesa Abierta Correctamente.'];
+            if ($mesa->estado_id == 1) {
+                return ['estado' => 'success', 'mensaje' => 'Mesa Abierta Correctamente.'];
+            } else {
+                return ['estado' => 'success', 'mensaje' => 'Mesa Cerrada Correctamente.'];
+            }
         } else {
             return ['estado' => 'failed', 'mensaje' => 'A ocurrido un error, intenta nuevamente o pruebe creando las mesas individualmente.'];
+        }
+    }
+
+    protected function cambiarEstadoMesas($mesas)
+    {
+        $count = 0;
+        DB::beginTransaction();
+        foreach ($mesas as $key) {
+            $mesa = Mesas::find($key['id']);
+            $mesa->estado_id = 3;
+            if ($mesa->save()) {
+                $count++;
+            }
+        }
+        if (count($mesas) == $count) {
+            DB::commit();
+            return true;
+        } else {
+            DB::rollBack();
+            return false;
         }
     }
 }

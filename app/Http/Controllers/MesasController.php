@@ -31,4 +31,5 @@ class MesasController extends Controller
     {
         return Mesas::abrirCerrarMesa($request);
     }
+
 }

@@ -88,4 +88,8 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     /* <---Movimientos Caja---> */
     Route::post('/abrir_caja', 'CajaController@abrirCerrarCaja');
     /* <---Movimientos Caja---> */
+
+    /* <---Pedidos---> */
+    Route::post('/ingresar_pedido', 'PedidosController@IngresarPedido');
+    /* <---Pedidos---> */
 });

@@ -2,8 +2,10 @@
 
 namespace App;
 
+use App\Insumos;
 use Carbon\Carbon;
 use App\DetalleAlmacen;
+use App\DetalleProducto;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
@@ -110,11 +112,12 @@ class CompraDetalleAlmacen extends Model
             ])
             ->join('users as u', 'u.id', 'cda.creada_por')
             ->join('proveedores as p', 'p.id', 'cda.proveedor_id')
+            /* ->join('almacen as a', 'a.id', 'cda.almacen_id') */
             ->where([
                 'cda.activo' => 'S',
                 'cda.anio_id' => $anio,
                 'cda.mes_id' => $mes,
-                'cda.id' => $sucursal_id
+                'cda.almacen_id' => $sucursal_id
             ])
             ->get();
         if (!$compras->isEmpty()) {
@@ -156,5 +159,22 @@ class CompraDetalleAlmacen extends Model
         } else {
             return ['estado' => 'failed', 'mensaje' => 'No se encuentra el detalle de la compra seleccionada.'];
         }
+    }
+
+    protected function verificarStock(/* $sucursal_id, */ $pedidos)
+    {
+        $array = [];
+
+        for ($i = 0; $i < count($pedidos); $i++) {
+            $detalle = DetalleProducto::where([
+                'activo' => 'S',
+                'producto_id' => $pedidos[$i]['id_producto']
+            ])
+                ->get();
+            for ($e = 0; $e < count($detalle); $e++) {
+                $insumo = Insumos::find($detalle[$e]->insumo_id);
+            }
+        }
+        dd($insumo);
     }
 }

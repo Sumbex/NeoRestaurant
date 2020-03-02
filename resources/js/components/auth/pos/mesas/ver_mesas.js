@@ -15,12 +15,60 @@ export default {
             buscar: null,
             cantidad: 1,
             total: 0,
+            estado: false,
+            pedidoMesas: [],
+            mesasDrop: [],
         }
     },
     methods: {
         seleccionarMesa(mesa) {
             this.mesa = mesa;
+            if (this.mesa.estado_id == 1) {
+                this.estado = true;
+            } else {
+                this.estado = false;
+            }
             console.log(this.mesa);
+        },
+        añadirMesa(estado, mesa) {
+            if (estado == true) {
+                this.pedidoMesas = [];
+                this.pedidoMesas.push({ 'id': this.mesa.id, 'mesa': this.mesa.mesa });
+            } else {
+                let existe = false;
+                for (let i = 0; i < this.pedidoMesas.length; i++) {
+                    if (mesa.id == this.pedidoMesas[i].id) {
+                        existe = true;
+                        console.log('existe en la posicion: ' + i + ', existe: ' + existe);
+                        break;
+                    }
+                }
+                if (existe == true) {
+                    this.$snotify.create({
+                        body: 'La mesa que intentas agregar ya se encuentra seleccionada.',
+                        config: {
+                            timeout: 4000,
+                            showProgressBar: true,
+                            closeOnClick: true,
+                            pauseOnHover: false,
+                            position: SnotifyPosition.centerBottom,
+                            type: SnotifyStyle.warning,
+                        }
+                    });
+                } else {
+                    this.pedidoMesas.push({ 'id': mesa.id, 'mesa': mesa.mesa });
+                }
+
+            }
+
+            console.log(this.pedidoMesas);
+        },
+        quitarMesa(id) {
+            for (let i = 0; i < this.pedidoMesas.length; i++) {
+                if (this.pedidoMesas[i].id == id) {
+                    this.pedidoMesas.splice(i, 1);
+                }
+            }
         },
         abrirCerrarMesa() {
             const data = {
@@ -40,6 +88,11 @@ export default {
                             type: SnotifyStyle.success,
                         }
                     })
+                    if (this.mesa.estado_id == 2) {
+                        this.estado = true;
+                    } else {
+                        this.estado = false;
+                    }
                     this.traerMesas();
                 } else {
                     this.$snotify.create({
@@ -56,10 +109,24 @@ export default {
                 }
             });
         },
+        guardarMesas(res) {
+            this.mesasDrop = [];
+            let mesas = res.mesas;
+            let zonas = res.zonas;
+            for (let i = 0; i < zonas.length; i++) {
+                for (let q = 0; q < mesas[zonas[i]].length; q++) {
+                    if (mesas[zonas[i]][q].estado_id == 2) {
+                        this.mesasDrop.push({ 'id': mesas[zonas[i]][q].id, 'mesa': mesas[zonas[i]][q].mesa });
+                    }
+                }
+            }
+        },
         traerMesas() {
             axios.get('/api/traer_mesas_sucursal/' + this.id).then((res) => {
                 if (res.data.estado == 'success') {
+                    this.guardarMesas(res.data);
                     this.mesas = res.data.mesas;
+                    console.log(this.mesas);
                     this.zonas = res.data.zonas;
                 } else {
                     this.$snotify.create({
@@ -144,6 +211,41 @@ export default {
         toggle() {
             $("#wrapper").toggleClass("toggled");
         },
+        ingresarPedido() {
+            const data = {
+                'mesas': this.pedidoMesas,
+                'pedidos': this.pedidos,
+                'total': this.total,
+            }
+            axios.post('/api/ingresar_pedido', data).then((res) => {
+                if (res.data.estado == 'success') {
+                    this.$snotify.create({
+                        body: res.data.mensaje,
+                        config: {
+                            timeout: 2000,
+                            showProgressBar: true,
+                            closeOnClick: true,
+                            pauseOnHover: false,
+                            position: SnotifyPosition.centerBottom,
+                            type: SnotifyStyle.success,
+                        }
+                    });
+                    this.traerMesas();
+                } else {
+                    this.$snotify.create({
+                        body: res.data.mensaje,
+                        config: {
+                            timeout: 2000,
+                            showProgressBar: true,
+                            closeOnClick: true,
+                            pauseOnHover: false,
+                            position: SnotifyPosition.centerBottom,
+                            type: SnotifyStyle.error,
+                        }
+                    });
+                }
+            });
+        }
     },
     mounted() {
         this.traerMesas();
