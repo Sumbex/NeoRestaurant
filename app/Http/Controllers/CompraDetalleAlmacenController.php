@@ -21,4 +21,9 @@ class CompraDetalleAlmacenController extends Controller
     {
         return CompraDetalleAlmacen::traerDetalleCompra($compra_id);
     }
+
+    public function VerificarStockProducto($sucursal, $produto)
+    {
+        return CompraDetalleAlmacen::verificarStockProducto($sucursal, $produto);
+    }
 }

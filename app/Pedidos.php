@@ -20,7 +20,7 @@ class Pedidos extends Model
     protected function ingresarPedido($request)
     {
         /* dd($request->all()); */
-        /* $test = CompraDetalleAlmacen::verificarStock($request->pedidos);
+        /* $test = CompraDetalleAlmacen::verificarStockProducto($request->pedidos);
         dd($test); */
         $fecha = $this->fechaActual();
         DB::beginTransaction();

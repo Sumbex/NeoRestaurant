@@ -4189,6 +4189,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     agregarProducto: function agregarProducto(prod) {
+      this.verificarStock(prod.id);
       var existe = false;
 
       for (var i = 0; i < this.pedidos.length; i++) {
@@ -4254,6 +4255,27 @@ __webpack_require__.r(__webpack_exports__);
             body: res.data.mensaje,
             config: {
               timeout: 2000,
+              showProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: false,
+              position: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyPosition"].centerBottom,
+              type: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyStyle"].error
+            }
+          });
+        }
+      });
+    },
+    verificarStock: function verificarStock(prod) {
+      var _this6 = this;
+
+      axios.get('/api/verificar_stock_producto/' + this.id + '/' + prod).then(function (res) {
+        if (res.data.estado == 'success') {
+          console.log(res.data);
+        } else {
+          _this6.$snotify.create({
+            body: res.data.mensaje,
+            config: {
+              timeout: 3000,
               showProgressBar: true,
               closeOnClick: true,
               pauseOnHover: false,

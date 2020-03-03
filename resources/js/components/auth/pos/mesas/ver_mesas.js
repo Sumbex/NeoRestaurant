@@ -183,6 +183,7 @@ export default {
             });
         },
         agregarProducto(prod) {
+            this.verificarStock(prod.id);
             let existe = false;
             for (let i = 0; i < this.pedidos.length; i++) {
                 if (prod.id == this.pedidos[i].id_producto) {
@@ -245,7 +246,26 @@ export default {
                     });
                 }
             });
-        }
+        },
+        verificarStock(prod) {
+            axios.get('/api/verificar_stock_producto/' + this.id + '/' + prod).then((res) => {
+                if (res.data.estado == 'success') {
+                    console.log(res.data);
+                } else {
+                    this.$snotify.create({
+                        body: res.data.mensaje,
+                        config: {
+                            timeout: 3000,
+                            showProgressBar: true,
+                            closeOnClick: true,
+                            pauseOnHover: false,
+                            position: SnotifyPosition.centerBottom,
+                            type: SnotifyStyle.error,
+                        }
+                    })
+                }
+            });
+        },
     },
     mounted() {
         this.traerMesas();
