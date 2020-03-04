@@ -3997,6 +3997,7 @@ __webpack_require__.r(__webpack_exports__);
       cantidad: 1,
       total: 0,
       estado: false,
+      estadoMesa: null,
       pedidoMesas: [],
       mesasDrop: []
     };
@@ -4005,10 +4006,26 @@ __webpack_require__.r(__webpack_exports__);
     seleccionarMesa: function seleccionarMesa(mesa) {
       this.mesa = mesa;
 
-      if (this.mesa.estado_id == 1) {
-        this.estado = true;
-      } else {
-        this.estado = false;
+      switch (this.mesa.estado_id) {
+        case 1:
+          this.estado = true;
+          this.estadoMesa = 2;
+          break;
+
+        case 2:
+          this.estado = false;
+          break;
+
+        case 3:
+          this.estado = true;
+          this.estadoMesa = 3;
+          this.traerPedidoMesa();
+          break;
+
+        default:
+          this.estado = true;
+          this.estadoMesa = 3;
+          this.traerPedidoMesa();
       }
 
       console.log(this.mesa);
@@ -4069,6 +4086,13 @@ __webpack_require__.r(__webpack_exports__);
       };
       axios.post('/api/abrir_cerrar_mesa', data).then(function (res) {
         if (res.data.estado == 'success') {
+          if (_this.mesa.estado_id == 2) {
+            _this.estado = true;
+            _this.estadoMesa = 2;
+          } else {
+            _this.estado = false;
+          }
+
           _this.$snotify.create({
             body: res.data.mensaje,
             config: {
@@ -4080,12 +4104,6 @@ __webpack_require__.r(__webpack_exports__);
               type: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyStyle"].success
             }
           });
-
-          if (_this.mesa.estado_id == 2) {
-            _this.estado = true;
-          } else {
-            _this.estado = false;
-          }
 
           _this.traerMesas();
         } else {
@@ -4188,8 +4206,75 @@ __webpack_require__.r(__webpack_exports__);
         }
       });
     },
+    toggle: function toggle() {
+      $("#wrapper").toggleClass("toggled");
+    },
+    ingresarPedido: function ingresarPedido() {
+      var _this5 = this;
+
+      var data = {
+        'mesas': this.pedidoMesas,
+        'pedidos': this.pedidos,
+        'total': this.total
+      };
+      axios.post('/api/ingresar_pedido', data).then(function (res) {
+        if (res.data.estado == 'success') {
+          _this5.estadoMesa = 3;
+
+          _this5.$snotify.create({
+            body: res.data.mensaje,
+            config: {
+              timeout: 2000,
+              showProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: false,
+              position: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyPosition"].centerBottom,
+              type: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyStyle"].success
+            }
+          });
+
+          _this5.traerMesas();
+        } else {
+          _this5.$snotify.create({
+            body: res.data.mensaje,
+            config: {
+              timeout: 2000,
+              showProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: false,
+              position: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyPosition"].centerBottom,
+              type: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyStyle"].error
+            }
+          });
+        }
+      });
+    },
+    verificarStock: function verificarStock(prod) {
+      var _this6 = this;
+
+      var data = {
+        'sucursal': this.id,
+        'producto': prod
+      };
+      axios.post('/api/verificar_stock_producto', data).then(function (res) {
+        if (res.data.estado == 'success') {
+          _this6.agregarProducto(prod);
+        } else {
+          _this6.$snotify.create({
+            body: res.data.mensaje,
+            config: {
+              timeout: 3000,
+              showProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: false,
+              position: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyPosition"].centerBottom,
+              type: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyStyle"].error
+            }
+          });
+        }
+      });
+    },
     agregarProducto: function agregarProducto(prod) {
-      this.verificarStock(prod.id);
       var existe = false;
 
       for (var i = 0; i < this.pedidos.length; i++) {
@@ -4224,55 +4309,27 @@ __webpack_require__.r(__webpack_exports__);
         this.total = this.total + this.pedidos[i].subtotal;
       }
     },
-    toggle: function toggle() {
-      $("#wrapper").toggleClass("toggled");
-    },
-    ingresarPedido: function ingresarPedido() {
-      var _this5 = this;
+    traerPedidoMesa: function traerPedidoMesa() {
+      var _this7 = this;
 
-      var data = {
-        'mesas': this.pedidoMesas,
-        'pedidos': this.pedidos,
-        'total': this.total
-      };
-      axios.post('/api/ingresar_pedido', data).then(function (res) {
+      axios.get('/api/traer_pedido_mesa/' + this.id + '/' + this.mesa.id).then(function (res) {
         if (res.data.estado == 'success') {
-          _this5.$snotify.create({
-            body: res.data.mensaje,
-            config: {
-              timeout: 2000,
-              showProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: false,
-              position: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyPosition"].centerBottom,
-              type: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyStyle"].success
-            }
-          });
+          _this7.pedidos = [];
 
-          _this5.traerMesas();
-        } else {
-          _this5.$snotify.create({
-            body: res.data.mensaje,
-            config: {
-              timeout: 2000,
-              showProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: false,
-              position: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyPosition"].centerBottom,
-              type: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyStyle"].error
-            }
-          });
-        }
-      });
-    },
-    verificarStock: function verificarStock(prod) {
-      var _this6 = this;
+          for (var i = 0; i < res.data.pedido.length; i++) {
+            _this7.pedidos.push({
+              'id': res.data.pedido[i].id,
+              'id_producto': res.data.pedido[i].producto_id,
+              'producto': res.data.pedido[i].producto,
+              'cantidad': res.data.pedido[i].cantidad,
+              'precio': res.data.pedido[i].precio_venta,
+              'subtotal': res.data.pedido[i].subtotal
+            });
+          }
 
-      axios.get('/api/verificar_stock_producto/' + this.id + '/' + prod).then(function (res) {
-        if (res.data.estado == 'success') {
-          console.log(res.data);
+          _this7.totalPedido();
         } else {
-          _this6.$snotify.create({
+          _this7.$snotify.create({
             body: res.data.mensaje,
             config: {
               timeout: 3000,
@@ -78787,63 +78844,182 @@ var render = function() {
                   staticClass: "container-fluid"
                 },
                 [
-                  _c("h3", { staticClass: "text-center mt-2" }, [
-                    _vm._v("Toma de Pedido")
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "row justify-center" }, [
-                    _c("div", { staticClass: "col-lg-12 mb-3" }, [
-                      _c("h5", { staticClass: "text-center" }, [
-                        _vm._v("Mesa # " + _vm._s(_vm.mesa.mesa))
-                      ])
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "row justify-center mt-3 mb-1" }, [
-                    _vm._m(0),
-                    _vm._v(" "),
-                    _vm._m(1),
-                    _vm._v(" "),
-                    _vm._m(2),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "form-group col-md-12 mb-3 text-center" },
-                      [
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-primary btn-sm btn-block",
-                            attrs: {
-                              type: "button",
-                              "data-toggle": "modal",
-                              "data-target": "#staticBackdrop"
-                            },
-                            on: {
-                              click: function($event) {
-                                _vm.añadirMesa(true, null)
-                              }
-                            }
-                          },
-                          [_vm._v("Tomar Pedido")]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            staticClass: "btn btn-danger btn-sm btn-block",
-                            attrs: { type: "button" },
-                            on: {
-                              click: function($event) {
-                                return _vm.abrirCerrarMesa()
-                              }
-                            }
-                          },
-                          [_vm._v("Cerrar Mesa")]
-                        )
+                  _c(
+                    "div",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.estadoMesa == 2,
+                          expression: "estadoMesa == 2"
+                        }
                       ]
-                    )
-                  ])
+                    },
+                    [
+                      _c("h3", { staticClass: "text-center mt-2" }, [
+                        _vm._v("Toma de Pedido")
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "row justify-center" }, [
+                        _c("div", { staticClass: "col-lg-12 mb-3" }, [
+                          _c("h5", { staticClass: "text-center" }, [
+                            _vm._v("Mesa # " + _vm._s(_vm.mesa.mesa))
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "row justify-center mt-3 mb-1" },
+                        [
+                          _vm._m(0),
+                          _vm._v(" "),
+                          _vm._m(1),
+                          _vm._v(" "),
+                          _vm._m(2),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "form-group col-md-12 mb-3 text-center"
+                            },
+                            [
+                              _c(
+                                "button",
+                                {
+                                  staticClass:
+                                    "btn btn-primary btn-sm btn-block",
+                                  attrs: {
+                                    type: "button",
+                                    "data-toggle": "modal",
+                                    "data-target": "#staticBackdrop"
+                                  },
+                                  on: {
+                                    click: function($event) {
+                                      _vm.añadirMesa(true, null)
+                                    }
+                                  }
+                                },
+                                [_vm._v("Tomar Pedido")]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "button",
+                                {
+                                  staticClass:
+                                    "btn btn-danger btn-sm btn-block",
+                                  attrs: { type: "button" },
+                                  on: {
+                                    click: function($event) {
+                                      return _vm.abrirCerrarMesa()
+                                    }
+                                  }
+                                },
+                                [_vm._v("Cerrar Mesa")]
+                              )
+                            ]
+                          )
+                        ]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.estadoMesa == 3,
+                          expression: "estadoMesa == 3"
+                        }
+                      ]
+                    },
+                    [
+                      _vm._m(3),
+                      _vm._v(" "),
+                      _vm._l(_vm.pedidos, function(pedido) {
+                        return _c(
+                          "div",
+                          {
+                            key: pedido.id,
+                            staticClass: "row justify-center mb-2",
+                            attrs: { prop: "pedido" }
+                          },
+                          [
+                            _c("div", { staticClass: "col-sm-12" }, [
+                              _c("label", [
+                                _c("strong", [_vm._v(_vm._s(pedido.cantidad))]),
+                                _vm._v(
+                                  "\n                    x " +
+                                    _vm._s(pedido.producto) +
+                                    "\n                  "
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("label", { staticClass: "text-right" }, [
+                                _vm._v("$" + _vm._s(pedido.precio) + " c/u")
+                              ])
+                            ])
+                          ]
+                        )
+                      }),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "row justify-center mb-2" }, [
+                        _c("div", { staticClass: "col-sm-12" }, [
+                          _vm._m(4),
+                          _vm._v(" "),
+                          _c("label", { staticClass: "text-right" }, [
+                            _vm._v("$" + _vm._s(_vm.total))
+                          ])
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        {
+                          staticClass: "form-group col-md-12 mb-3 text-center"
+                        },
+                        [
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-primary btn-sm btn-block",
+                              attrs: {
+                                type: "button",
+                                "data-toggle": "modal",
+                                "data-target": "#staticBackdrop"
+                              },
+                              on: {
+                                click: function($event) {
+                                  _vm.añadirMesa(true, null)
+                                }
+                              }
+                            },
+                            [_vm._v("Actualizar Pedido")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "button",
+                            {
+                              staticClass: "btn btn-danger btn-sm btn-block",
+                              attrs: { type: "button" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.abrirCerrarMesa()
+                                }
+                              }
+                            },
+                            [_vm._v("Pagar")]
+                          )
+                        ]
+                      )
+                    ],
+                    2
+                  )
                 ]
               )
             ])
@@ -78854,7 +79030,7 @@ var render = function() {
           "div",
           { staticClass: "column col-md-8", attrs: { id: "main" } },
           [
-            _vm._m(3),
+            _vm._m(5),
             _vm._v(" "),
             _vm._l(_vm.zonas, function(zona) {
               return _c(
@@ -78970,7 +79146,7 @@ var render = function() {
                   [_vm._v("Nuevo Pedido " + _vm._s(_vm.idMesa))]
                 ),
                 _vm._v(" "),
-                _vm._m(4)
+                _vm._m(6)
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
@@ -79102,7 +79278,7 @@ var render = function() {
                             ]
                           ),
                           _vm._v(" "),
-                          _vm._m(5),
+                          _vm._m(7),
                           _vm._v(" "),
                           _vm._l(_vm.pedidos, function(pedido) {
                             return _c(
@@ -79138,7 +79314,7 @@ var render = function() {
                             { staticClass: "row justify-center mb-2" },
                             [
                               _c("div", { staticClass: "col-sm-12" }, [
-                                _vm._m(6),
+                                _vm._m(8),
                                 _vm._v(" "),
                                 _c("label", { staticClass: "text-right" }, [
                                   _vm._v("$" + _vm._s(_vm.total))
@@ -79290,7 +79466,7 @@ var render = function() {
                                 attrs: { prop: "producto" },
                                 on: {
                                   click: function($event) {
-                                    return _vm.agregarProducto(producto)
+                                    return _vm.verificarStock(producto)
                                   }
                                 }
                               },
@@ -79364,6 +79540,34 @@ var staticRenderFns = [
     return _c("div", { staticClass: "col-sm-12 text-center" }, [
       _c("label", [_c("h5", [_c("strong", [_vm._v("Pedido")])])])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row justify-center mt-3 mb-1" }, [
+      _c("div", { staticClass: "col-sm-12 text-center" }, [
+        _c("h4", [_vm._v("Pedido")])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-sm-12" }, [
+        _c("label", [_c("strong", [_vm._v("Hora del Pedido:")])])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-sm-12" }, [
+        _c("label", [_c("strong", [_vm._v("Estado del Pedido:")])])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-sm-12 text-center" }, [
+        _c("label", [_c("h5", [_c("strong", [_vm._v("Pedido")])])])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", [_c("strong", [_vm._v("Total")])])
   },
   function() {
     var _vm = this

@@ -16,6 +16,7 @@ export default {
             cantidad: 1,
             total: 0,
             estado: false,
+            estadoMesa: null,
             pedidoMesas: [],
             mesasDrop: [],
         }
@@ -23,10 +24,24 @@ export default {
     methods: {
         seleccionarMesa(mesa) {
             this.mesa = mesa;
-            if (this.mesa.estado_id == 1) {
-                this.estado = true;
-            } else {
-                this.estado = false;
+            switch (this.mesa.estado_id) {
+                case 1:
+                    this.estado = true;
+                    this.estadoMesa = 2;
+                    break;
+
+                case 2:
+                    this.estado = false;
+                    break;
+                case 3:
+                    this.estado = true;
+                    this.estadoMesa = 3;
+                    this.traerPedidoMesa();
+                    break;
+                default:
+                    this.estado = true;
+                    this.estadoMesa = 3;
+                    this.traerPedidoMesa();
             }
             console.log(this.mesa);
         },
@@ -77,6 +92,12 @@ export default {
             }
             axios.post('/api/abrir_cerrar_mesa', data).then((res) => {
                 if (res.data.estado == 'success') {
+                    if (this.mesa.estado_id == 2) {
+                        this.estado = true;
+                        this.estadoMesa = 2;
+                    } else {
+                        this.estado = false;
+                    }
                     this.$snotify.create({
                         body: res.data.mensaje,
                         config: {
@@ -88,11 +109,6 @@ export default {
                             type: SnotifyStyle.success,
                         }
                     })
-                    if (this.mesa.estado_id == 2) {
-                        this.estado = true;
-                    } else {
-                        this.estado = false;
-                    }
                     this.traerMesas();
                 } else {
                     this.$snotify.create({
@@ -182,33 +198,6 @@ export default {
                 }
             });
         },
-        agregarProducto(prod) {
-            this.verificarStock(prod.id);
-            let existe = false;
-            for (let i = 0; i < this.pedidos.length; i++) {
-                if (prod.id == this.pedidos[i].id_producto) {
-                    this.pedidos[i].cantidad = this.pedidos[i].cantidad + 1;
-                    this.pedidos[i].subtotal = this.pedidos[i].cantidad * this.pedidos[i].precio;
-                    existe = true;
-                    console.log('existe en la posicion: ' + i);
-                    break;
-                }
-            }
-            if (existe == false) {
-                let subtotal = prod.precio_venta * this.cantidad;
-                this.pedidos.push({ 'id_producto': prod.id, 'producto': prod.producto, 'cantidad': 1, 'precio': prod.precio_venta, 'subtotal': subtotal });
-                this.totalPedido();
-                console.log(this.pedidos);
-            } else {
-                this.totalPedido();
-            }
-        },
-        totalPedido() {
-            this.total = 0;
-            for (let i = 0; i < this.pedidos.length; i++) {
-                this.total = this.total + this.pedidos[i].subtotal;
-            }
-        },
         toggle() {
             $("#wrapper").toggleClass("toggled");
         },
@@ -220,6 +209,7 @@ export default {
             }
             axios.post('/api/ingresar_pedido', data).then((res) => {
                 if (res.data.estado == 'success') {
+                    this.estadoMesa = 3;
                     this.$snotify.create({
                         body: res.data.mensaje,
                         config: {
@@ -248,9 +238,62 @@ export default {
             });
         },
         verificarStock(prod) {
-            axios.get('/api/verificar_stock_producto/' + this.id + '/' + prod).then((res) => {
+            const data = {
+                'sucursal': this.id,
+                'producto': prod
+            }
+            axios.post('/api/verificar_stock_producto', data).then((res) => {
                 if (res.data.estado == 'success') {
-                    console.log(res.data);
+                    this.agregarProducto(prod);
+                } else {
+                    this.$snotify.create({
+                        body: res.data.mensaje,
+                        config: {
+                            timeout: 3000,
+                            showProgressBar: true,
+                            closeOnClick: true,
+                            pauseOnHover: false,
+                            position: SnotifyPosition.centerBottom,
+                            type: SnotifyStyle.error,
+                        }
+                    })
+                }
+            });
+        },
+        agregarProducto(prod) {
+            let existe = false;
+            for (let i = 0; i < this.pedidos.length; i++) {
+                if (prod.id == this.pedidos[i].id_producto) {
+                    this.pedidos[i].cantidad = this.pedidos[i].cantidad + 1;
+                    this.pedidos[i].subtotal = this.pedidos[i].cantidad * this.pedidos[i].precio;
+                    existe = true;
+                    console.log('existe en la posicion: ' + i);
+                    break;
+                }
+            }
+            if (existe == false) {
+                let subtotal = prod.precio_venta * this.cantidad;
+                this.pedidos.push({ 'id_producto': prod.id, 'producto': prod.producto, 'cantidad': 1, 'precio': prod.precio_venta, 'subtotal': subtotal });
+                this.totalPedido();
+                console.log(this.pedidos);
+            } else {
+                this.totalPedido();
+            }
+        },
+        totalPedido() {
+            this.total = 0;
+            for (let i = 0; i < this.pedidos.length; i++) {
+                this.total = this.total + this.pedidos[i].subtotal;
+            }
+        },
+        traerPedidoMesa() {
+            axios.get('/api/traer_pedido_mesa/' + this.id + '/' + this.mesa.id).then((res) => {
+                if (res.data.estado == 'success') {
+                    this.pedidos = [];
+                    for (let i = 0; i < res.data.pedido.length; i++) {
+                        this.pedidos.push({ 'id': res.data.pedido[i].id, 'id_producto': res.data.pedido[i].producto_id, 'producto': res.data.pedido[i].producto, 'cantidad': res.data.pedido[i].cantidad, 'precio': res.data.pedido[i].precio_venta, 'subtotal': res.data.pedido[i].subtotal });
+                    }
+                    this.totalPedido();
                 } else {
                     this.$snotify.create({
                         body: res.data.mensaje,

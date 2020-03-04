@@ -11,4 +11,9 @@ class PedidosController extends Controller
     {
         return Pedidos::ingresarPedido($request);
     }
+
+    public function TraerPedido($sucursal, $mesa)
+    {
+        return Pedidos::traerPedido($sucursal, $mesa);
+    }
 }

@@ -27,7 +27,7 @@ class DetallePedidos extends Model
             $detalle->pedido_id = $pedido_id;
             $detalle->producto_id = $key['id_producto'];
             $detalle->cantidad = $key['cantidad'];
-            $detalle->precio = $key['cantidad'];
+            $detalle->precio = $key['precio'];
             $detalle->creada_por = Auth::user()->id;
             $detalle->estado_id = 1;
             $detalle->activo = 'S';

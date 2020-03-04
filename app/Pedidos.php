@@ -53,4 +53,34 @@ class Pedidos extends Model
             return ['estado' => 'failed', 'mensaje' => 'A ocurrido un error, intenta nuevamente.'];
         }
     }
+
+    protected function traerPedido($sucursal, $mesa)
+    {
+        $pedido = DB::table('mesa_pedido as mp')
+            ->select([
+                'dp.id',
+                'pr.id as producto_id',
+                'pr.producto',
+                'dp.cantidad',
+                'pr.precio_venta',
+                DB::raw("SUM(dp.cantidad*pr.precio_venta)as subtotal")
+            ])
+            ->join('pedido as p', 'p.id', 'mp.pedido_id')
+            ->join('detalle_pedido as dp', 'dp.pedido_id', 'p.id')
+            ->join('productos as pr', 'pr.id', 'dp.producto_id')
+            ->join('almacen as a', 'a.id', 'pr.almacen_id')
+            ->where([
+                'p.activo' => 'S',
+                'mp.mesa_id' => $mesa,
+                'a.sucursal_id' => $sucursal
+            ])
+            ->groupBy('pr.producto', 'dp.cantidad', 'dp.precio','pr.id', 'dp.id')
+            ->get();
+
+        if (!$pedido->isEmpty()) {
+            return ['estado' => 'success', 'pedido' => $pedido];
+        } else {
+            return ['estado' => 'failed', 'mensaje' => 'No se encuentra el pedido.'];
+        }
+    }
 }

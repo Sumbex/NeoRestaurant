@@ -91,6 +91,7 @@ Route::group(['middleware' => 'auth.jwt'], function () {
 
     /* <---Pedidos---> */
     Route::post('/ingresar_pedido', 'PedidosController@IngresarPedido');
-    Route::get('/verificar_stock_producto/{sucursal}/{produto}', 'CompraDetalleAlmacenController@VerificarStockProducto');
+    Route::get('/traer_pedido_mesa/{sucursal}/{mesa}', 'PedidosController@TraerPedido');
+    Route::post('/verificar_stock_producto', 'CompraDetalleAlmacenController@VerificarStockProducto');
     /* <---Pedidos---> */
 });

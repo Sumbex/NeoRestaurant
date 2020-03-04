@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\CompraDetalleAlmacen;
 use Illuminate\Http\Request;
+use App\CompraDetalleAlmacen;
+use App\CantidadInsumosAlmacen;
 
 class CompraDetalleAlmacenController extends Controller
 {
@@ -22,8 +23,8 @@ class CompraDetalleAlmacenController extends Controller
         return CompraDetalleAlmacen::traerDetalleCompra($compra_id);
     }
 
-    public function VerificarStockProducto($sucursal, $produto)
+    public function VerificarStockProducto(Request $request)
     {
-        return CompraDetalleAlmacen::verificarStockProducto($sucursal, $produto);
+        return CantidadInsumosAlmacen::verificarStockProducto($request);
     }
 }

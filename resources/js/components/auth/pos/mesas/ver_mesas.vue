@@ -21,31 +21,98 @@
               </div>
             </div>
             <div class="container-fluid" v-show="estado">
-              <h3 class="text-center mt-2">Toma de Pedido</h3>
-              <div class="row justify-center">
-                <div class="col-lg-12 mb-3">
-                  <h5 class="text-center">Mesa # {{mesa.mesa}}</h5>
+              <div v-show="estadoMesa == 2">
+                <h3 class="text-center mt-2">Toma de Pedido</h3>
+                <div class="row justify-center">
+                  <div class="col-lg-12 mb-3">
+                    <h5 class="text-center">Mesa # {{mesa.mesa}}</h5>
+                  </div>
+                </div>
+                <div class="row justify-center mt-3 mb-1">
+                  <div class="col-sm-12">
+                    <label>
+                      <strong>Hora del Pedido:</strong>
+                    </label>
+                    <!-- <label class="text-right">15:25</label> -->
+                  </div>
+                  <div class="col-sm-12">
+                    <label>
+                      <strong>Estado del Pedido:</strong>
+                    </label>
+                    <!-- <label class="text-right">Atendido</label> -->
+                  </div>
+                  <div class="col-sm-12 text-center">
+                    <label>
+                      <h5>
+                        <strong>Pedido</strong>
+                      </h5>
+                    </label>
+                  </div>
+                  <div class="form-group col-md-12 mb-3 text-center">
+                    <button
+                      type="button"
+                      class="btn btn-primary btn-sm btn-block"
+                      data-toggle="modal"
+                      data-target="#staticBackdrop"
+                      @click="añadirMesa(true, null)"
+                    >Tomar Pedido</button>
+                    <button
+                      type="button"
+                      class="btn btn-danger btn-sm btn-block"
+                      @click="abrirCerrarMesa()"
+                    >Cerrar Mesa</button>
+                  </div>
                 </div>
               </div>
-              <div class="row justify-center mt-3 mb-1">
-                <div class="col-sm-12">
-                  <label>
-                    <strong>Hora del Pedido:</strong>
-                  </label>
-                  <!-- <label class="text-right">15:25</label> -->
+              <div v-show="estadoMesa == 3">
+                <div class="row justify-center mt-3 mb-1">
+                  <div class="col-sm-12 text-center">
+                    <h4>Pedido</h4>
+                  </div>
+                  <div class="col-sm-12">
+                    <label>
+                      <strong>Hora del Pedido:</strong>
+                    </label>
+                    <!-- <label class="text-right">15:25</label> -->
+                  </div>
+                  <div class="col-sm-12">
+                    <label>
+                      <strong>Estado del Pedido:</strong>
+                    </label>
+                    <!-- <label class="text-right">Atendido</label> -->
+                  </div>
+                  <div class="col-sm-12 text-center">
+                    <label>
+                      <h5>
+                        <strong>Pedido</strong>
+                      </h5>
+                    </label>
+                  </div>
                 </div>
-                <div class="col-sm-12">
-                  <label>
-                    <strong>Estado del Pedido:</strong>
-                  </label>
-                  <!-- <label class="text-right">Atendido</label> -->
+                <div
+                  class="row justify-center mb-2"
+                  v-for="pedido in pedidos"
+                  prop="pedido"
+                  :key="pedido.id"
+                >
+                  <!-- array del pedido -->
+                  <div class="col-sm-12">
+                    <label>
+                      <strong>{{pedido.cantidad}}</strong>
+                      x {{pedido.producto}}
+                    </label>
+                    <label class="text-right">${{pedido.precio}} c/u</label>
+                  </div>
+                  <!-- array del pedido -->
                 </div>
-                <div class="col-sm-12 text-center">
-                  <label>
-                    <h5>
-                      <strong>Pedido</strong>
-                    </h5>
-                  </label>
+
+                <div class="row justify-center mb-2">
+                  <div class="col-sm-12">
+                    <label>
+                      <strong>Total</strong>
+                    </label>
+                    <label class="text-right">${{total}}</label>
+                  </div>
                 </div>
                 <div class="form-group col-md-12 mb-3 text-center">
                   <button
@@ -54,12 +121,12 @@
                     data-toggle="modal"
                     data-target="#staticBackdrop"
                     @click="añadirMesa(true, null)"
-                  >Tomar Pedido</button>
+                  >Actualizar Pedido</button>
                   <button
                     type="button"
                     class="btn btn-danger btn-sm btn-block"
                     @click="abrirCerrarMesa()"
-                  >Cerrar Mesa</button>
+                  >Pagar</button>
                 </div>
               </div>
             </div>
@@ -287,7 +354,7 @@
                         v-for="producto in productos"
                         prop="producto"
                         :key="producto.id"
-                        @click="agregarProducto(producto)"
+                        @click="verificarStock(producto)"
                       >
                         <div class="card bg-dark text-white">
                           <img :src="'/'+producto.foto" class="card-img" :alt="producto.producto" />
