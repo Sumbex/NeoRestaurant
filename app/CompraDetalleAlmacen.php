@@ -56,6 +56,7 @@ class CompraDetalleAlmacen extends Model
     {
         $carro = json_decode($request->carro, true);
         $almacenes = explode(",", $request->almacenes);
+        /* if (count($almacenes < 2)) { */
         $count = 0;
         $fecha = $this->fecha($request->fecha);
         $anio = $this->anioID($fecha['anio']);
@@ -84,7 +85,6 @@ class CompraDetalleAlmacen extends Model
                 if ($ingresarDetalle == true) {
                     $stock = CantidadInsumosAlmacen::agregarStockInsumo($key, $carro);
                     if ($stock == true) {
-                        DB::commit();
                         $count++;
                     } else {
                         DB::rollBack();
@@ -94,12 +94,16 @@ class CompraDetalleAlmacen extends Model
                 }
             }
         }
-        dd(count($almacenes) == $count);
+
         if (count($almacenes) == $count) {
+            DB::commit();
             return ['estado' => 'success', 'mensaje' => 'Compra registrada Correctamente.'];
         } else {
             return ['estado' => 'failed', 'mensaje' => 'A ocurrido un error, intenta nuevamente.'];
         }
+        /* } else {
+            return ['estado' => 'failed', 'mensaje' => 'Solo puedes registrar una compra por sucursales independientemente.'];
+        } */
     }
 
     protected function traerCompras($anio, $mes, $sucursal_id)
