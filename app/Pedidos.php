@@ -19,6 +19,8 @@ class Pedidos extends Model
 
     protected function ingresarPedido($request)
     {
+        //hacer la modificacion traer los datos del pedido, 
+        //las mesas de mesapedido restar del stock verificar nuevamente si es que hay  stock al ingresar un pedido
         /* dd($request->all()); */
         /* $test = CompraDetalleAlmacen::verificarStockProducto($request->pedidos);
         dd($test); */
@@ -82,5 +84,13 @@ class Pedidos extends Model
         } else {
             return ['estado' => 'failed', 'mensaje' => 'No se encuentra el pedido.'];
         }
+    }
+
+    protected function traerDatosPedidos(){
+        $datos = DB::table('pedido')
+        ->select([
+            'id',
+            'hora_pedido'
+        ])
     }
 }
