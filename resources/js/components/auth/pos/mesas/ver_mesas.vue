@@ -54,7 +54,7 @@
                       class="btn btn-primary btn-sm btn-block"
                       data-toggle="modal"
                       data-target="#staticBackdrop"
-                      @click="añadirMesa(true, null)"
+                      @click="añadirMesa(true, null, true)"
                     >Tomar Pedido</button>
                     <button
                       type="button"
@@ -120,7 +120,7 @@
                     class="btn btn-primary btn-sm btn-block"
                     data-toggle="modal"
                     data-target="#staticBackdrop"
-                    @click="añadirMesa(true, null)"
+                    @click="añadirMesa(true, null, false)"
                   >Actualizar Pedido</button>
                   <button
                     type="button"

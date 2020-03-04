@@ -4030,9 +4030,11 @@ __webpack_require__.r(__webpack_exports__);
 
       console.log(this.mesa);
     },
-    añadirMesa: function aAdirMesa(estado, mesa) {
-      this.pedidos = [];
-      this.total = 0;
+    añadirMesa: function aAdirMesa(estado, mesa, quitar) {
+      if (quitar == true) {
+        this.pedidos = [];
+        this.total = 0;
+      }
 
       if (estado == true) {
         this.pedidoMesas = [];
@@ -78901,7 +78903,7 @@ var render = function() {
                                   },
                                   on: {
                                     click: function($event) {
-                                      _vm.añadirMesa(true, null)
+                                      _vm.añadirMesa(true, null, true)
                                     }
                                   }
                                 },
@@ -78998,7 +79000,7 @@ var render = function() {
                               },
                               on: {
                                 click: function($event) {
-                                  _vm.añadirMesa(true, null)
+                                  _vm.añadirMesa(true, null, false)
                                 }
                               }
                             },
