@@ -46,6 +46,8 @@ export default {
             console.log(this.mesa);
         },
         añadirMesa(estado, mesa) {
+            this.pedidos = [];
+            this.total = 0;
             if (estado == true) {
                 this.pedidoMesas = [];
                 this.pedidoMesas.push({ 'id': this.mesa.id, 'mesa': this.mesa.mesa });

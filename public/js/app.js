@@ -4031,6 +4031,9 @@ __webpack_require__.r(__webpack_exports__);
       console.log(this.mesa);
     },
     añadirMesa: function aAdirMesa(estado, mesa) {
+      this.pedidos = [];
+      this.total = 0;
+
       if (estado == true) {
         this.pedidoMesas = [];
         this.pedidoMesas.push({
