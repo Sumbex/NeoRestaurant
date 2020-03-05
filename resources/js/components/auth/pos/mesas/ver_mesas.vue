@@ -65,21 +65,24 @@
                 </div>
               </div>
               <div v-show="estadoMesa == 3">
+                <div class="col-sm-12 text-center">
+                  <h3 class="text-center mt-2">Informacion del Pedido</h3>
+                </div>
                 <div class="row justify-center mt-3 mb-1">
-                  <div class="col-sm-12 text-center">
-                    <h4>Pedido</h4>
+                  <div class="col-lg-12 mb-3">
+                    <h5 class="text-center">Mesa # {{mesa.mesa}}</h5>
                   </div>
                   <div class="col-sm-12">
                     <label>
                       <strong>Hora del Pedido:</strong>
                     </label>
-                    <!-- <label class="text-right">15:25</label> -->
+                    <label class="text-right">{{datosPedido.hora_pedido}}</label>
                   </div>
                   <div class="col-sm-12">
                     <label>
                       <strong>Estado del Pedido:</strong>
                     </label>
-                    <!-- <label class="text-right">Atendido</label> -->
+                    <label class="text-right">{{datosPedido.estado}}</label>
                   </div>
                   <div class="col-sm-12 text-center">
                     <label>

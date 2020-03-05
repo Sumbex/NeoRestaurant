@@ -19,6 +19,7 @@ export default {
             estadoMesa: null,
             pedidoMesas: [],
             mesasDrop: [],
+            datosPedido: [],
         }
     },
     methods: {
@@ -294,6 +295,7 @@ export default {
             axios.get('/api/traer_pedido_mesa/' + this.id + '/' + this.mesa.id).then((res) => {
                 if (res.data.estado == 'success') {
                     this.pedidos = [];
+                    this.datosPedido = res.data.datos;
                     for (let i = 0; i < res.data.pedido.length; i++) {
                         this.pedidos.push({ 'id': res.data.pedido[i].id, 'id_producto': res.data.pedido[i].producto_id, 'producto': res.data.pedido[i].producto, 'cantidad': res.data.pedido[i].cantidad, 'precio': res.data.pedido[i].precio_venta, 'subtotal': res.data.pedido[i].subtotal });
                     }

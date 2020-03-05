@@ -3999,7 +3999,8 @@ __webpack_require__.r(__webpack_exports__);
       estado: false,
       estadoMesa: null,
       pedidoMesas: [],
-      mesasDrop: []
+      mesasDrop: [],
+      datosPedido: []
     };
   },
   methods: {
@@ -4320,6 +4321,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.get('/api/traer_pedido_mesa/' + this.id + '/' + this.mesa.id).then(function (res) {
         if (res.data.estado == 'success') {
           _this7.pedidos = [];
+          _this7.datosPedido = res.data.datos;
 
           for (var i = 0; i < res.data.pedido.length; i++) {
             _this7.pedidos.push({
@@ -78946,6 +78948,36 @@ var render = function() {
                     [
                       _vm._m(3),
                       _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "row justify-center mt-3 mb-1" },
+                        [
+                          _c("div", { staticClass: "col-lg-12 mb-3" }, [
+                            _c("h5", { staticClass: "text-center" }, [
+                              _vm._v("Mesa # " + _vm._s(_vm.mesa.mesa))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-sm-12" }, [
+                            _vm._m(4),
+                            _vm._v(" "),
+                            _c("label", { staticClass: "text-right" }, [
+                              _vm._v(_vm._s(_vm.datosPedido.hora_pedido))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-sm-12" }, [
+                            _vm._m(5),
+                            _vm._v(" "),
+                            _c("label", { staticClass: "text-right" }, [
+                              _vm._v(_vm._s(_vm.datosPedido.estado))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _vm._m(6)
+                        ]
+                      ),
+                      _vm._v(" "),
                       _vm._l(_vm.pedidos, function(pedido) {
                         return _c(
                           "div",
@@ -78975,7 +79007,7 @@ var render = function() {
                       _vm._v(" "),
                       _c("div", { staticClass: "row justify-center mb-2" }, [
                         _c("div", { staticClass: "col-sm-12" }, [
-                          _vm._m(4),
+                          _vm._m(7),
                           _vm._v(" "),
                           _c("label", { staticClass: "text-right" }, [
                             _vm._v("$" + _vm._s(_vm.total))
@@ -79035,7 +79067,7 @@ var render = function() {
           "div",
           { staticClass: "column col-md-8", attrs: { id: "main" } },
           [
-            _vm._m(5),
+            _vm._m(8),
             _vm._v(" "),
             _vm._l(_vm.zonas, function(zona) {
               return _c(
@@ -79151,7 +79183,7 @@ var render = function() {
                   [_vm._v("Nuevo Pedido " + _vm._s(_vm.idMesa))]
                 ),
                 _vm._v(" "),
-                _vm._m(6)
+                _vm._m(9)
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
@@ -79283,7 +79315,7 @@ var render = function() {
                             ]
                           ),
                           _vm._v(" "),
-                          _vm._m(7),
+                          _vm._m(10),
                           _vm._v(" "),
                           _vm._l(_vm.pedidos, function(pedido) {
                             return _c(
@@ -79319,7 +79351,7 @@ var render = function() {
                             { staticClass: "row justify-center mb-2" },
                             [
                               _c("div", { staticClass: "col-sm-12" }, [
-                                _vm._m(8),
+                                _vm._m(11),
                                 _vm._v(" "),
                                 _c("label", { staticClass: "text-right" }, [
                                   _vm._v("$" + _vm._s(_vm.total))
@@ -79550,22 +79582,30 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row justify-center mt-3 mb-1" }, [
-      _c("div", { staticClass: "col-sm-12 text-center" }, [
-        _c("h4", [_vm._v("Pedido")])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-sm-12" }, [
-        _c("label", [_c("strong", [_vm._v("Hora del Pedido:")])])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-sm-12" }, [
-        _c("label", [_c("strong", [_vm._v("Estado del Pedido:")])])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-sm-12 text-center" }, [
-        _c("label", [_c("h5", [_c("strong", [_vm._v("Pedido")])])])
+    return _c("div", { staticClass: "col-sm-12 text-center" }, [
+      _c("h3", { staticClass: "text-center mt-2" }, [
+        _vm._v("Informacion del Pedido")
       ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", [_c("strong", [_vm._v("Hora del Pedido:")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", [_c("strong", [_vm._v("Estado del Pedido:")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-sm-12 text-center" }, [
+      _c("label", [_c("h5", [_c("strong", [_vm._v("Pedido")])])])
     ])
   },
   function() {
@@ -82291,86 +82331,102 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "px-2" }, [
-                _c("div", { staticClass: "form-label-group" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.rut,
-                        expression: "rut"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "text",
-                      placeholder: "Ingrese su rut",
-                      required: "",
-                      autofocus: ""
-                    },
-                    domProps: { value: _vm.rut },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.rut = $event.target.value
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("label", { attrs: { for: "inputEmail" } }, [_vm._v("Rut")])
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-label-group" }, [
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.password,
-                        expression: "password"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "password",
-                      placeholder: "Ingrese su contraseña",
-                      required: ""
-                    },
-                    domProps: { value: _vm.password },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.password = $event.target.value
-                      }
-                    }
-                  }),
-                  _vm._v(" "),
-                  _c("label", { attrs: { for: "inputPassword" } }, [
-                    _vm._v("Contraseña")
-                  ])
-                ]),
-                _vm._v(" "),
                 _c(
-                  "button",
+                  "form",
                   {
-                    staticClass: "btn btn-lg btn-primary btn-block",
-                    attrs: { type: "submit" },
+                    staticClass: "justify-content-center",
                     on: {
-                      click: function($event) {
+                      submit: function($event) {
+                        $event.preventDefault()
                         return _vm.login()
                       }
                     }
                   },
-                  [_vm._v("Ingresar")]
-                ),
-                _vm._v(" "),
-                _c("a", { staticClass: "float-left text-white mt-2" }, [
-                  _vm._v("Olvidaste tu Contraseña")
-                ])
+                  [
+                    _c("div", { staticClass: "form-label-group" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.rut,
+                            expression: "rut"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          placeholder: "Ingrese su rut",
+                          required: "",
+                          autofocus: ""
+                        },
+                        domProps: { value: _vm.rut },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.rut = $event.target.value
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("label", { attrs: { for: "inputEmail" } }, [
+                        _vm._v("Rut")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-label-group" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.password,
+                            expression: "password"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "password",
+                          placeholder: "Ingrese su contraseña",
+                          required: ""
+                        },
+                        domProps: { value: _vm.password },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.password = $event.target.value
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c("label", { attrs: { for: "inputPassword" } }, [
+                        _vm._v("Contraseña")
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-lg btn-primary btn-block",
+                        attrs: { type: "submit" },
+                        on: {
+                          click: function($event) {
+                            return _vm.login()
+                          }
+                        }
+                      },
+                      [_vm._v("Ingresar")]
+                    ),
+                    _vm._v(" "),
+                    _c("a", { staticClass: "float-left text-white mt-2" }, [
+                      _vm._v("Olvidaste tu Contraseña")
+                    ])
+                  ]
+                )
               ])
             ]
           )
@@ -100434,7 +100490,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var routes = [{
-  path: '/',
+  path: '/login',
   component: _components_publico_index_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
   name: 'Index',
   iconCls: 'el-icon-message',

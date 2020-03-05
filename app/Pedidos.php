@@ -61,6 +61,7 @@ class Pedidos extends Model
         $pedido = DB::table('mesa_pedido as mp')
             ->select([
                 'dp.id',
+                'dp.pedido_id',
                 'pr.id as producto_id',
                 'pr.producto',
                 'dp.cantidad',
@@ -76,21 +77,39 @@ class Pedidos extends Model
                 'mp.mesa_id' => $mesa,
                 'a.sucursal_id' => $sucursal
             ])
-            ->groupBy('pr.producto', 'dp.cantidad', 'dp.precio','pr.id', 'dp.id')
+            ->groupBy('pr.producto', 'dp.cantidad', 'dp.precio', 'pr.id', 'dp.id')
             ->get();
 
         if (!$pedido->isEmpty()) {
-            return ['estado' => 'success', 'pedido' => $pedido];
+            $datos = $this->traerDatosPedidos($pedido[0]->pedido_id);
+            if ($datos['estado'] == 'success') {
+                return ['estado' => 'success', 'pedido' => $pedido, 'datos' => $datos['datos']];
+            } else {
+                return ['estado' => 'failed', 'mensaje' => 'No se encuentra el pedido.'];
+            }
         } else {
             return ['estado' => 'failed', 'mensaje' => 'No se encuentra el pedido.'];
         }
     }
 
-    protected function traerDatosPedidos(){
-        $datos = DB::table('pedido')
-        ->select([
-            'id',
-            'hora_pedido'
-        ])
+    protected function traerDatosPedidos($pedido)
+    {
+        $datos = DB::table('pedido as p')
+            ->select([
+                'p.id',
+                'p.hora_pedido',
+                'ep.descripcion as estado'
+            ])
+            ->join('estado_pedidos as ep', 'ep.id', 'p.estado_id')
+            ->where([
+                'p.activo' => 'S',
+                'p.id' => $pedido
+            ])
+            ->first();
+        if (!is_null($datos)) {
+            return ['estado' => 'success', 'datos' => $datos];
+        } else {
+            return ['estado' => 'failed', 'mensaje' => 'No se encuentran los datos.'];
+        }
     }
 }

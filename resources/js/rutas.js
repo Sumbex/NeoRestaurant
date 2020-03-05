@@ -23,7 +23,7 @@ import VerProductos from './components/auth/productos/ver_detalle/detalle.vue';
 import Cajas from './components/auth/caja/caja.vue';
 
 const routes = [{
-        path: '/',
+        path: '/login',
         component: Index,
         name: 'Index',
         iconCls: 'el-icon-message',
