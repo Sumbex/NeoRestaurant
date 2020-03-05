@@ -3999,8 +3999,10 @@ __webpack_require__.r(__webpack_exports__);
       estado: false,
       estadoMesa: null,
       pedidoMesas: [],
+      updpedidoMesas: [],
       mesasDrop: [],
-      datosPedido: []
+      datosPedido: [],
+      mesasPedido: null
     };
   },
   methods: {
@@ -4039,17 +4041,27 @@ __webpack_require__.r(__webpack_exports__);
 
       if (estado == true) {
         this.pedidoMesas = [];
-        this.pedidoMesas.push({
-          'id': this.mesa.id,
-          'mesa': this.mesa.mesa
-        });
+
+        if (quitar == true) {
+          this.pedidoMesas.push({
+            'id': this.mesa.id,
+            'mesa': this.mesa.mesa
+          });
+        } else {
+          for (var i = 0; i < this.updpedidoMesas.length; i++) {
+            this.pedidoMesas.push({
+              'id': this.updpedidoMesas[i].id,
+              'mesa': this.updpedidoMesas[i].mesa
+            });
+          }
+        }
       } else {
         var existe = false;
 
-        for (var i = 0; i < this.pedidoMesas.length; i++) {
-          if (mesa.id == this.pedidoMesas[i].id) {
+        for (var _i = 0; _i < this.pedidoMesas.length; _i++) {
+          if (mesa.id == this.pedidoMesas[_i].id) {
             existe = true;
-            console.log('existe en la posicion: ' + i + ', existe: ' + existe);
+            console.log('existe en la posicion: ' + _i + ', existe: ' + existe);
             break;
           }
         }
@@ -4077,9 +4089,23 @@ __webpack_require__.r(__webpack_exports__);
       console.log(this.pedidoMesas);
     },
     quitarMesa: function quitarMesa(id) {
-      for (var i = 0; i < this.pedidoMesas.length; i++) {
-        if (this.pedidoMesas[i].id == id) {
-          this.pedidoMesas.splice(i, 1);
+      if (this.mesa.id == id) {
+        this.$snotify.create({
+          body: 'No puedes quitar la mesa seleccionada.',
+          config: {
+            timeout: 2000,
+            showProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: false,
+            position: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyPosition"].centerBottom,
+            type: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyStyle"].warning
+          }
+        });
+      } else {
+        for (var i = 0; i < this.pedidoMesas.length; i++) {
+          if (this.pedidoMesas[i].id == id) {
+            this.pedidoMesas.splice(i, 1);
+          }
         }
       }
     },
@@ -4322,6 +4348,8 @@ __webpack_require__.r(__webpack_exports__);
         if (res.data.estado == 'success') {
           _this7.pedidos = [];
           _this7.datosPedido = res.data.datos;
+          _this7.mesasPedido = res.data.mesas;
+          _this7.updpedidoMesas = res.data.mesas_pedido;
 
           for (var i = 0; i < res.data.pedido.length; i++) {
             _this7.pedidos.push({
@@ -78968,7 +78996,7 @@ var render = function() {
                         [
                           _c("div", { staticClass: "col-lg-12 mb-3" }, [
                             _c("h5", { staticClass: "text-center" }, [
-                              _vm._v("Mesa # " + _vm._s(_vm.mesa.mesa))
+                              _vm._v("Mesa # " + _vm._s(_vm.mesasPedido))
                             ])
                           ]),
                           _vm._v(" "),
@@ -79057,12 +79085,7 @@ var render = function() {
                             "button",
                             {
                               staticClass: "btn btn-danger btn-sm btn-block",
-                              attrs: { type: "button" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.abrirCerrarMesa()
-                                }
-                              }
+                              attrs: { type: "button" }
                             },
                             [_vm._v("Pagar")]
                           )
@@ -79306,7 +79329,7 @@ var render = function() {
                                         "aria-labelledby": "dropdownQuitar"
                                       }
                                     },
-                                    _vm._l(_vm.mesasDrop, function(data) {
+                                    _vm._l(_vm.pedidoMesas, function(data) {
                                       return _c(
                                         "a",
                                         {

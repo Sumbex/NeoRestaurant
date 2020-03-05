@@ -18,8 +18,10 @@ export default {
             estado: false,
             estadoMesa: null,
             pedidoMesas: [],
+            updpedidoMesas: [],
             mesasDrop: [],
             datosPedido: [],
+            mesasPedido: null,
         }
     },
     methods: {
@@ -53,7 +55,13 @@ export default {
             }
             if (estado == true) {
                 this.pedidoMesas = [];
-                this.pedidoMesas.push({ 'id': this.mesa.id, 'mesa': this.mesa.mesa });
+                if (quitar == true) {
+                    this.pedidoMesas.push({ 'id': this.mesa.id, 'mesa': this.mesa.mesa });
+                } else {
+                    for (let i = 0; i < this.updpedidoMesas.length; i++) {
+                        this.pedidoMesas.push({ 'id': this.updpedidoMesas[i].id, 'mesa': this.updpedidoMesas[i].mesa });
+                    }
+                }
             } else {
                 let existe = false;
                 for (let i = 0; i < this.pedidoMesas.length; i++) {
@@ -84,11 +92,26 @@ export default {
             console.log(this.pedidoMesas);
         },
         quitarMesa(id) {
-            for (let i = 0; i < this.pedidoMesas.length; i++) {
-                if (this.pedidoMesas[i].id == id) {
-                    this.pedidoMesas.splice(i, 1);
+            if (this.mesa.id == id) {
+                this.$snotify.create({
+                    body: 'No puedes quitar la mesa seleccionada.',
+                    config: {
+                        timeout: 2000,
+                        showProgressBar: true,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        position: SnotifyPosition.centerBottom,
+                        type: SnotifyStyle.warning,
+                    }
+                });
+            } else {
+                for (let i = 0; i < this.pedidoMesas.length; i++) {
+                    if (this.pedidoMesas[i].id == id) {
+                        this.pedidoMesas.splice(i, 1);
+                    }
                 }
             }
+
         },
         abrirCerrarMesa() {
             const data = {
@@ -296,6 +319,8 @@ export default {
                 if (res.data.estado == 'success') {
                     this.pedidos = [];
                     this.datosPedido = res.data.datos;
+                    this.mesasPedido = res.data.mesas;
+                    this.updpedidoMesas = res.data.mesas_pedido;
                     for (let i = 0; i < res.data.pedido.length; i++) {
                         this.pedidos.push({ 'id': res.data.pedido[i].id, 'id_producto': res.data.pedido[i].producto_id, 'producto': res.data.pedido[i].producto, 'cantidad': res.data.pedido[i].cantidad, 'precio': res.data.pedido[i].precio_venta, 'subtotal': res.data.pedido[i].subtotal });
                     }

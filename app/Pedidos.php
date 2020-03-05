@@ -83,7 +83,12 @@ class Pedidos extends Model
         if (!$pedido->isEmpty()) {
             $datos = $this->traerDatosPedidos($pedido[0]->pedido_id);
             if ($datos['estado'] == 'success') {
-                return ['estado' => 'success', 'pedido' => $pedido, 'datos' => $datos['datos']];
+                $mesas = $this->traerMesasPedido($pedido[0]->pedido_id);
+                if ($mesas['estado'] == 'success') {
+                    return ['estado' => 'success', 'datos' => $datos['datos'],  'mesas' => $mesas['mesas'], 'mesas_pedido' => $mesas['mesa_pedido'], 'pedido' => $pedido];
+                } else {
+                    return ['estado' => 'failed', 'mensaje' => 'No se encuentra el pedido.'];
+                }
             } else {
                 return ['estado' => 'failed', 'mensaje' => 'No se encuentra el pedido.'];
             }
@@ -110,6 +115,40 @@ class Pedidos extends Model
             return ['estado' => 'success', 'datos' => $datos];
         } else {
             return ['estado' => 'failed', 'mensaje' => 'No se encuentran los datos.'];
+        }
+    }
+
+    protected function traerMesasPedido($pedido)
+    {
+        /* select m.mesa from mesa_pedido as mp
+inner join mesas as m on m.id = mp.mesa_id
+where mp.pedido_id = 12 */
+        $mesas = DB::table('mesa_pedido as mp')
+            ->select([
+                'm.id',
+                'm.mesa'
+            ])
+            ->join('mesas as m', 'm.id', 'mp.mesa_id')
+            ->where([
+                'mp.pedido_id' => $pedido
+            ])
+            ->get();
+        if (!$mesas->isEmpty()) {
+            $mesa = '';
+            foreach ($mesas as $key) {
+                if ($mesa == '') {
+                    $mesa = $key->mesa;
+                } else {
+                    if (count($mesas) > 2) {
+                        $mesa = $mesa . ', ' . $key->mesa;
+                    } else {
+                        $mesa = $mesa . ' y ' . $key->mesa;
+                    }
+                }
+            }
+            return ['estado' => 'success', 'mesas' => $mesa, 'mesa_pedido' => $mesas];
+        } else {
+            return ['estado' => 'failed', 'mensaje' => 'No se encuentran las mesas.'];
         }
     }
 }

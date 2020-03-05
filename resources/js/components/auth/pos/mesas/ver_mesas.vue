@@ -70,7 +70,7 @@
                 </div>
                 <div class="row justify-center mt-3 mb-1">
                   <div class="col-lg-12 mb-3">
-                    <h5 class="text-center">Mesa # {{mesa.mesa}}</h5>
+                    <h5 class="text-center">Mesa # {{mesasPedido}}</h5>
                   </div>
                   <div class="col-sm-12">
                     <label>
@@ -128,7 +128,6 @@
                   <button
                     type="button"
                     class="btn btn-danger btn-sm btn-block"
-                    @click="abrirCerrarMesa()"
                   >Pagar</button>
                 </div>
               </div>
@@ -244,7 +243,7 @@
                           <div class="dropdown-menu" aria-labelledby="dropdownQuitar">
                             <a
                               class="dropdown-item"
-                              v-for="data in mesasDrop"
+                              v-for="data in pedidoMesas"
                               prop="data"
                               :key="data.id"
                               @click="quitarMesa(data.id)"
