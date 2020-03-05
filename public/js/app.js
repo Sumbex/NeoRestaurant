@@ -82449,12 +82449,7 @@ var render = function() {
                       "button",
                       {
                         staticClass: "btn btn-lg btn-primary btn-block",
-                        attrs: { type: "submit" },
-                        on: {
-                          click: function($event) {
-                            return _vm.login()
-                          }
-                        }
+                        attrs: { type: "submit" }
                       },
                       [_vm._v("Ingresar")]
                     ),
@@ -99100,13 +99095,13 @@ Vue.use(__webpack_require__(/*! @websanova/vue-auth */ "./node_modules/@websanov
   rolesVar: 'type',
   //aqui va la columna rol de users
   loginData: {
-    url: ' api/auth/login'
+    url: '/api/auth/login'
   },
   logoutData: {
-    url: ' api/auth/logout'
+    url: '/api/auth/logout'
   },
   fetchData: {
-    url: ' api/auth/user'
+    url: '/api/auth/user'
   },
   refreshData: {
     enabled: false

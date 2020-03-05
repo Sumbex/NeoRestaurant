@@ -45,9 +45,9 @@ Vue.use(require('@websanova/vue-auth'), {
     http: require('@websanova/vue-auth/drivers/http/axios.1.x.js'),
     router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js'),
     rolesVar: 'type', //aqui va la columna rol de users
-    loginData: { url: ' api/auth/login' },
-    logoutData: { url: ' api/auth/logout' },
-    fetchData: { url: ' api/auth/user' },
+    loginData: { url: '/api/auth/login' },
+    logoutData: { url: '/api/auth/logout' },
+    fetchData: { url: '/api/auth/user' },
     refreshData: { enabled: false },
 });
 

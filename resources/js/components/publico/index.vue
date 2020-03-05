@@ -30,7 +30,6 @@
                 </div>
                 <button
                   class="btn btn-lg btn-primary btn-block"
-                  @click="login()"
                   type="submit"
                 >Ingresar</button>
                 <a class="float-left text-white mt-2">Olvidaste tu Contraseña</a>
