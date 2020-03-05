@@ -78282,7 +78282,7 @@ var render = function() {
                 staticStyle: { "text-decoration": "none" },
                 on: {
                   click: function($event) {
-                    return _vm.url("Dashboard")
+                    return _vm.url("Home")
                   }
                 }
               },
@@ -78300,11 +78300,11 @@ var render = function() {
                   "list-group-item list-group-item-action bg-dark text-white",
                 on: {
                   click: function($event) {
-                    return _vm.url("Dashboard")
+                    return _vm.url("Home")
                   }
                 }
               },
-              [_vm._v("Dashboard")]
+              [_vm._v("Home")]
             ),
             _vm._v(" "),
             _c(
@@ -100521,8 +100521,8 @@ var routes = [{
     auth: true
   },
   children: [{
-    name: 'Dashboard',
-    path: '/dashboard',
+    name: 'Home',
+    path: '/home',
     component: _components_auth_home_home_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   }, {
     name: 'Sucursal',

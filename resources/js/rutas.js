@@ -38,8 +38,8 @@ const routes = [{
         meta: { auth: true },
 
         children: [{
-                name: 'Dashboard',
-                path: '/dashboard',
+                name: 'Home',
+                path: '/home',
                 component: Home
             },
             {
