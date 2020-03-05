@@ -3,7 +3,7 @@
     <!-- Sidebar -->
     <div class="bg-dark border-right" id="sidebar-wrapper">
       <div class="sidebar-heading border-bottom">
-        <a @click="url('Home')" style="text-decoration:none">
+        <a @click="url('Dashboard')" style="text-decoration:none">
           <div class="row px-2 no-gutters">
             <div class="col-8 mt-2 ml-3">
               <h5 class="text-white">Neo RestoBar</h5>
@@ -18,6 +18,10 @@
         <span class="list-group-item bg-info text-white bg-primary text-center">
           <h6>Navegacion</h6>
         </span>
+        <a
+          @click="url('Dashboard')"
+          class="list-group-item list-group-item-action bg-dark text-white"
+        >Dashboard</a>
         <a @click="url('POS')" class="list-group-item list-group-item-action bg-dark text-white">POS</a>
         <a
           data-toggle="collapse"
