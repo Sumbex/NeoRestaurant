@@ -22,6 +22,8 @@ export default {
             mesasDrop: [],
             datosPedido: [],
             mesasPedido: null,
+            updPedido: false,
+            mesasBorrar: [],
         }
     },
     methods: {
@@ -51,13 +53,17 @@ export default {
         añadirMesa(estado, mesa, quitar) {
             if (quitar == true) {
                 this.pedidos = [];
+                this.datosPedido = [];
+                this.mesasBorrar = [];
                 this.total = 0;
             }
             if (estado == true) {
                 this.pedidoMesas = [];
                 if (quitar == true) {
+                    this.updPedido = false;
                     this.pedidoMesas.push({ 'id': this.mesa.id, 'mesa': this.mesa.mesa });
                 } else {
+                    this.updPedido = true;
                     for (let i = 0; i < this.updpedidoMesas.length; i++) {
                         this.pedidoMesas.push({ 'id': this.updpedidoMesas[i].id, 'mesa': this.updpedidoMesas[i].mesa });
                     }
@@ -107,9 +113,11 @@ export default {
             } else {
                 for (let i = 0; i < this.pedidoMesas.length; i++) {
                     if (this.pedidoMesas[i].id == id) {
+                        this.mesasBorrar.push(this.pedidoMesas[i]);
                         this.pedidoMesas.splice(i, 1);
                     }
                 }
+                console.log(this.mesasBorrar);
             }
 
         },
@@ -229,13 +237,23 @@ export default {
         toggle() {
             $("#wrapper").toggleClass("toggled");
         },
-        ingresarPedido() {
+        ingresarModificarPedido() {
+            let id = null;
+            if (this.datosPedido == []) {
+                id = null;
+            } else {
+                id = this.datosPedido.id;
+            }
+            //datosPedido.id
             const data = {
+                'id': id,
                 'mesas': this.pedidoMesas,
                 'pedidos': this.pedidos,
                 'total': this.total,
+                'update': this.updPedido,
+                'mesas_borrar': this.mesasBorrar,
             }
-            axios.post('/api/ingresar_pedido', data).then((res) => {
+            axios.post('/api/ingresar_actualizar_pedido', data).then((res) => {
                 if (res.data.estado == 'success') {
                     this.estadoMesa = 3;
                     this.$snotify.create({

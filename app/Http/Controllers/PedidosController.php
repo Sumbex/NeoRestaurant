@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 
 class PedidosController extends Controller
 {
-    public function IngresarPedido(Request $request)
+    public function IngresarActualizarPedido(Request $request)
     {
-        return Pedidos::ingresarPedido($request);
+        return Pedidos::ingresarActualizarPedido($request);
     }
 
     public function TraerPedido($sucursal, $mesa)

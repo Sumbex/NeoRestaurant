@@ -4002,7 +4002,9 @@ __webpack_require__.r(__webpack_exports__);
       updpedidoMesas: [],
       mesasDrop: [],
       datosPedido: [],
-      mesasPedido: null
+      mesasPedido: null,
+      updPedido: false,
+      mesasBorrar: []
     };
   },
   methods: {
@@ -4036,6 +4038,8 @@ __webpack_require__.r(__webpack_exports__);
     añadirMesa: function aAdirMesa(estado, mesa, quitar) {
       if (quitar == true) {
         this.pedidos = [];
+        this.datosPedido = [];
+        this.mesasBorrar = [];
         this.total = 0;
       }
 
@@ -4043,11 +4047,14 @@ __webpack_require__.r(__webpack_exports__);
         this.pedidoMesas = [];
 
         if (quitar == true) {
+          this.updPedido = false;
           this.pedidoMesas.push({
             'id': this.mesa.id,
             'mesa': this.mesa.mesa
           });
         } else {
+          this.updPedido = true;
+
           for (var i = 0; i < this.updpedidoMesas.length; i++) {
             this.pedidoMesas.push({
               'id': this.updpedidoMesas[i].id,
@@ -4104,9 +4111,12 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         for (var i = 0; i < this.pedidoMesas.length; i++) {
           if (this.pedidoMesas[i].id == id) {
+            this.mesasBorrar.push(this.pedidoMesas[i]);
             this.pedidoMesas.splice(i, 1);
           }
         }
+
+        console.log(this.mesasBorrar);
       }
     },
     abrirCerrarMesa: function abrirCerrarMesa() {
@@ -4241,15 +4251,27 @@ __webpack_require__.r(__webpack_exports__);
     toggle: function toggle() {
       $("#wrapper").toggleClass("toggled");
     },
-    ingresarPedido: function ingresarPedido() {
+    ingresarModificarPedido: function ingresarModificarPedido() {
       var _this5 = this;
 
+      var id = null;
+
+      if (this.datosPedido == []) {
+        id = null;
+      } else {
+        id = this.datosPedido.id;
+      } //datosPedido.id
+
+
       var data = {
+        'id': id,
         'mesas': this.pedidoMesas,
         'pedidos': this.pedidos,
-        'total': this.total
+        'total': this.total,
+        'update': this.updPedido,
+        'mesas_borrar': this.mesasBorrar
       };
-      axios.post('/api/ingresar_pedido', data).then(function (res) {
+      axios.post('/api/ingresar_actualizar_pedido', data).then(function (res) {
         if (res.data.estado == 'success') {
           _this5.estadoMesa = 3;
 
@@ -79352,7 +79374,31 @@ var render = function() {
                             ]
                           ),
                           _vm._v(" "),
-                          _vm._m(10),
+                          _c(
+                            "div",
+                            { staticClass: "row justify-center mt-3 mb-1" },
+                            [
+                              _vm._m(10),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-sm-12" }, [
+                                _vm._m(11),
+                                _vm._v(" "),
+                                _c("label", { staticClass: "text-right" }, [
+                                  _vm._v(_vm._s(_vm.datosPedido.hora_pedido))
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "col-sm-12" }, [
+                                _vm._m(12),
+                                _vm._v(" "),
+                                _c("label", { staticClass: "text-right" }, [
+                                  _vm._v(_vm._s(_vm.datosPedido.estado))
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _vm._m(13)
+                            ]
+                          ),
                           _vm._v(" "),
                           _vm._l(_vm.pedidos, function(pedido) {
                             return _c(
@@ -79388,7 +79434,7 @@ var render = function() {
                             { staticClass: "row justify-center mb-2" },
                             [
                               _c("div", { staticClass: "col-sm-12" }, [
-                                _vm._m(11),
+                                _vm._m(14),
                                 _vm._v(" "),
                                 _c("label", { staticClass: "text-right" }, [
                                   _vm._v("$" + _vm._s(_vm.total))
@@ -79412,11 +79458,41 @@ var render = function() {
                                   attrs: { type: "button" },
                                   on: {
                                     click: function($event) {
-                                      return _vm.ingresarPedido()
+                                      return _vm.ingresarModificarPedido()
                                     }
                                   }
                                 },
-                                [_vm._v("Realizar Pedido")]
+                                [
+                                  _c(
+                                    "span",
+                                    {
+                                      directives: [
+                                        {
+                                          name: "show",
+                                          rawName: "v-show",
+                                          value: !_vm.updPedido,
+                                          expression: "!updPedido"
+                                        }
+                                      ]
+                                    },
+                                    [_vm._v("Realizar Pedido")]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "span",
+                                    {
+                                      directives: [
+                                        {
+                                          name: "show",
+                                          rawName: "v-show",
+                                          value: _vm.updPedido,
+                                          expression: "updPedido"
+                                        }
+                                      ]
+                                    },
+                                    [_vm._v("Actualizar Pedido")]
+                                  )
+                                ]
                               )
                             ]
                           )
@@ -79680,22 +79756,28 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row justify-center mt-3 mb-1" }, [
-      _c("div", { staticClass: "col-sm-12 text-center" }, [
-        _c("h4", [_vm._v("Toma de Pedido")])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-sm-12" }, [
-        _c("label", [_c("strong", [_vm._v("Hora del Pedido:")])])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-sm-12" }, [
-        _c("label", [_c("strong", [_vm._v("Estado del Pedido:")])])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-sm-12 text-center" }, [
-        _c("label", [_c("h5", [_c("strong", [_vm._v("Pedido")])])])
-      ])
+    return _c("div", { staticClass: "col-sm-12 text-center" }, [
+      _c("h4", [_vm._v("Toma de Pedido")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", [_c("strong", [_vm._v("Hora del Pedido:")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", [_c("strong", [_vm._v("Estado del Pedido:")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-sm-12 text-center" }, [
+      _c("label", [_c("h5", [_c("strong", [_vm._v("Pedido")])])])
     ])
   },
   function() {

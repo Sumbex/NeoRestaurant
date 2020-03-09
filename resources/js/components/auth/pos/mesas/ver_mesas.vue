@@ -125,10 +125,7 @@
                     data-target="#staticBackdrop"
                     @click="añadirMesa(true, null, false)"
                   >Actualizar Pedido</button>
-                  <button
-                    type="button"
-                    class="btn btn-danger btn-sm btn-block"
-                  >Pagar</button>
+                  <button type="button" class="btn btn-danger btn-sm btn-block">Pagar</button>
                 </div>
               </div>
             </div>
@@ -256,17 +253,29 @@
                       <div class="col-sm-12 text-center">
                         <h4>Toma de Pedido</h4>
                       </div>
-                      <div class="col-sm-12">
+                      <!-- <div class="col-sm-12">
                         <label>
                           <strong>Hora del Pedido:</strong>
                         </label>
-                        <!-- <label class="text-right">15:25</label> -->
+                        <label class="text-right">15:25</label>
                       </div>
                       <div class="col-sm-12">
                         <label>
                           <strong>Estado del Pedido:</strong>
                         </label>
-                        <!-- <label class="text-right">Atendido</label> -->
+                        <label class="text-right">Atendido</label>
+                      </div>-->
+                      <div class="col-sm-12">
+                        <label>
+                          <strong>Hora del Pedido:</strong>
+                        </label>
+                        <label class="text-right">{{datosPedido.hora_pedido}}</label>
+                      </div>
+                      <div class="col-sm-12">
+                        <label>
+                          <strong>Estado del Pedido:</strong>
+                        </label>
+                        <label class="text-right">{{datosPedido.estado}}</label>
                       </div>
                       <div class="col-sm-12 text-center">
                         <label>
@@ -306,13 +315,11 @@
                       <button
                         type="button"
                         class="btn btn-primary btn-sm btn-block"
-                        @click="ingresarPedido()"
-                      >Realizar Pedido</button>
-                      <!-- <button
-                        type="button"
-                        class="btn btn-primary btn-sm btn-block"
-                      >Actualizar Pedido</button>
-                      <button type="button" class="btn btn-secondary btn-sm btn-block">Pagar</button>-->
+                        @click="ingresarModificarPedido()"
+                      >
+                        <span v-show="!updPedido">Realizar Pedido</span>
+                        <span v-show="updPedido">Actualizar Pedido</span>
+                      </button>
                     </div>
                   </div>
                 </div>
