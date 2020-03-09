@@ -246,6 +246,7 @@ export default {
             }
             //datosPedido.id
             const data = {
+                'sucursal_id': this.id,
                 'id': id,
                 'mesas': this.pedidoMesas,
                 'pedidos': this.pedidos,
@@ -256,6 +257,10 @@ export default {
             axios.post('/api/ingresar_actualizar_pedido', data).then((res) => {
                 if (res.data.estado == 'success') {
                     this.estadoMesa = 3;
+                    document.getElementById('cerrarModalPedido').click();
+                    if (id != null) {
+                        this.traerPedidoMesa();
+                    }
                     this.$snotify.create({
                         body: res.data.mensaje,
                         config: {

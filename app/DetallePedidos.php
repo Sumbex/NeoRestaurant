@@ -71,4 +71,62 @@ class DetallePedidos extends Model
             return false;
         }
     }
+
+    protected function verficarStockProducto($sucursal, $producto)
+    {
+        //produto sucursal
+    }
+    /* protected function verificarStockProducto($request)
+    {
+        $insumos = DB::table('productos as p')
+            ->select([
+                'dp.insumo_id',
+                'dp.cantidad'
+            ])
+            ->join('detalle_producto as dp', 'dp.producto_id', 'p.id')
+            ->join('almacen as a', 'a.id', 'p.almacen_id')
+            ->where([
+                'p.activo' => 'S',
+                'p.id' => $request->producto['id'],
+                'a.sucursal_id' => $request->sucursal
+            ])
+            ->get();
+
+        $stock = DB::table('productos as p')
+            ->select([
+                'cia.insumo_id',
+                'cia.stock'
+            ])
+            ->join('detalle_producto as dp', 'dp.producto_id', 'p.id')
+            ->join('cantidad_insumos_almacen as cia', 'cia.insumo_id', 'dp.insumo_id')
+            ->join('almacen as a', 'a.id', 'p.almacen_id')
+            ->where([
+                'p.activo' => 'S',
+                'p.id' => $request->producto['id'],
+                'a.sucursal_id' => $request->sucursal
+            ])
+            ->get();
+
+        if (count($insumos) != count($stock)) {
+            return ['estado' => 'failed', 'mensaje' => 'Producto sin stock.'];
+        } else {
+            $count = 0;
+            $resta = 0;
+            for ($i = 0; $i < count($insumos); $i++) {
+                for ($e = 0; $e < count($stock); $e++) {
+                    if ($stock[$e]->insumo_id == $insumos[$i]->insumo_id) {
+                        $resta = $stock[$e]->stock - $insumos[$i]->cantidad;
+                        if ($resta > 0) {
+                            $count++;
+                        }
+                    }
+                }
+            }
+            if (count($stock) == $count) {
+                return ['estado' => 'success', 'mensaje' => 'Producto con stock'];
+            } else {
+                return ['estado' => 'failed', 'mensaje' => 'Producto sin stock.'];
+            }
+        }
+    } */
 }

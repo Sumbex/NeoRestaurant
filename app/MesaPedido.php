@@ -10,11 +10,6 @@ class MesaPedido extends Model
 {
     protected $table = "mesa_pedido";
 
-    /* $table->integer('mesa_id');
-            $table->integer('pedido_id');
-            $table->integer('creada_por');
-            $table->integer('estado_id'); */
-
     protected function ingresarMesas($pedido_id, $mesas)
     {
         $count = 0;

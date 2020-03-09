@@ -19,9 +19,7 @@ class Pedidos extends Model
 
     protected function ingresarActualizarPedido($request)
     {
-        //hacer la modificacion traer los datos del pedido, 
-        //las mesas de mesapedido restar del stock verificar nuevamente si es que hay  stock al ingresar un pedido
-        /* dd($request->all()); */
+        dd($request->all());
 
         $fecha = $this->fechaActual();
         if ($request->update == true) {
@@ -50,6 +48,7 @@ class Pedidos extends Model
         } else {
             DB::beginTransaction();
             $pedido = new Pedidos;
+            $pedido->sucursal_id = $request->sucursal_id;
             $pedido->hora_pedido = $fecha;
             $pedido->total = $request->total;
             $pedido->creada_por = Auth::user()->id;
@@ -97,6 +96,7 @@ class Pedidos extends Model
             ->join('productos as pr', 'pr.id', 'dp.producto_id')
             ->join('almacen as a', 'a.id', 'pr.almacen_id')
             ->where([
+                'mp.activo' => 'S',
                 'p.activo' => 'S',
                 'mp.mesa_id' => $mesa,
                 'a.sucursal_id' => $sucursal
@@ -144,9 +144,6 @@ class Pedidos extends Model
 
     protected function traerMesasPedido($pedido)
     {
-        /* select m.mesa from mesa_pedido as mp
-inner join mesas as m on m.id = mp.mesa_id
-where mp.pedido_id = 12 */
         $mesas = DB::table('mesa_pedido as mp')
             ->select([
                 'm.id',

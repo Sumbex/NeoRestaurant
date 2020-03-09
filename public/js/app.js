@@ -4264,6 +4264,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
       var data = {
+        'sucursal_id': this.id,
         'id': id,
         'mesas': this.pedidoMesas,
         'pedidos': this.pedidos,
@@ -4274,6 +4275,11 @@ __webpack_require__.r(__webpack_exports__);
       axios.post('/api/ingresar_actualizar_pedido', data).then(function (res) {
         if (res.data.estado == 'success') {
           _this5.estadoMesa = 3;
+          document.getElementById('cerrarModalPedido').click();
+
+          if (id != null) {
+            _this5.traerPedidoMesa();
+          }
 
           _this5.$snotify.create({
             body: res.data.mensaje,
@@ -79744,6 +79750,7 @@ var staticRenderFns = [
       {
         staticClass: "close",
         attrs: {
+          id: "cerrarModalPedido",
           type: "button",
           "data-dismiss": "modal",
           "aria-label": "Close"

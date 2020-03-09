@@ -15,8 +15,8 @@ class CreatePedidoTable extends Migration
     {
         Schema::create('pedido', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('sucursal_id');
             $table->dateTime('hora_pedido');
-
             $table->bigInteger('total');
             $table->text('comentario')->nullable();
             $table->integer('creada_por');

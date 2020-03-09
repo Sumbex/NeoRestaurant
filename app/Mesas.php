@@ -137,7 +137,6 @@ class Mesas extends Model
 
     protected function abrirCerrarMesa($request)
     {
-        /* dd($request->all()); */
         $mesa = Mesas::find($request->mesa);
         if ($request->estado == 2) {
             $mesa->estado_id = 1;
