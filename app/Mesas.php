@@ -174,4 +174,23 @@ class Mesas extends Model
             return false;
         }
     }
+
+    protected function actualizarMesa($mesa, $estado)
+    {
+        $count = 0;
+        DB::beginTransaction();
+        $mesa = Mesas::find($mesa);
+        if ($estado == true) {
+            $mesa->estado_id = 3;
+        } else {
+            $mesa->estado_id = 2;
+        }
+        if ($mesa->save()) {
+            DB::commit();
+            return true;
+        } else {
+            DB::rollBack();
+            return false;
+        }
+    }
 }

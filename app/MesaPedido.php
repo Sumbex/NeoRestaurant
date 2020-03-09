@@ -65,7 +65,10 @@ class MesaPedido extends Model
                 $mesa->estado_id = 1;
                 $mesa->activo = 'S';
                 if ($mesa->save()) {
-                    $count++;
+                    $estado = Mesas::actualizarMesa($key['id'], true);
+                    if ($estado == true) {
+                        $count++;
+                    }
                 }
             }
         }
@@ -103,7 +106,10 @@ class MesaPedido extends Model
                 $delete = MesaPedido::find($verificar->id);
                 $delete->activo = 'N';
                 if ($delete->save()) {
-                    $count++;
+                    $estado = Mesas::actualizarMesa($key['id'], false);
+                    if ($estado == true) {
+                        $count++;
+                    }
                 }
             }
         }

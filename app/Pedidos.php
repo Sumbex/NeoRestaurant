@@ -154,6 +154,7 @@ where mp.pedido_id = 12 */
             ])
             ->join('mesas as m', 'm.id', 'mp.mesa_id')
             ->where([
+                'mp.activo' => 'S',
                 'mp.pedido_id' => $pedido
             ])
             ->get();
