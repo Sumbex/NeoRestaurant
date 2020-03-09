@@ -119,4 +119,25 @@ class CantidadInsumosAlmacen extends Model
             }
         }
     }
+
+    protected function restarStock($sucursal, $producto)
+    {
+        //
+        /* select cia.insumo_id, cia.stock from cantidad_insumos_almacen as cia
+inner join detalle_producto as dp on dp.insumo_id = cia.insumo_id
+inner join almacen as a on a.id = cia.almacen_id
+where dp.producto_id = 13 and a.sucursal_id = 10 */
+        $stock = DB::table('cantidad_insumos_almacen as cia')
+            ->select([
+                'cia.insumo_id',
+                'cia.stock'
+            ])
+            ->join('detalle_producto as dp', 'dp.insumo_id', 'cia.insumo_id')
+            ->join('almacen as a', 'a.id', 'cia.almacen_id')
+            ->where([
+                'dp.producto_id' => $producto['id'],
+                'a.sucursal_id' => $sucursal
+            ])
+            ->get();
+    }
 }
