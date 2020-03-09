@@ -21,7 +21,7 @@ class Pedidos extends Model
     {
         //hacer la modificacion traer los datos del pedido, 
         //las mesas de mesapedido restar del stock verificar nuevamente si es que hay  stock al ingresar un pedido
-        dd($request->all());
+        /* dd($request->all()); */
 
         $fecha = $this->fechaActual();
         if ($request->update == true) {
