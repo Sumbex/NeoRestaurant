@@ -31,6 +31,7 @@ class Pedidos extends Model
         if (empty($prod)) {
             /* return 'todo bien'; */
             if ($request->update == true) {
+                return 'restar stock al update';
                 DB::beginTransaction();
                 $update = Pedidos::find($request->id);
                 $update->total = $request->total;
@@ -54,6 +55,7 @@ class Pedidos extends Model
                     return ['estado' => 'failed', 'mensaje' => 'A ocurrido un error, intenta nuevamente 3.'];
                 }
             } else {
+                return 'restar stock al ingreso';
                 DB::beginTransaction();
                 $pedido = new Pedidos;
                 $pedido->sucursal_id = $request->sucursal_id;
@@ -65,24 +67,30 @@ class Pedidos extends Model
                 if ($pedido->save()) {
                     $detalle = DetallePedidos::ingresarDetallePedido($pedido->id, $request->pedidos);
                     if ($detalle == true) {
-                        $mesas = MesaPedido::ingresarMesas($pedido->id, $request->mesas);
-                        if ($mesas == true) {
-                            $estadoMesa = Mesas::cambiarEstadoMesas($request->mesas);
-                            if ($estadoMesa == true) {
-                                DB::commit();
-                                return ['estado' => 'success', 'mensaje' => 'Pedido realizado Correctamente.'];
+                        $restar = CantidadInsumosAlmacen::restarStock($request->update, $request->sucursal, $request->pedidos);
+                        if ($restar == true) {
+                            $mesas = MesaPedido::ingresarMesas($pedido->id, $request->mesas);
+                            if ($mesas == true) {
+                                $estadoMesa = Mesas::cambiarEstadoMesas($request->mesas);
+                                if ($estadoMesa == true) {
+                                    DB::commit();
+                                    return ['estado' => 'success', 'mensaje' => 'Pedido realizado Correctamente.'];
+                                }
+                            } else {
+                                DB::rollBack();
+                                return ['estado' => 'failed', 'mensaje' => 'A ocurrido un error, intenta nuevamente 1.'];
                             }
                         } else {
                             DB::rollBack();
-                            return ['estado' => 'failed', 'mensaje' => 'A ocurrido un error, intenta nuevamente.'];
+                            return ['estado' => 'failed', 'mensaje' => 'A ocurrido un error, intenta nuevamente 2.'];
                         }
                     } else {
                         DB::rollBack();
-                        return ['estado' => 'failed', 'mensaje' => 'A ocurrido un error, intenta nuevamente.'];
+                        return ['estado' => 'failed', 'mensaje' => 'A ocurrido un error, intenta nuevamente 3.'];
                     }
                 } else {
                     DB::rollBack();
-                    return ['estado' => 'failed', 'mensaje' => 'A ocurrido un error, intenta nuevamente.'];
+                    return ['estado' => 'failed', 'mensaje' => 'A ocurrido un error, intenta nuevamente 4.'];
                 }
             }
         } else {

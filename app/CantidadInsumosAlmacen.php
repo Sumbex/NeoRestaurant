@@ -173,4 +173,10 @@ class CantidadInsumosAlmacen extends Model
             }
         }
     }
+    protected function restarStock($update, $sucursal, $pedidos)
+    {
+        $count = 0;
+        DB::beginTransaction();
+        //
+    }
 }
