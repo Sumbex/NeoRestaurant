@@ -56,7 +56,7 @@ class Insumos extends Model
             Carbon::setLocale('es');
             
             foreach ($insumos as $key) {
-                setlocale(LC_ALL, 'es_CL');
+                setlocale(LC_TIME, 'es');
                 /* $fecha = ucwords(Carbon::parse($key->created_at)->diffForHumans()); */
                 $fecha = Carbon::parse($key->created_at)->formatLocalized('%d de %B del %Y %H:%M:%S');
                 $key->created_at = $fecha;
