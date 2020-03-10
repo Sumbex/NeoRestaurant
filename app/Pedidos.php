@@ -20,51 +20,61 @@ class Pedidos extends Model
     protected function ingresarActualizarPedido($request)
     {
         /* dd($request->all()); */
-
+        $prod = array();
         $fecha = $this->fechaActual();
-        if ($request->update == true) {
-            DB::beginTransaction();
-            $update = Pedidos::find($request->id);
-            $update->total = $request->total;
-            if ($update->save()) {
-                $updDetalle = DetallePedidos::actualizarDetallePedido($request->id, $request->pedidos);
-                if ($updDetalle == true) {
-                    $updMesas = MesaPedido::actualizarMesa($request->id, $request->mesas, $request->mesas_borrar);
-                    if ($updMesas == true) {
-                        DB::commit();
-                        return ['estado' => 'success', 'mensaje' => 'Pedido actualizado Correctamente.'];
+        foreach ($request->pedidos as $key) {
+            $stock = CantidadInsumosAlmacen::verificarStockVenta($request->sucursal_id, $key);
+            if ($stock['estado'] == 'failed') {
+                $prod[] = $stock['producto'];
+            }
+        }
+        if (empty($prod)) {
+            /* return 'todo bien'; */
+            if ($request->update == true) {
+                DB::beginTransaction();
+                $update = Pedidos::find($request->id);
+                $update->total = $request->total;
+                if ($update->save()) {
+                    $updDetalle = DetallePedidos::actualizarDetallePedido($request->id, $request->pedidos);
+                    if ($updDetalle == true) {
+                        $updMesas = MesaPedido::actualizarMesa($request->id, $request->mesas, $request->mesas_borrar);
+                        if ($updMesas == true) {
+                            DB::commit();
+                            return ['estado' => 'success', 'mensaje' => 'Pedido actualizado Correctamente.'];
+                        } else {
+                            DB::rollBack();
+                            return ['estado' => 'failed', 'mensaje' => 'A ocurrido un error, intenta nuevamente 1.'];
+                        }
                     } else {
                         DB::rollBack();
-                        return ['estado' => 'failed', 'mensaje' => 'A ocurrido un error, intenta nuevamente 1.'];
+                        return ['estado' => 'failed', 'mensaje' => 'A ocurrido un error, intenta nuevamente 2.'];
                     }
                 } else {
                     DB::rollBack();
-                    return ['estado' => 'failed', 'mensaje' => 'A ocurrido un error, intenta nuevamente 2.'];
+                    return ['estado' => 'failed', 'mensaje' => 'A ocurrido un error, intenta nuevamente 3.'];
                 }
             } else {
-                DB::rollBack();
-                return ['estado' => 'failed', 'mensaje' => 'A ocurrido un error, intenta nuevamente 3.'];
-            }
-        } else {
-            $test = CantidadInsumosAlmacen::verificarStockVenta($request->sucursal_id, $request->pedidos);
-            dd($test);
-            DB::beginTransaction();
-            $pedido = new Pedidos;
-            $pedido->sucursal_id = $request->sucursal_id;
-            $pedido->hora_pedido = $fecha;
-            $pedido->total = $request->total;
-            $pedido->creada_por = Auth::user()->id;
-            $pedido->estado_id = 1;
-            $pedido->activo = 'S';
-            if ($pedido->save()) {
-                $detalle = DetallePedidos::ingresarDetallePedido($pedido->id, $request->pedidos);
-                if ($detalle == true) {
-                    $mesas = MesaPedido::ingresarMesas($pedido->id, $request->mesas);
-                    if ($mesas == true) {
-                        $estadoMesa = Mesas::cambiarEstadoMesas($request->mesas);
-                        if ($estadoMesa == true) {
-                            DB::commit();
-                            return ['estado' => 'success', 'mensaje' => 'Pedido realizado Correctamente.'];
+                DB::beginTransaction();
+                $pedido = new Pedidos;
+                $pedido->sucursal_id = $request->sucursal_id;
+                $pedido->hora_pedido = $fecha;
+                $pedido->total = $request->total;
+                $pedido->creada_por = Auth::user()->id;
+                $pedido->estado_id = 1;
+                $pedido->activo = 'S';
+                if ($pedido->save()) {
+                    $detalle = DetallePedidos::ingresarDetallePedido($pedido->id, $request->pedidos);
+                    if ($detalle == true) {
+                        $mesas = MesaPedido::ingresarMesas($pedido->id, $request->mesas);
+                        if ($mesas == true) {
+                            $estadoMesa = Mesas::cambiarEstadoMesas($request->mesas);
+                            if ($estadoMesa == true) {
+                                DB::commit();
+                                return ['estado' => 'success', 'mensaje' => 'Pedido realizado Correctamente.'];
+                            }
+                        } else {
+                            DB::rollBack();
+                            return ['estado' => 'failed', 'mensaje' => 'A ocurrido un error, intenta nuevamente.'];
                         }
                     } else {
                         DB::rollBack();
@@ -74,9 +84,24 @@ class Pedidos extends Model
                     DB::rollBack();
                     return ['estado' => 'failed', 'mensaje' => 'A ocurrido un error, intenta nuevamente.'];
                 }
+            }
+        } else {
+            $mensaje = '';
+            foreach ($prod as $key) {
+                if ($mensaje == '') {
+                    $mensaje = $key;
+                } else {
+                    if (count($prod) > 2) {
+                        $mensaje = $mensaje . ', ' . $key;
+                    } else {
+                        $mensaje = $mensaje . ' y ' . $key;
+                    }
+                }
+            }
+            if (count($prod) < 2) {
+                return ['estado' => 'failed_prod',  'mensaje' => 'El siguiente producto se encuentra sin stock: ' . $mensaje];
             } else {
-                DB::rollBack();
-                return ['estado' => 'failed', 'mensaje' => 'A ocurrido un error, intenta nuevamente.'];
+                return ['estado' => 'failed_prod', 'mensaje' => 'Los siguientes productos se encuentran sin stock: ' . $mensaje];
             }
         }
     }

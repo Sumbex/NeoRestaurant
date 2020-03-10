@@ -273,6 +273,18 @@ export default {
                         }
                     });
                     this.traerMesas();
+                } else if (res.data.estado == 'failed_prod') {
+                    this.$snotify.create({
+                        body: res.data.mensaje,
+                        config: {
+                            timeout: 5000,
+                            showProgressBar: true,
+                            closeOnClick: true,
+                            pauseOnHover: false,
+                            position: SnotifyPosition.centerBottom,
+                            type: SnotifyStyle.error,
+                        }
+                    });
                 } else {
                     this.$snotify.create({
                         body: res.data.mensaje,
@@ -286,6 +298,7 @@ export default {
                         }
                     });
                 }
+
             });
         },
         verificarStock(prod) {

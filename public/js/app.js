@@ -4294,6 +4294,18 @@ __webpack_require__.r(__webpack_exports__);
           });
 
           _this5.traerMesas();
+        } else if (res.data.estado == 'failed_prod') {
+          _this5.$snotify.create({
+            body: res.data.mensaje,
+            config: {
+              timeout: 5000,
+              showProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: false,
+              position: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyPosition"].centerBottom,
+              type: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyStyle"].error
+            }
+          });
         } else {
           _this5.$snotify.create({
             body: res.data.mensaje,
@@ -79622,7 +79634,7 @@ var render = function() {
                                 attrs: { prop: "producto" },
                                 on: {
                                   click: function($event) {
-                                    return _vm.agregarProducto(producto)
+                                    return _vm.verificarStock(producto)
                                   }
                                 }
                               },

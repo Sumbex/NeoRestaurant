@@ -363,9 +363,8 @@
                         v-for="producto in productos"
                         prop="producto"
                         :key="producto.id"
-                        @click="agregarProducto(producto)"
+                        @click="verificarStock(producto)"
                       >
-                      
                         <div class="card bg-dark text-white">
                           <img :src="'/'+producto.foto" class="card-img" :alt="producto.producto" />
                           <div class="card-img-overlay">
