@@ -120,24 +120,60 @@ class CantidadInsumosAlmacen extends Model
         }
     }
 
-    protected function restarStock($sucursal, $producto)
+    protected function verificarStockVenta($sucursal, $pedidos)
     {
-        //
-        /* select cia.insumo_id, cia.stock from cantidad_insumos_almacen as cia
-inner join detalle_producto as dp on dp.insumo_id = cia.insumo_id
-inner join almacen as a on a.id = cia.almacen_id
-where dp.producto_id = 13 and a.sucursal_id = 10 */
-        $stock = DB::table('cantidad_insumos_almacen as cia')
-            ->select([
-                'cia.insumo_id',
-                'cia.stock'
-            ])
-            ->join('detalle_producto as dp', 'dp.insumo_id', 'cia.insumo_id')
-            ->join('almacen as a', 'a.id', 'cia.almacen_id')
-            ->where([
-                'dp.producto_id' => $producto['id'],
-                'a.sucursal_id' => $sucursal
-            ])
-            ->get();
+        /* dd($pedidos); */
+        $test = 0;
+        $productos = [];
+        foreach ($pedidos as $key) {
+            $insumos = DB::table('productos as p')
+                ->select([
+                    'dp.insumo_id',
+                    'dp.cantidad'
+                ])
+                ->join('detalle_producto as dp', 'dp.producto_id', 'p.id')
+                ->join('almacen as a', 'a.id', 'p.almacen_id')
+                ->where([
+                    'p.activo' => 'S',
+                    'p.id' => $key['id_producto'],
+                    'a.sucursal_id' => $sucursal
+                ])
+                ->get();
+
+            $stock = DB::table('productos as p')
+                ->select([
+                    'cia.id',
+                    'cia.insumo_id',
+                    'cia.stock'
+                ])
+                ->join('detalle_producto as dp', 'dp.producto_id', 'p.id')
+                ->join('cantidad_insumos_almacen as cia', 'cia.insumo_id', 'dp.insumo_id')
+                ->join('almacen as a', 'a.id', 'p.almacen_id')
+                ->where([
+                    'p.activo' => 'S',
+                    'p.id' => $key['id_producto'],
+                    'a.sucursal_id' => $sucursal
+                ])
+                ->get();
+
+            $count = 0;
+            $resta = 0;
+            for ($i = 0; $i < count($insumos); $i++) {
+                for ($e = 0; $e < count($stock); $e++) {
+                    if ($stock[$e]->insumo_id == $insumos[$i]->insumo_id) {
+                        $resta = $stock[$e]->stock - $insumos[$i]->cantidad;
+                        if ($resta > 0) {
+                            $count++;
+                        }
+                    }
+                }
+            }
+            if (count($stock) == $count) {
+                $test++;
+            } else {
+                $productos[] = $key;
+            }
+        }
+        dd($productos);
     }
 }

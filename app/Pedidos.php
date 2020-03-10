@@ -19,7 +19,7 @@ class Pedidos extends Model
 
     protected function ingresarActualizarPedido($request)
     {
-        dd($request->all());
+        /* dd($request->all()); */
 
         $fecha = $this->fechaActual();
         if ($request->update == true) {
@@ -46,6 +46,8 @@ class Pedidos extends Model
                 return ['estado' => 'failed', 'mensaje' => 'A ocurrido un error, intenta nuevamente 3.'];
             }
         } else {
+            $test = CantidadInsumosAlmacen::verificarStockVenta($request->sucursal_id, $request->pedidos);
+            dd($test);
             DB::beginTransaction();
             $pedido = new Pedidos;
             $pedido->sucursal_id = $request->sucursal_id;

@@ -79622,7 +79622,7 @@ var render = function() {
                                 attrs: { prop: "producto" },
                                 on: {
                                   click: function($event) {
-                                    return _vm.verificarStock(producto)
+                                    return _vm.agregarProducto(producto)
                                   }
                                 }
                               },
