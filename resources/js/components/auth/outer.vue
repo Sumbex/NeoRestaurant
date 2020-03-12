@@ -24,6 +24,10 @@
         >Home</a>
         <a @click="url('POS')" class="list-group-item list-group-item-action bg-dark text-white">POS</a>
         <a
+          @click="url('Cocina')"
+          class="list-group-item list-group-item-action bg-dark text-white"
+        >Cocina</a>
+        <a
           data-toggle="collapse"
           href="#collapseSucursal"
           class="list-group-item list-group-item-action bg-dark text-white"
@@ -123,7 +127,26 @@
             @click="url('VerCompraInsumos')"
           >Ver Compras</a>-->
         </div>
-        <a href="#" class="list-group-item list-group-item-action bg-dark text-white">Configuracion</a>
+        <a
+          data-toggle="collapse"
+          href="#collapseConfig"
+          class="list-group-item list-group-item-action bg-dark text-white"
+        >
+          Configuraciones
+          <i class="fa float-right"></i>
+        </a>
+        <div class="collapse" id="collapseConfig">
+          <a
+            class="list-group-item list-group-item-action list-group-item-light"
+            :class="[currentPage.includes('configuraciones') ? activeClass : 'list-group-item-action']"
+            @click="url('Config')"
+          >Configuraciones</a>
+          <a
+            class="list-group-item list-group-item-action list-group-item-light"
+            :class="[currentPage.includes('usuarios') ? activeClass : 'list-group-item-action']"
+            @click="url('Usuarios')"
+          >Usuarios</a>
+        </div>
       </div>
     </div>
     <!-- /#sidebar-wrapper -->

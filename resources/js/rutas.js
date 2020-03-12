@@ -22,6 +22,11 @@ import VerProductos from './components/auth/productos/ver_detalle/detalle.vue';
 
 import Cajas from './components/auth/caja/caja.vue';
 
+import Cocina from './components/auth/cocina/cocina.vue';
+
+import Config from './components/auth/configuraciones/configuraciones.vue';
+import Usuarios from './components/auth/configuraciones/usuarios/usuarios.vue';
+
 const routes = [{
         path: '/login',
         component: Index,
@@ -97,6 +102,21 @@ const routes = [{
                 path: '/cajas',
                 component: Cajas
             },
+            {
+                name: 'Cocina',
+                path: '/cocina',
+                component: Cocina
+            },
+            {
+                name: 'Config',
+                path: '/configuraciones',
+                component: Config
+            },
+            {
+                name: 'Usuarios',
+                path: '/usuarios',
+                component: Usuarios
+            }
         ]
     },
     {

@@ -3,9 +3,12 @@
 namespace App;
 
 use App\DetallePedidos;
+use Mike42\Escpos\Printer;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Model;
+use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
+
 
 class Pedidos extends Model
 {
@@ -31,7 +34,7 @@ class Pedidos extends Model
         if (empty($prod)) {
             /* return 'todo bien'; */
             if ($request->update == true) {
-                return 'restar stock al update';
+                /* return 'restar stock al update'; */
                 DB::beginTransaction();
                 $update = Pedidos::find($request->id);
                 $update->total = $request->total;
@@ -55,7 +58,7 @@ class Pedidos extends Model
                     return ['estado' => 'failed', 'mensaje' => 'A ocurrido un error, intenta nuevamente 3.'];
                 }
             } else {
-                return 'restar stock al ingreso';
+                /* return 'restar stock al ingreso'; */
                 DB::beginTransaction();
                 $pedido = new Pedidos;
                 $pedido->sucursal_id = $request->sucursal_id;
@@ -67,18 +70,12 @@ class Pedidos extends Model
                 if ($pedido->save()) {
                     $detalle = DetallePedidos::ingresarDetallePedido($pedido->id, $request->pedidos);
                     if ($detalle == true) {
-                        $restar = CantidadInsumosAlmacen::restarStock($request->update, $request->sucursal, $request->pedidos);
-                        if ($restar == true) {
-                            $mesas = MesaPedido::ingresarMesas($pedido->id, $request->mesas);
-                            if ($mesas == true) {
-                                $estadoMesa = Mesas::cambiarEstadoMesas($request->mesas);
-                                if ($estadoMesa == true) {
-                                    DB::commit();
-                                    return ['estado' => 'success', 'mensaje' => 'Pedido realizado Correctamente.'];
-                                }
-                            } else {
-                                DB::rollBack();
-                                return ['estado' => 'failed', 'mensaje' => 'A ocurrido un error, intenta nuevamente 1.'];
+                        $mesas = MesaPedido::ingresarMesas($pedido->id, $request->mesas);
+                        if ($mesas == true) {
+                            $estadoMesa = Mesas::cambiarEstadoMesas($request->mesas);
+                            if ($estadoMesa == true) {
+                                DB::commit();
+                                return ['estado' => 'success', 'mensaje' => 'Pedido realizado Correctamente.'];
                             }
                         } else {
                             DB::rollBack();
@@ -144,6 +141,8 @@ class Pedidos extends Model
             if ($datos['estado'] == 'success') {
                 $mesas = $this->traerMesasPedido($pedido[0]->pedido_id);
                 if ($mesas['estado'] == 'success') {
+                    $test = $this->imprimirTicket();
+                    dd($test);
                     return ['estado' => 'success', 'datos' => $datos['datos'],  'mesas' => $mesas['mesas'], 'mesas_pedido' => $mesas['mesa_pedido'], 'pedido' => $pedido];
                 } else {
                     return ['estado' => 'failed', 'mensaje' => 'No se encuentra el pedido.'];
@@ -207,5 +206,22 @@ class Pedidos extends Model
         } else {
             return ['estado' => 'failed', 'mensaje' => 'No se encuentran las mesas.'];
         }
+    }
+
+    protected function imprimirTicket(/* $datos, $pedido */)
+    {
+        $nombreImpresora = "POS-58";
+        $connector = new WindowsPrintConnector($nombreImpresora);
+        $impresora = new Printer($connector);
+        $impresora->setJustification(Printer::JUSTIFY_CENTER);
+        $impresora->setTextSize(2, 2);
+        $impresora->text("Imprimiendo\n");
+        $impresora->text("ticket\n");
+        $impresora->text("desde\n");
+        $impresora->text("Laravel\n");
+        $impresora->setTextSize(1, 1);
+        $impresora->text("https://restobar.neofox.cl");
+        $impresora->feed(5);
+        $impresora->close();
     }
 }
