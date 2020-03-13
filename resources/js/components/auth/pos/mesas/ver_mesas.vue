@@ -125,7 +125,12 @@
                     data-target="#staticBackdrop"
                     @click="añadirMesa(true, null, false)"
                   >Actualizar Pedido</button>
-                  <button type="button" class="btn btn-danger btn-sm btn-block">Pagar</button>
+                  <button
+                    type="button"
+                    class="btn btn-danger btn-sm btn-block"
+                    data-toggle="modal"
+                    data-target="#pagoModal"
+                  >Pagar</button>
                 </div>
               </div>
             </div>
@@ -133,10 +138,6 @@
         </div>
         <!-- main -->
         <div class="column col-md-8" id="main">
-          <div class="col-sm-12 text-center">
-            <h2>Mesas</h2>
-          </div>
-
           <div class="col-sm-12 my-1" v-for="zona in zonas" prop="zona" :key="zona">
             <div class="card mb-3">
               <div class="card-body">
@@ -182,7 +183,13 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="staticBackdropLabel">Nuevo Pedido {{idMesa}}</h5>
-            <button id="cerrarModalPedido" type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <button
+              id="cerrarModalPedido"
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
@@ -381,6 +388,103 @@
           <!-- <div class="modal-footer">
             <button type="button" class="btn btn-secondary rounded-pill" data-dismiss="modal">Close</button>
           </div>-->
+        </div>
+      </div>
+    </div>
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="pagoModal"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="pagoModal"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="pagoModal">Realizar pago</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row justify-center mt-1 mb-1">
+              <div class="col-md-5">
+                <div class="card">
+                  <div class="row justify-center mt-3 mb-1">
+                    <div class="col-sm-12 text-center">
+                      <label>
+                        <h4>
+                          <strong>Pedido</strong>
+                        </h4>
+                      </label>
+                    </div>
+                  </div>
+                  <div
+                    class="row justify-center mb-2"
+                    v-for="pedido in pedidos"
+                    prop="pedido"
+                    :key="pedido.id"
+                  >
+                    <!-- array del pedido -->
+                    <div class="col-sm-12">
+                      <label>
+                        <strong>{{pedido.cantidad}}</strong>
+                        x {{pedido.producto}}
+                      </label>
+                      <label class="text-right">${{pedido.precio}} c/u</label>
+                    </div>
+                    <!-- array del pedido -->
+                  </div>
+
+                  <div class="row justify-center mb-2">
+                    <div class="col-sm-12">
+                      <label>
+                        <strong>Total</strong>
+                      </label>
+                      <label class="text-right">${{total}}</label>
+                    </div>
+                    <div class="col-sm-12">
+                      <label>
+                        <strong>Propina Sugerida (x%)</strong>
+                      </label>
+                      <label class="text-right">$propina</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-7">
+                <div class="card">
+                  <div class="row justify-center my-2">
+                    <div class="col-sm-6">
+                      <div class="input-group">
+                        <select class="form-control">
+                          <option value="0">Efectivo</option>
+                          <option value="1">Debito</option>
+                          <option value="2">Credito</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="input-group">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="precio"
+                          aria-label="precio"
+                          aria-describedby="precio"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary">Realizar Pago</button>
+          </div>
         </div>
       </div>
     </div>

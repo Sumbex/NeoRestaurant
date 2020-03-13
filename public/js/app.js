@@ -3190,40 +3190,38 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      sucursal: 0,
-      select_sucursal: null,
-      zonas: 0,
-      select_zonas: null,
-      radio: true,
-      disabled: true,
+      sucursales: []
+      /* sucursal: '',
+      direccion: '',
+      observacion: '',
+      sucursales: [],
       tabla: false,
-      zonasModal: [],
-      zona: null,
-      mesa: null,
-      cantMesa: null,
-      mesas: []
-      /* checkmul: false, */
+      guardar: false,
+      boton: true,
+      errors: [], */
 
     };
   },
   methods: {
-    estado: function estado() {
-      if (this.radio == true) {
-        this.disabled = true;
-      } else {
-        this.disabled = false;
-      }
+    url: function url(id) {
+      this.$router.push({
+        name: 'POSMesas',
+        params: id
+      })["catch"](function (error) {
+        if (error.name != "NavigationDuplicated") {
+          throw error;
+        }
+      });
     },
-    traerSucursales: function traerSucursales() {
+    traer: function traer() {
       var _this = this;
 
-      axios.get('api/traer_sucursales_select').then(function (res) {
+      axios.get('api/traer_sucursales').then(function (res) {
         if (res.data.estado == 'success') {
-          _this.select_sucursal = res.data.sucursales;
-          _this.tabla = true;
+          _this.sucursales = res.data.sucursales;
+          /* this.tabla = true; */
         } else {
-          _this.tabla = true;
-
+          /* this.tabla = true; */
           _this.$snotify.create({
             body: res.data.mensaje,
             config: {
@@ -3237,168 +3235,84 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
       });
-    },
-    ingresarZonas: function ingresarZonas() {
-      var _this2 = this;
-
-      var data = {
-        'zona': this.zona
-      };
-      axios.post('api/ingresar_zona', data).then(function (res) {
-        if (res.data.estado == 'success') {
-          _this2.zona = '';
-
-          _this2.$snotify.create({
-            body: res.data.mensaje,
-            config: {
-              timeout: 2000,
-              showProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: false,
-              position: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyPosition"].centerBottom,
-              type: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyStyle"].success
-            }
-          });
-
-          _this2.traerZonas();
-
-          _this2.traerZonaSelect();
-        } else {
-          _this2.$snotify.create({
-            body: res.data.mensaje,
-            config: {
-              timeout: 2000,
-              showProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: false,
-              position: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyPosition"].centerBottom,
-              type: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyStyle"].error
-            }
-          });
-        }
-      });
-    },
-    ingresarMesa: function ingresarMesa() {
-      var _this3 = this;
-
-      var data = {
-        'mesa': this.mesa,
-        'cantMesa': this.cantMesa,
-        'sucursal': this.sucursal,
-        'zona': this.zonas,
-        'estado': this.radio
-      };
-      console.log(data);
-      axios.post('api/ingresar_mesa', data).then(function (res) {
-        if (res.data.estado == 'success') {
-          _this3.limpiar();
-
-          _this3.traerMesas();
-
-          _this3.$snotify.create({
-            body: res.data.mensaje,
-            config: {
-              timeout: 2000,
-              showProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: false,
-              position: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyPosition"].centerBottom,
-              type: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyStyle"].success
-            }
-          });
-        } else {
-          _this3.$snotify.create({
-            body: res.data.mensaje,
-            config: {
-              timeout: 3000,
-              showProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: false,
-              position: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyPosition"].centerBottom,
-              type: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyStyle"].error
-            }
-          });
-        }
-      });
-    },
-    traerMesas: function traerMesas() {
-      var _this4 = this;
-
-      axios.get('api/traer_mesas').then(function (res) {
-        if (res.data.estado == 'success') {
-          _this4.mesas = res.data.mesas;
-        } else {
-          _this4.$snotify.create({
-            body: res.data.mensaje,
-            config: {
-              timeout: 3000,
-              showProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: false,
-              position: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyPosition"].centerBottom,
-              type: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyStyle"].error
-            }
-          });
-        }
-      });
-    },
-    limpiar: function limpiar() {
-      this.radio = true;
-      this.mesa = '';
-      this.cantMesa = '';
-      this.sucursal = 0;
-      this.zonas = 0;
-    },
-    traerZonas: function traerZonas() {
-      var _this5 = this;
-
-      axios.get('api/traer_zonas').then(function (res) {
-        if (res.data.estado == 'success') {
-          _this5.zonasModal = res.data.zonas;
-        } else {
-          _this5.$snotify.create({
-            body: res.data.mensaje,
-            config: {
-              timeout: 3000,
-              showProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: false,
-              position: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyPosition"].centerBottom,
-              type: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyStyle"].error
-            }
-          });
-        }
-      });
-    },
-    traerZonaSelect: function traerZonaSelect() {
-      var _this6 = this;
-
-      axios.get('api/traer_zonas_select').then(function (res) {
-        if (res.data.estado == 'success') {
-          _this6.select_zonas = res.data.zonas;
-          _this6.tabla = true;
-        } else {
-          _this6.tabla = true;
-
-          _this6.$snotify.create({
-            body: res.data.mensaje,
-            config: {
-              timeout: 3000,
-              showProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: false,
-              position: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyPosition"].centerBottom,
-              type: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyStyle"].error
-            }
-          });
-        }
-      });
     }
+    /* ingresar() {
+        const data = {
+            'sucursal': this.sucursal,
+            'direccion': this.direccion,
+            'observacion': this.observacion,
+        }
+        axios.post('api/ingresar_sucursal', data).then((res) => {
+            this.guardar = true;
+            if (res.data.estado == 'success') {
+                this.guardar = false;
+                this.limpiar();
+                this.boton = true;
+                this.$snotify.create({
+                    body: res.data.mensaje,
+                    config: {
+                        timeout: 2000,
+                        showProgressBar: true,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        position: SnotifyPosition.centerBottom,
+                        type: SnotifyStyle.success,
+                    }
+                })
+                this.traer();
+            } else {
+                this.guardar = false;
+                this.$snotify.create({
+                    body: res.data.mensaje,
+                    config: {
+                        timeout: 2000,
+                        showProgressBar: true,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        position: SnotifyPosition.centerBottom,
+                        type: SnotifyStyle.error,
+                    }
+                });
+              }
+        });
+    },
+    traer() {
+        axios.get('api/traer_sucursales').then((res) => {
+            if (res.data.estado == 'success') {
+                this.sucursales = res.data.sucursales;
+                this.tabla = true;
+            } else {
+                this.tabla = true;
+                this.$snotify.create({
+                    body: res.data.mensaje,
+                    config: {
+                        timeout: 3000,
+                        showProgressBar: true,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        position: SnotifyPosition.centerBottom,
+                        type: SnotifyStyle.error,
+                    }
+                })
+            }
+        });
+    },
+    limpiar() {
+        this.sucursal = '';
+        this.direccion = '';
+        this.observacion = '';
+    },
+    escribiendo() {
+        if (this.sucursal.toLowerCase().trim() == '' || this.direccion.toLowerCase().trim() == '') {
+            this.boton = true;
+        } else {
+            this.boton = false;
+        }
+    } */
+
   },
   mounted: function mounted() {
-    this.traerSucursales();
-    this.traerZonaSelect();
-    this.traerMesas();
+    this.traer();
   }
 });
 
@@ -4372,46 +4286,60 @@ __webpack_require__.r(__webpack_exports__);
     abrirCerrarMesa: function abrirCerrarMesa() {
       var _this = this;
 
-      var data = {
-        'mesa': this.mesa.id,
-        'estado': this.mesa.estado_id
-      };
-      axios.post('/api/abrir_cerrar_mesa', data).then(function (res) {
-        if (res.data.estado == 'success') {
-          if (_this.mesa.estado_id == 2) {
-            _this.estado = true;
-            _this.estadoMesa = 2;
-          } else {
-            _this.estado = false;
+      if (this.mesa == '') {
+        this.$snotify.create({
+          body: 'Debe seleccionar una mesa.',
+          config: {
+            timeout: 2000,
+            showProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: false,
+            position: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyPosition"].centerBottom,
+            type: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyStyle"].warning
           }
-
-          _this.$snotify.create({
-            body: res.data.mensaje,
-            config: {
-              timeout: 2000,
-              showProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: false,
-              position: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyPosition"].centerBottom,
-              type: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyStyle"].success
+        });
+      } else {
+        var data = {
+          'mesa': this.mesa.id,
+          'estado': this.mesa.estado_id
+        };
+        axios.post('/api/abrir_cerrar_mesa', data).then(function (res) {
+          if (res.data.estado == 'success') {
+            if (_this.mesa.estado_id == 2) {
+              _this.estado = true;
+              _this.estadoMesa = 2;
+            } else {
+              _this.estado = false;
             }
-          });
 
-          _this.traerMesas();
-        } else {
-          _this.$snotify.create({
-            body: res.data.mensaje,
-            config: {
-              timeout: 2000,
-              showProgressBar: true,
-              closeOnClick: true,
-              pauseOnHover: false,
-              position: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyPosition"].centerBottom,
-              type: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyStyle"].error
-            }
-          });
-        }
-      });
+            _this.$snotify.create({
+              body: res.data.mensaje,
+              config: {
+                timeout: 2000,
+                showProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: false,
+                position: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyPosition"].centerBottom,
+                type: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyStyle"].success
+              }
+            });
+
+            _this.traerMesas();
+          } else {
+            _this.$snotify.create({
+              body: res.data.mensaje,
+              config: {
+                timeout: 2000,
+                showProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: false,
+                position: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyPosition"].centerBottom,
+                type: vue_snotify__WEBPACK_IMPORTED_MODULE_0__["SnotifyStyle"].error
+              }
+            });
+          }
+        });
+      }
     },
     guardarMesas: function guardarMesas(res) {
       this.mesasDrop = [];
@@ -4667,6 +4595,9 @@ __webpack_require__.r(__webpack_exports__);
           });
         }
       });
+    },
+    imprimir: function imprimir() {
+      window.print();
     }
   },
   mounted: function mounted() {
@@ -76817,23 +76748,88 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "container" }, [
+    _c(
+      "div",
+      { staticClass: "row justify-center my-3" },
+      [
+        _vm._m(0),
+        _vm._v(" "),
+        _vm._l(_vm.sucursales, function(sucursal) {
+          return _c(
+            "div",
+            {
+              key: sucursal.id,
+              staticClass: "col-sm-4 my-1",
+              attrs: { prop: "sucursal" }
+            },
+            [
+              _c("div", { staticClass: "card text-white bg-info mb-3" }, [
+                _c(
+                  "a",
+                  {
+                    staticClass: "text-white",
+                    staticStyle: { "text-decoration": "none" },
+                    on: {
+                      click: function($event) {
+                        return _vm.url({
+                          id: sucursal.id
+                        })
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "card-body" }, [
+                      _vm._m(1, true),
+                      _vm._v(" "),
+                      _c("h4", { staticClass: "card-text text-center" }, [
+                        _vm._v(_vm._s(sucursal.sucursal))
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "card-text text-center" }, [
+                        _vm._v(_vm._s(sucursal.direccion))
+                      ])
+                    ])
+                  ]
+                ),
+                _vm._v(" "),
+                _vm._m(2, true)
+              ])
+            ]
+          )
+        })
+      ],
+      2
+    )
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-center my-3" }, [
-        _c("div", { staticClass: "card col-md-12" }, [
-          _c("div", { staticClass: "form-row justify-center" }, [
-            _c("div", { staticClass: "col-12 my-1" }, [
-              _c("h3", { staticClass: "text-center" }, [_vm._v("Cocina")])
-            ])
-          ])
-        ])
-      ])
+    return _c("div", { staticClass: "col-sm-12 text-center" }, [
+      _c("h2", [_vm._v("Seleccione una Sucursal")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h5", { staticClass: "card-title text-center" }, [
+      _c("i", { staticClass: "fas fa-store-alt fa-3x" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "card-footer text-center" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-success", attrs: { type: "button" } },
+        [_vm._v("Abierto/Cerrado")]
+      )
     ])
   }
 ]
@@ -79853,7 +79849,11 @@ var render = function() {
                             "button",
                             {
                               staticClass: "btn btn-danger btn-sm btn-block",
-                              attrs: { type: "button" }
+                              attrs: {
+                                type: "button",
+                                "data-toggle": "modal",
+                                "data-target": "#pagoModal"
+                              }
                             },
                             [_vm._v("Pagar")]
                           )
@@ -79871,90 +79871,83 @@ var render = function() {
         _c(
           "div",
           { staticClass: "column col-md-8", attrs: { id: "main" } },
-          [
-            _vm._m(8),
-            _vm._v(" "),
-            _vm._l(_vm.zonas, function(zona) {
-              return _c(
-                "div",
-                {
-                  key: zona,
-                  staticClass: "col-sm-12 my-1",
-                  attrs: { prop: "zona" }
-                },
-                [
-                  _c("div", { staticClass: "card mb-3" }, [
-                    _c("div", { staticClass: "card-body" }, [
-                      _c("h3", { staticClass: "card-title text-center" }, [
-                        _vm._v(_vm._s(zona))
-                      ]),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        { staticClass: "row justify-center my-3" },
-                        _vm._l(_vm.mesas[zona], function(data) {
-                          return _c(
-                            "div",
-                            {
-                              key: data.id,
-                              staticClass: "col-sm-2",
-                              attrs: { prop: "data" }
-                            },
-                            [
-                              _c(
-                                "div",
-                                { staticClass: "card border-info mb-3" },
-                                [
-                                  _c(
-                                    "a",
-                                    {
-                                      staticClass: "text-white",
-                                      staticStyle: {
-                                        "text-decoration": "none"
-                                      },
-                                      on: {
-                                        click: function($event) {
-                                          _vm.seleccionarMesa(data),
-                                            (_vm.idMesa = data.id)
-                                        }
+          _vm._l(_vm.zonas, function(zona) {
+            return _c(
+              "div",
+              {
+                key: zona,
+                staticClass: "col-sm-12 my-1",
+                attrs: { prop: "zona" }
+              },
+              [
+                _c("div", { staticClass: "card mb-3" }, [
+                  _c("div", { staticClass: "card-body" }, [
+                    _c("h3", { staticClass: "card-title text-center" }, [
+                      _vm._v(_vm._s(zona))
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "row justify-center my-3" },
+                      _vm._l(_vm.mesas[zona], function(data) {
+                        return _c(
+                          "div",
+                          {
+                            key: data.id,
+                            staticClass: "col-sm-2",
+                            attrs: { prop: "data" }
+                          },
+                          [
+                            _c(
+                              "div",
+                              { staticClass: "card border-info mb-3" },
+                              [
+                                _c(
+                                  "a",
+                                  {
+                                    staticClass: "text-white",
+                                    staticStyle: { "text-decoration": "none" },
+                                    on: {
+                                      click: function($event) {
+                                        _vm.seleccionarMesa(data),
+                                          (_vm.idMesa = data.id)
                                       }
-                                    },
-                                    [
-                                      _c(
-                                        "div",
-                                        { staticClass: "card-body text-info" },
-                                        [
-                                          _c("img", {
-                                            staticClass: "card-img-top",
-                                            attrs: { src: "/images/silla.png" }
-                                          }),
-                                          _vm._v(" "),
-                                          _c(
-                                            "h4",
-                                            {
-                                              staticClass:
-                                                "card-text text-center"
-                                            },
-                                            [_vm._v(_vm._s(data.mesa))]
-                                          )
-                                        ]
-                                      )
-                                    ]
-                                  )
-                                ]
-                              )
-                            ]
-                          )
-                        }),
-                        0
-                      )
-                    ])
+                                    }
+                                  },
+                                  [
+                                    _c(
+                                      "div",
+                                      { staticClass: "card-body text-info" },
+                                      [
+                                        _c("img", {
+                                          staticClass: "card-img-top",
+                                          attrs: { src: "/images/silla.png" }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "h4",
+                                          {
+                                            staticClass: "card-text text-center"
+                                          },
+                                          [_vm._v(_vm._s(data.mesa))]
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      }),
+                      0
+                    )
                   ])
-                ]
-              )
-            })
-          ],
-          2
+                ])
+              ]
+            )
+          }),
+          0
         )
       ])
     ]),
@@ -79988,7 +79981,7 @@ var render = function() {
                   [_vm._v("Nuevo Pedido " + _vm._s(_vm.idMesa))]
                 ),
                 _vm._v(" "),
-                _vm._m(9)
+                _vm._m(8)
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "modal-body" }, [
@@ -80124,10 +80117,10 @@ var render = function() {
                             "div",
                             { staticClass: "row justify-center mt-3 mb-1" },
                             [
-                              _vm._m(10),
+                              _vm._m(9),
                               _vm._v(" "),
                               _c("div", { staticClass: "col-sm-12" }, [
-                                _vm._m(11),
+                                _vm._m(10),
                                 _vm._v(" "),
                                 _c("label", { staticClass: "text-right" }, [
                                   _vm._v(_vm._s(_vm.datosPedido.hora_pedido))
@@ -80135,14 +80128,14 @@ var render = function() {
                               ]),
                               _vm._v(" "),
                               _c("div", { staticClass: "col-sm-12" }, [
-                                _vm._m(12),
+                                _vm._m(11),
                                 _vm._v(" "),
                                 _c("label", { staticClass: "text-right" }, [
                                   _vm._v(_vm._s(_vm.datosPedido.estado))
                                 ])
                               ]),
                               _vm._v(" "),
-                              _vm._m(13)
+                              _vm._m(12)
                             ]
                           ),
                           _vm._v(" "),
@@ -80180,7 +80173,7 @@ var render = function() {
                             { staticClass: "row justify-center mb-2" },
                             [
                               _c("div", { staticClass: "col-sm-12" }, [
-                                _vm._m(14),
+                                _vm._m(13),
                                 _vm._v(" "),
                                 _c("label", { staticClass: "text-right" }, [
                                   _vm._v("$" + _vm._s(_vm.total))
@@ -80409,6 +80402,91 @@ var render = function() {
           ]
         )
       ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "pagoModal",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "pagoModal",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog modal-xl", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(14),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c("div", { staticClass: "row justify-center mt-1 mb-1" }, [
+                  _c("div", { staticClass: "col-md-5" }, [
+                    _c(
+                      "div",
+                      { staticClass: "card" },
+                      [
+                        _vm._m(15),
+                        _vm._v(" "),
+                        _vm._l(_vm.pedidos, function(pedido) {
+                          return _c(
+                            "div",
+                            {
+                              key: pedido.id,
+                              staticClass: "row justify-center mb-2",
+                              attrs: { prop: "pedido" }
+                            },
+                            [
+                              _c("div", { staticClass: "col-sm-12" }, [
+                                _c("label", [
+                                  _c("strong", [
+                                    _vm._v(_vm._s(pedido.cantidad))
+                                  ]),
+                                  _vm._v(
+                                    "\n                      x " +
+                                      _vm._s(pedido.producto) +
+                                      "\n                    "
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("label", { staticClass: "text-right" }, [
+                                  _vm._v("$" + _vm._s(pedido.precio) + " c/u")
+                                ])
+                              ])
+                            ]
+                          )
+                        }),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "row justify-center mb-2" }, [
+                          _c("div", { staticClass: "col-sm-12" }, [
+                            _vm._m(16),
+                            _vm._v(" "),
+                            _c("label", { staticClass: "text-right" }, [
+                              _vm._v("$" + _vm._s(_vm.total))
+                            ])
+                          ]),
+                          _vm._v(" "),
+                          _vm._m(17)
+                        ])
+                      ],
+                      2
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _vm._m(18)
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._m(19)
+            ])
+          ]
+        )
+      ]
     )
   ])
 }
@@ -80477,14 +80555,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-sm-12 text-center" }, [
-      _c("h2", [_vm._v("Mesas")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c(
       "button",
       {
@@ -80532,6 +80602,103 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("label", [_c("strong", [_vm._v("Total")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c("h5", { staticClass: "modal-title", attrs: { id: "pagoModal" } }, [
+        _vm._v("Realizar pago")
+      ]),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row justify-center mt-3 mb-1" }, [
+      _c("div", { staticClass: "col-sm-12 text-center" }, [
+        _c("label", [_c("h4", [_c("strong", [_vm._v("Pedido")])])])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", [_c("strong", [_vm._v("Total")])])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-sm-12" }, [
+      _c("label", [_c("strong", [_vm._v("Propina Sugerida (x%)")])]),
+      _vm._v(" "),
+      _c("label", { staticClass: "text-right" }, [_vm._v("$propina")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-7" }, [
+      _c("div", { staticClass: "card" }, [
+        _c("div", { staticClass: "row justify-center my-2" }, [
+          _c("div", { staticClass: "col-sm-6" }, [
+            _c("div", { staticClass: "input-group" }, [
+              _c("select", { staticClass: "form-control" }, [
+                _c("option", { attrs: { value: "0" } }, [_vm._v("Efectivo")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "1" } }, [_vm._v("Debito")]),
+                _vm._v(" "),
+                _c("option", { attrs: { value: "2" } }, [_vm._v("Credito")])
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-sm-6" }, [
+            _c("div", { staticClass: "input-group" }, [
+              _c("input", {
+                staticClass: "form-control",
+                attrs: {
+                  type: "text",
+                  placeholder: "precio",
+                  "aria-label": "precio",
+                  "aria-describedby": "precio"
+                }
+              })
+            ])
+          ])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-footer" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-primary", attrs: { type: "button" } },
+        [_vm._v("Realizar Pago")]
+      )
+    ])
   }
 ]
 render._withStripped = true

@@ -8,6 +8,7 @@
     <title>Laravel</title>
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic|Material+Icons">
+    <link rel="stylesheet" href="https://printjs-4de6.kxcdn.com/print.min.css">
 
     {{-- <link href="{{ mix('css/app.css') }}" type="text/css" rel="stylesheet" /> --}}
     <meta name="csrf-token" value="{{ csrf_token() }}" />
@@ -19,6 +20,7 @@
 <body>
     <div id="app"></div>
     <script src="{{ mix('js/app.js') }}" type="text/javascript"></script>
+    <script src="https://printjs-4de6.kxcdn.com/print.min.js" type="text/javascript"></script>
 </body>
 
 </html>

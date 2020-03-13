@@ -3,36 +3,36 @@ import { SnotifyPosition, SnotifyStyle } from 'vue-snotify';
 export default {
     data() {
         return {
-            sucursal: 0,
-            select_sucursal: null,
-            zonas: 0,
-            select_zonas: null,
-            radio: true,
-            disabled: true,
+            sucursales: [],
+            /* sucursal: '',
+            direccion: '',
+            observacion: '',
+            sucursales: [],
             tabla: false,
-            zonasModal: [],
-            zona: null,
-            mesa: null,
-            cantMesa: null,
-            mesas: [],
-            /* checkmul: false, */
+            guardar: false,
+            boton: true,
+            errors: [], */
         }
     },
     methods: {
-        estado() {
-            if (this.radio == true) {
-                this.disabled = true;
-            } else {
-                this.disabled = false;
-            }
+
+        url(id) {
+            this.$router.push({
+                name: 'POSMesas',
+                params: id,
+            }).catch(error => {
+                if (error.name != "NavigationDuplicated") {
+                    throw error;
+                }
+            });
         },
-        traerSucursales() {
-            axios.get('api/traer_sucursales_select').then((res) => {
+        traer() {
+            axios.get('api/traer_sucursales').then((res) => {
                 if (res.data.estado == 'success') {
-                    this.select_sucursal = res.data.sucursales;
-                    this.tabla = true;
+                    this.sucursales = res.data.sucursales;
+                    /* this.tabla = true; */
                 } else {
-                    this.tabla = true;
+                    /* this.tabla = true; */
                     this.$snotify.create({
                         body: res.data.mensaje,
                         config: {
@@ -47,13 +47,18 @@ export default {
                 }
             });
         },
-        ingresarZonas() {
+        /* ingresar() {
             const data = {
-                'zona': this.zona
+                'sucursal': this.sucursal,
+                'direccion': this.direccion,
+                'observacion': this.observacion,
             }
-            axios.post('api/ingresar_zona', data).then((res) => {
+            axios.post('api/ingresar_sucursal', data).then((res) => {
+                this.guardar = true;
                 if (res.data.estado == 'success') {
-                    this.zona = '';
+                    this.guardar = false;
+                    this.limpiar();
+                    this.boton = true;
                     this.$snotify.create({
                         body: res.data.mensaje,
                         config: {
@@ -65,9 +70,9 @@ export default {
                             type: SnotifyStyle.success,
                         }
                     })
-                    this.traerZonas();
-                    this.traerZonaSelect()
+                    this.traer();
                 } else {
+                    this.guardar = false;
                     this.$snotify.create({
                         body: res.data.mensaje,
                         config: {
@@ -79,53 +84,17 @@ export default {
                             type: SnotifyStyle.error,
                         }
                     });
+
                 }
             });
         },
-        ingresarMesa() {
-            const data = {
-                'mesa': this.mesa,
-                'cantMesa': this.cantMesa,
-                'sucursal': this.sucursal,
-                'zona': this.zonas,
-                'estado': this.radio
-            }
-            console.log(data);
-            axios.post('api/ingresar_mesa', data).then((res) => {
+        traer() {
+            axios.get('api/traer_sucursales').then((res) => {
                 if (res.data.estado == 'success') {
-                    this.limpiar();
-                    this.traerMesas();
-                    this.$snotify.create({
-                        body: res.data.mensaje,
-                        config: {
-                            timeout: 2000,
-                            showProgressBar: true,
-                            closeOnClick: true,
-                            pauseOnHover: false,
-                            position: SnotifyPosition.centerBottom,
-                            type: SnotifyStyle.success,
-                        }
-                    })
+                    this.sucursales = res.data.sucursales;
+                    this.tabla = true;
                 } else {
-                    this.$snotify.create({
-                        body: res.data.mensaje,
-                        config: {
-                            timeout: 3000,
-                            showProgressBar: true,
-                            closeOnClick: true,
-                            pauseOnHover: false,
-                            position: SnotifyPosition.centerBottom,
-                            type: SnotifyStyle.error,
-                        }
-                    })
-                }
-            });
-        },
-        traerMesas() {
-            axios.get('api/traer_mesas').then((res) => {
-                if (res.data.estado == 'success') {
-                    this.mesas = res.data.mesas;
-                } else {
+                    this.tabla = true;
                     this.$snotify.create({
                         body: res.data.mensaje,
                         config: {
@@ -141,57 +110,19 @@ export default {
             });
         },
         limpiar() {
-            this.radio = true;
-            this.mesa = '';
-            this.cantMesa = '';
-            this.sucursal = 0;
-            this.zonas = 0;
+            this.sucursal = '';
+            this.direccion = '';
+            this.observacion = '';
         },
-        traerZonas() {
-            axios.get('api/traer_zonas').then((res) => {
-                if (res.data.estado == 'success') {
-                    this.zonasModal = res.data.zonas;
-                } else {
-                    this.$snotify.create({
-                        body: res.data.mensaje,
-                        config: {
-                            timeout: 3000,
-                            showProgressBar: true,
-                            closeOnClick: true,
-                            pauseOnHover: false,
-                            position: SnotifyPosition.centerBottom,
-                            type: SnotifyStyle.error,
-                        }
-                    })
-                }
-            });
-        },
-        traerZonaSelect() {
-            axios.get('api/traer_zonas_select').then((res) => {
-                if (res.data.estado == 'success') {
-                    this.select_zonas = res.data.zonas;
-                    this.tabla = true;
-                } else {
-                    this.tabla = true;
-                    this.$snotify.create({
-                        body: res.data.mensaje,
-                        config: {
-                            timeout: 3000,
-                            showProgressBar: true,
-                            closeOnClick: true,
-                            pauseOnHover: false,
-                            position: SnotifyPosition.centerBottom,
-                            type: SnotifyStyle.error,
-                        }
-                    })
-                }
-            });
-        }
+        escribiendo() {
+            if (this.sucursal.toLowerCase().trim() == '' || this.direccion.toLowerCase().trim() == '') {
+                this.boton = true;
+            } else {
+                this.boton = false;
+            }
+        } */
     },
     mounted() {
-        this.traerSucursales();
-        this.traerZonaSelect();
-        this.traerMesas();
-    },
-
+        this.traer();
+    }
 };

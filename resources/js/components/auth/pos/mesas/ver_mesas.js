@@ -122,44 +122,58 @@ export default {
 
         },
         abrirCerrarMesa() {
-            const data = {
-                'mesa': this.mesa.id,
-                'estado': this.mesa.estado_id,
-            }
-            axios.post('/api/abrir_cerrar_mesa', data).then((res) => {
-                if (res.data.estado == 'success') {
-                    if (this.mesa.estado_id == 2) {
-                        this.estado = true;
-                        this.estadoMesa = 2;
-                    } else {
-                        this.estado = false;
+            if (this.mesa == '') {
+                this.$snotify.create({
+                    body: 'Debe seleccionar una mesa.',
+                    config: {
+                        timeout: 2000,
+                        showProgressBar: true,
+                        closeOnClick: true,
+                        pauseOnHover: false,
+                        position: SnotifyPosition.centerBottom,
+                        type: SnotifyStyle.warning,
                     }
-                    this.$snotify.create({
-                        body: res.data.mensaje,
-                        config: {
-                            timeout: 2000,
-                            showProgressBar: true,
-                            closeOnClick: true,
-                            pauseOnHover: false,
-                            position: SnotifyPosition.centerBottom,
-                            type: SnotifyStyle.success,
-                        }
-                    })
-                    this.traerMesas();
-                } else {
-                    this.$snotify.create({
-                        body: res.data.mensaje,
-                        config: {
-                            timeout: 2000,
-                            showProgressBar: true,
-                            closeOnClick: true,
-                            pauseOnHover: false,
-                            position: SnotifyPosition.centerBottom,
-                            type: SnotifyStyle.error,
-                        }
-                    });
+                });
+            } else {
+                const data = {
+                    'mesa': this.mesa.id,
+                    'estado': this.mesa.estado_id,
                 }
-            });
+                axios.post('/api/abrir_cerrar_mesa', data).then((res) => {
+                    if (res.data.estado == 'success') {
+                        if (this.mesa.estado_id == 2) {
+                            this.estado = true;
+                            this.estadoMesa = 2;
+                        } else {
+                            this.estado = false;
+                        }
+                        this.$snotify.create({
+                            body: res.data.mensaje,
+                            config: {
+                                timeout: 2000,
+                                showProgressBar: true,
+                                closeOnClick: true,
+                                pauseOnHover: false,
+                                position: SnotifyPosition.centerBottom,
+                                type: SnotifyStyle.success,
+                            }
+                        })
+                        this.traerMesas();
+                    } else {
+                        this.$snotify.create({
+                            body: res.data.mensaje,
+                            config: {
+                                timeout: 2000,
+                                showProgressBar: true,
+                                closeOnClick: true,
+                                pauseOnHover: false,
+                                position: SnotifyPosition.centerBottom,
+                                type: SnotifyStyle.error,
+                            }
+                        });
+                    }
+                });
+            }
         },
         guardarMesas(res) {
             this.mesasDrop = [];
@@ -376,6 +390,9 @@ export default {
                 }
             });
         },
+        imprimir() {
+            window.print();
+        }
     },
     mounted() {
         this.traerMesas();
