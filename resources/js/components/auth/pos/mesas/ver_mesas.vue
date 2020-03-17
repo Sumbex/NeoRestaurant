@@ -410,73 +410,49 @@
           </div>
           <div class="modal-body">
             <div class="row justify-center mt-1 mb-1">
-              <div class="col-md-5">
-                <div class="card">
-                  <div class="row justify-center mt-3 mb-1">
-                    <div class="col-sm-12 text-center">
-                      <label>
-                        <h4>
-                          <strong>Pedido</strong>
-                        </h4>
-                      </label>
-                    </div>
+              <div class="row justify-center my-2">
+                <div class="col-sm-3">
+                  <div class="input-group custom-control custom-checkbox">
+                    <input
+                      type="checkbox"
+                      class="custom-control-input"
+                      id="propina"
+                      v-model="propina"
+                      @click="mostrarPropina()"
+                    />
+                    <label class="custom-control-label" for="propina">Propina?</label>
                   </div>
-                  <div
-                    class="row justify-center mb-2"
-                    v-for="pedido in pedidos"
-                    prop="pedido"
-                    :key="pedido.id"
-                  >
-                    <!-- array del pedido -->
-                    <div class="col-sm-12">
-                      <label>
-                        <strong>{{pedido.cantidad}}</strong>
-                        x {{pedido.producto}}
-                      </label>
-                      <label class="text-right">${{pedido.precio}} c/u</label>
-                    </div>
-                    <!-- array del pedido -->
-                  </div>
-
-                  <div class="row justify-center mb-2">
-                    <div class="col-sm-12">
-                      <label>
-                        <strong>Total</strong>
-                      </label>
-                      <label class="text-right">${{total}}</label>
-                    </div>
-                    <div class="col-sm-12">
-                      <label>
-                        <strong>Propina Sugerida (x%)</strong>
-                      </label>
-                      <label class="text-right">$propina</label>
-                    </div>
+                  {{propina}}
+                </div>
+                <div class="col-sm-3">
+                  <div class="input-group">
+                    <select class="form-control">
+                      <option value="0">Efectivo</option>
+                      <option value="1">Debito</option>
+                      <option value="2">Credito</option>
+                    </select>
                   </div>
                 </div>
-              </div>
-              <div class="col-md-7">
-                <div class="card">
-                  <div class="row justify-center my-2">
-                    <div class="col-sm-6">
-                      <div class="input-group">
-                        <select class="form-control">
-                          <option value="0">Efectivo</option>
-                          <option value="1">Debito</option>
-                          <option value="2">Credito</option>
-                        </select>
-                      </div>
-                    </div>
-                    <div class="col-sm-6">
-                      <div class="input-group">
-                        <input
-                          type="text"
-                          class="form-control"
-                          placeholder="precio"
-                          aria-label="precio"
-                          aria-describedby="precio"
-                        />
-                      </div>
-                    </div>
+                <div class="col-sm-6">
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="precio"
+                      aria-label="precio"
+                      aria-describedby="precio"
+                    />
+                  </div>
+                </div>
+                <div class="col-sm-6" v-show="propina">
+                  <div class="input-group">
+                    <input
+                      type="text"
+                      class="form-control"
+                      placeholder="precio"
+                      aria-label="precio"
+                      aria-describedby="monto"
+                    />
                   </div>
                 </div>
               </div>

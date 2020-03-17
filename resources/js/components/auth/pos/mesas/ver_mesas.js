@@ -24,9 +24,13 @@ export default {
             mesasPedido: null,
             updPedido: false,
             mesasBorrar: [],
+            propina: false,
         }
     },
     methods: {
+        mostrarPropina() {
+            this.propina = !this.propina;
+        },
         seleccionarMesa(mesa) {
             this.mesa = mesa;
             switch (this.mesa.estado_id) {

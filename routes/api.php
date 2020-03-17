@@ -19,6 +19,7 @@ Route::post('auth/login', 'AuthController@Login');
 
 Route::group(['middleware' => 'auth.jwt'], function () {
     Route::post('auth/logout', 'AuthController@Logout');
+    Route::get('auth/user', 'AuthController@User');
 
     /* <---DatosBasicos---> */
     Route::get('/traer_anios', 'TraerDatosBasicosController@TraerAnios');
@@ -94,4 +95,9 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     Route::get('/traer_pedido_mesa/{sucursal}/{mesa}', 'PedidosController@TraerPedido');
     Route::post('/verificar_stock_producto', 'CompraDetalleAlmacenController@VerificarStockProducto');
     /* <---Pedidos---> */
+
+    /* <---Usuarios---> */
+    Route::post('/ingresar_empleado', 'UsuariosController@CrearUsuario');
+    Route::get('/traer_empleados', 'UsuariosController@TraerUsuarios');
+    /* <---Usuarios---> */
 });

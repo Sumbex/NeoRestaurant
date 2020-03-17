@@ -159,7 +159,8 @@ class Pedidos extends Model
             ->select([
                 'p.id',
                 'p.hora_pedido',
-                'ep.descripcion as estado'
+                'ep.descripcion as estado',
+                'p.creada_por as mesero'
             ])
             ->join('estado_pedidos as ep', 'ep.id', 'p.estado_id')
             ->where([

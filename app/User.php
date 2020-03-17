@@ -2,7 +2,9 @@
 
 namespace App;
 
+use Illuminate\Support\Facades\DB;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
@@ -156,4 +158,45 @@ class User extends Authenticatable implements JWTSubject
         $rut = str_replace('-', '', $rut);
         return $rut;
     }
+
+    protected function crearUsuario($rut, $nombre, $rol)
+    {
+        $usuario = new User;
+        $usuario->rut = $rut;
+        $usuario->nombre = $nombre;
+        $usuario->password = bcrypt(substr($rut, -5, 4));
+        $usuario->rol_id = $rol;
+        $usuario->creada_por = Auth::user()->id;
+        $usuario->estado_id = 1;
+        $usuario->activo = 'S';
+        if ($usuario->save()) {
+            DB::commit();
+            return true;
+        } else {
+            DB::rollBack();
+            return false;
+        }
+    }
+
+    protected function traerUser()
+    {
+        $user = DB::table('users')
+            ->select([
+                'id',
+                'rut',
+                'nombre',
+                'rol_id'
+            ])
+            ->where([
+                'id' => Auth::user()->id
+            ])
+            ->first();
+
+        if (!is_null($user)) {
+            return ['estado' => 'success', 'user' => $user];
+        } else {
+            return ['estado' => 'failed', 'mensaje' => 'Usuario no encontrado.'];
+        }
+    }
+
 }

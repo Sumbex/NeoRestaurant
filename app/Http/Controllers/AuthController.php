@@ -16,4 +16,9 @@ class AuthController extends Controller
     {
         return User::logout();
     }
+
+    public function User()
+    {
+        return User::traerUser();
+    }
 }
