@@ -14,19 +14,17 @@ export default {
             });
         },
 
-        getUser() {
+        guardarUser() {
             if (localStorage.getItem("user") != null) {
                 this.user = JSON.parse(localStorage.getItem("user"));
-                return this.user;
+            } else {
+                axios.get('api/auth/user').then((res) => {
+                    if (res.data.estado == 'success') {
+                        this.user = JSON.parse(localStorage.getItem("user"));
+                    }
+                });
             }
-        },
 
-        guardarUser() {
-            axios.get('api/auth/user').then((res) => {
-                if (res.data.estado == 'success') {
-                    localStorage.setItem("user", JSON.stringify(res.data.user));
-                }
-            });
         },
         toggle() {
             $("#wrapper").toggleClass("toggled");

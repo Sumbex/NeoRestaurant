@@ -4196,18 +4196,18 @@ __webpack_require__.r(__webpack_exports__);
         redirect: '/'
       });
     },
-    getUser: function getUser() {
+    guardarUser: function guardarUser() {
+      var _this = this;
+
       if (localStorage.getItem("user") != null) {
         this.user = JSON.parse(localStorage.getItem("user"));
-        return this.user;
+      } else {
+        axios.get('api/auth/user').then(function (res) {
+          if (res.data.estado == 'success') {
+            _this.user = JSON.parse(localStorage.getItem("user"));
+          }
+        });
       }
-    },
-    guardarUser: function guardarUser() {
-      axios.get('api/auth/user').then(function (res) {
-        if (res.data.estado == 'success') {
-          localStorage.setItem("user", JSON.stringify(res.data.user));
-        }
-      });
     },
     toggle: function toggle() {
       $("#wrapper").toggleClass("toggled");
