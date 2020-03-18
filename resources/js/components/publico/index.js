@@ -1,3 +1,5 @@
+import usuario from "../servicios/usuario";
+
 export default {
 
     data() {
@@ -15,8 +17,11 @@ export default {
                     rut: app.rut,
                     password: app.password
                 },
-                success: function () { },
-                error: function () { },
+                success: function() {
+                    let datos = this.$auth.user();
+                    localStorage.setItem("user", JSON.stringify(datos));
+                },
+                error: function() {},
                 rememberMe: true,
                 redirect: "/home",
                 fetchUser: true

@@ -198,7 +198,7 @@ class User extends Authenticatable implements JWTSubject
             ->first();
 
         if (!is_null($user)) {
-            return ['estado' => 'success', 'user' => $user];
+            return ['status' => 'success', 'data' => $user];
         } else {
             return ['estado' => 'failed', 'mensaje' => 'Usuario no encontrado.'];
         }

@@ -3772,6 +3772,8 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_snotify__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-snotify */ "./node_modules/vue-snotify/vue-snotify.esm.js");
+/* harmony import */ var _servicios_usuario__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../servicios/usuario */ "./resources/js/components/servicios/usuario.js");
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -3790,10 +3792,11 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    userActivo: function userActivo() {
-      var user = JSON.parse(localStorage.getItem("user"));
-      this.user = user;
-
+    setUsuario: function setUsuario() {
+      var datos = _servicios_usuario__WEBPACK_IMPORTED_MODULE_1__["default"].guardarUser();
+      this.user = datos;
+    },
+    bloquearCampos: function bloquearCampos() {
       if (this.user.rol != 1) {
         this.bloquear = true;
       }
@@ -3843,9 +3846,10 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
+    this.setUsuario();
+    this.bloquearCampos();
     this.traerSucursales();
     this.traerRoles();
-    this.userActivo();
   }
 });
 
@@ -4187,6 +4191,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _servicios_usuario__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../servicios/usuario */ "./resources/js/components/servicios/usuario.js");
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -4205,24 +4211,9 @@ __webpack_require__.r(__webpack_exports__);
     setUser: function setUser(user) {
       this.user = user;
     },
-    getUser: function getUser() {
-      return this.user;
-    },
     guardarUser: function guardarUser() {
-      var _this = this;
-
-      if (localStorage.getItem("user") != null) {
-        this.setUser(JSON.parse(localStorage.getItem("user")));
-      } else {
-        console.log('else');
-        axios.get('api/auth/user').then(function (res) {
-          if (res.data.estado == 'success') {
-            _this.setUser(res.data.user);
-
-            localStorage.setItem("user", JSON.stringify(_this.user));
-          }
-        });
-      }
+      var data = _servicios_usuario__WEBPACK_IMPORTED_MODULE_0__["default"].guardarUser();
+      this.user = data;
     },
     toggle: function toggle() {
       $("#wrapper").toggleClass("toggled");
@@ -5684,6 +5675,8 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _servicios_usuario__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../servicios/usuario */ "./resources/js/components/servicios/usuario.js");
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -5699,7 +5692,10 @@ __webpack_require__.r(__webpack_exports__);
           rut: app.rut,
           password: app.password
         },
-        success: function success() {},
+        success: function success() {
+          var datos = this.$auth.user();
+          localStorage.setItem("user", JSON.stringify(datos));
+        },
         error: function error() {},
         rememberMe: true,
         redirect: "/home",
@@ -102041,6 +102037,37 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_outer_vue_vue_type_template_id_879121d2___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
+
+/***/ }),
+
+/***/ "./resources/js/components/servicios/usuario.js":
+/*!******************************************************!*\
+  !*** ./resources/js/components/servicios/usuario.js ***!
+  \******************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      user: []
+    };
+  },
+  setUser: function setUser(user) {
+    this.user = user;
+  },
+  getUser: function getUser() {
+    return this.user;
+  },
+  guardarUser: function guardarUser() {
+    if (localStorage.getItem("user") != null) {
+      this.setUser(JSON.parse(localStorage.getItem("user")));
+      return this.getUser();
+    }
+  }
+});
 
 /***/ }),
 

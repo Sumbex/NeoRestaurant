@@ -1,4 +1,5 @@
 import { SnotifyPosition, SnotifyStyle } from 'vue-snotify';
+import usuario from '../../../servicios/usuario';
 
 export default {
     data() {
@@ -17,9 +18,11 @@ export default {
         }
     },
     methods: {
-        userActivo() {
-            let user = JSON.parse(localStorage.getItem("user"));
-            this.user = user;
+        setUsuario() {
+            let datos = usuario.guardarUser();
+            this.user = datos;
+        },
+        bloquearCampos() {
             if (this.user.rol != 1) {
                 this.bloquear = true;
             }
@@ -65,8 +68,9 @@ export default {
         },
     },
     mounted() {
+        this.setUsuario();
+        this.bloquearCampos();
         this.traerSucursales();
         this.traerRoles();
-        this.userActivo();
     }
 };
