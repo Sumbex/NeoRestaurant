@@ -53,12 +53,13 @@ export default {
                 this.url({
                     id: user.sucursal
                 });
+            } else {
+                this.traer();
             }
         }
     },
     mounted() {
         this.redirigir();
-        this.traer();
     },
 
 };

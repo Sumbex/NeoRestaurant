@@ -4787,12 +4787,13 @@ __webpack_require__.r(__webpack_exports__);
         this.url({
           id: user.sucursal
         });
+      } else {
+        this.traer();
       }
     }
   },
   mounted: function mounted() {
     this.redirigir();
-    this.traer();
   }
 });
 
