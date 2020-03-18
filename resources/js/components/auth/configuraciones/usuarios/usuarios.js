@@ -12,19 +12,23 @@ export default {
             apellidos: null,
             direccion: null,
             correo: null,
-            user: []
+            user: [],
+            bloquear: false,
         }
     },
     methods: {
         userActivo() {
             let user = JSON.parse(localStorage.getItem("user"));
             this.user = user;
-            return this.user;
+            if (this.user.rol != 1) {
+                this.bloquear = true;
+            }
         },
         traerSucursales() {
             axios.get('api/traer_sucursales_select').then((res) => {
                 if (res.data.estado == 'success') {
                     this.select_sucursal = res.data.sucursales;
+                    this.sucursal = this.user.sucursal;
                 } else {
                     this.$snotify.create({
                         body: res.data.mensaje,
@@ -63,5 +67,6 @@ export default {
     mounted() {
         this.traerSucursales();
         this.traerRoles();
+        this.userActivo();
     }
 };

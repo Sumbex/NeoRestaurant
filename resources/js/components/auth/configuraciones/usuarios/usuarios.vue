@@ -7,7 +7,7 @@
             <h3 class="text-center mt-2">Usuarios</h3>
             <div class="row justify-center my-3">
               <div class="form-group col-md-6">
-                <select class="form-control" v-model="sucursal">
+                <select class="form-control" :disabled="bloquear" v-model="sucursal">
                   <option value="0">Seleccione una Sucursal</option>
                   <option
                     v-for="option in select_sucursal"

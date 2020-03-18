@@ -3785,14 +3785,18 @@ __webpack_require__.r(__webpack_exports__);
       apellidos: null,
       direccion: null,
       correo: null,
-      user: []
+      user: [],
+      bloquear: false
     };
   },
   methods: {
     userActivo: function userActivo() {
       var user = JSON.parse(localStorage.getItem("user"));
       this.user = user;
-      return this.user;
+
+      if (this.user.rol != 1) {
+        this.bloquear = true;
+      }
     },
     traerSucursales: function traerSucursales() {
       var _this = this;
@@ -3800,6 +3804,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.get('api/traer_sucursales_select').then(function (res) {
         if (res.data.estado == 'success') {
           _this.select_sucursal = res.data.sucursales;
+          _this.sucursal = _this.user.sucursal;
         } else {
           _this.$snotify.create({
             body: res.data.mensaje,
@@ -3840,6 +3845,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     this.traerSucursales();
     this.traerRoles();
+    this.userActivo();
   }
 });
 
@@ -4196,16 +4202,23 @@ __webpack_require__.r(__webpack_exports__);
         redirect: '/'
       });
     },
+    setUser: function setUser(user) {
+      this.user = user;
+    },
+    getUser: function getUser() {
+      return this.user;
+    },
     guardarUser: function guardarUser() {
       var _this = this;
 
       if (localStorage.getItem("user") != null) {
-        this.user = JSON.parse(localStorage.getItem("user"));
+        this.setUser(JSON.parse(localStorage.getItem("user")));
       } else {
         console.log('else');
         axios.get('api/auth/user').then(function (res) {
           if (res.data.estado == 'success') {
-            _this.user = res.data.user;
+            _this.setUser(res.data.user);
+
             localStorage.setItem("user", JSON.stringify(_this.user));
           }
         });
@@ -78234,6 +78247,7 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control",
+                    attrs: { disabled: _vm.bloquear },
                     on: {
                       change: function($event) {
                         var $$selectedVal = Array.prototype.filter
