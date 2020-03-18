@@ -4196,13 +4196,16 @@ __webpack_require__.r(__webpack_exports__);
         redirect: '/'
       });
     },
+    getUser: function getUser() {
+      if (localStorage.getItem("user") != null) {
+        this.user = JSON.parse(localStorage.getItem("user"));
+        return this.user;
+      }
+    },
     guardarUser: function guardarUser() {
-      var _this = this;
-
       axios.get('api/auth/user').then(function (res) {
         if (res.data.estado == 'success') {
-          _this.user = res.data.user;
-          localStorage.setItem("user", JSON.stringify(_this.user));
+          localStorage.setItem("user", JSON.stringify(res.data.user));
         }
       });
     },

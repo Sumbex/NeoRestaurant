@@ -14,11 +14,17 @@ export default {
             });
         },
 
+        getUser() {
+            if (localStorage.getItem("user") != null) {
+                this.user = JSON.parse(localStorage.getItem("user"));
+                return this.user;
+            }
+        },
+
         guardarUser() {
             axios.get('api/auth/user').then((res) => {
                 if (res.data.estado == 'success') {
-                    this.user = res.data.user;
-                    localStorage.setItem("user", JSON.stringify(this.user));
+                    localStorage.setItem("user", JSON.stringify(res.data.user));
                 }
             });
         },
