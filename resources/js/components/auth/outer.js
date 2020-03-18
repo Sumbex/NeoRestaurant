@@ -18,9 +18,11 @@ export default {
             if (localStorage.getItem("user") != null) {
                 this.user = JSON.parse(localStorage.getItem("user"));
             } else {
+                console.log('else');
                 axios.get('api/auth/user').then((res) => {
                     if (res.data.estado == 'success') {
-                        this.user = JSON.parse(localStorage.getItem("user"));
+                        this.user = res.data.user;
+                        localStorage.setItem("user", JSON.stringify(this.user));
                     }
                 });
             }

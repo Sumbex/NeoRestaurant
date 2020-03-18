@@ -4202,9 +4202,11 @@ __webpack_require__.r(__webpack_exports__);
       if (localStorage.getItem("user") != null) {
         this.user = JSON.parse(localStorage.getItem("user"));
       } else {
+        console.log('else');
         axios.get('api/auth/user').then(function (res) {
           if (res.data.estado == 'success') {
-            _this.user = JSON.parse(localStorage.getItem("user"));
+            _this.user = res.data.user;
+            localStorage.setItem("user", JSON.stringify(_this.user));
           }
         });
       }
@@ -4783,80 +4785,6 @@ __webpack_require__.r(__webpack_exports__);
         });
       }
     }
-    /* ingresar() {
-        const data = {
-            'sucursal': this.sucursal,
-            'direccion': this.direccion,
-            'observacion': this.observacion,
-        }
-        axios.post('api/ingresar_sucursal', data).then((res) => {
-            this.guardar = true;
-            if (res.data.estado == 'success') {
-                this.guardar = false;
-                this.limpiar();
-                this.boton = true;
-                this.$snotify.create({
-                    body: res.data.mensaje,
-                    config: {
-                        timeout: 2000,
-                        showProgressBar: true,
-                        closeOnClick: true,
-                        pauseOnHover: false,
-                        position: SnotifyPosition.centerBottom,
-                        type: SnotifyStyle.success,
-                    }
-                })
-                this.traer();
-            } else {
-                this.guardar = false;
-                this.$snotify.create({
-                    body: res.data.mensaje,
-                    config: {
-                        timeout: 2000,
-                        showProgressBar: true,
-                        closeOnClick: true,
-                        pauseOnHover: false,
-                        position: SnotifyPosition.centerBottom,
-                        type: SnotifyStyle.error,
-                    }
-                });
-              }
-        });
-    },
-    traer() {
-        axios.get('api/traer_sucursales').then((res) => {
-            if (res.data.estado == 'success') {
-                this.sucursales = res.data.sucursales;
-                this.tabla = true;
-            } else {
-                this.tabla = true;
-                this.$snotify.create({
-                    body: res.data.mensaje,
-                    config: {
-                        timeout: 3000,
-                        showProgressBar: true,
-                        closeOnClick: true,
-                        pauseOnHover: false,
-                        position: SnotifyPosition.centerBottom,
-                        type: SnotifyStyle.error,
-                    }
-                })
-            }
-        });
-    },
-    limpiar() {
-        this.sucursal = '';
-        this.direccion = '';
-        this.observacion = '';
-    },
-    escribiendo() {
-        if (this.sucursal.toLowerCase().trim() == '' || this.direccion.toLowerCase().trim() == '') {
-            this.boton = true;
-        } else {
-            this.boton = false;
-        }
-    } */
-
   },
   mounted: function mounted() {
     this.redirigir();
