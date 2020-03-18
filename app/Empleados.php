@@ -83,4 +83,22 @@ class Empleados extends Model
             return ['estado' => 'failed', 'mensaje' => 'Empleado no encontrado.'];
         }
     }
+
+    protected function traerRoles()
+    {
+        $roles = DB::table('roles')
+            ->select([
+                'id',
+                'rol'
+            ])
+            ->where([
+                'activo' => 'S'
+            ])
+            ->get();
+        if (!$roles->isEmpty()) {
+            return ['estado' => 'success', 'roles' => $roles];
+        } else {
+            return ['estado' => 'failed', 'mensaje' => 'No se encuentran usuarios registrados.'];
+        }
+    }
 }

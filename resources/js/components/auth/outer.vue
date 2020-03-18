@@ -138,14 +138,14 @@
         <div class="collapse" id="collapseConfig">
           <a
             class="list-group-item list-group-item-action list-group-item-light"
-            :class="[currentPage.includes('configuraciones') ? activeClass : 'list-group-item-action']"
-            @click="url('Config')"
-          >Configuraciones</a>
-          <a
-            class="list-group-item list-group-item-action list-group-item-light"
             :class="[currentPage.includes('usuarios') ? activeClass : 'list-group-item-action']"
             @click="url('Usuarios')"
           >Usuarios</a>
+          <a
+            class="list-group-item list-group-item-action list-group-item-light"
+            :class="[currentPage.includes('configuraciones') ? activeClass : 'list-group-item-action']"
+            @click="url('Config')"
+          >Configuraciones</a>
         </div>
       </div>
     </div>
@@ -182,6 +182,7 @@
                 <a class="nav-link" href="#">Link</a>
               </li>
           </ul>-->
+
           <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
             <li class="nav-item dropdown">
               <a
@@ -191,7 +192,7 @@
                 data-toggle="dropdown"
                 aria-haspopup="true"
                 aria-expanded="false"
-              >Bryan Montecino</a>
+              >{{user.usuario}}</a>
               <div class="dropdown-menu" aria-labelledby="dropdown07">
                 <a class="dropdown-item" href="#" @click="logout">Log out</a>
               </div>

@@ -7,6 +7,7 @@ export default {
     },
     methods: {
         logout: function() {
+            localStorage.removeItem('user');
             this.$auth.logout({
                 makeRequest: true,
                 redirect: '/'

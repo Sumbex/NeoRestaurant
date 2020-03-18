@@ -47,6 +47,14 @@ export default {
                 }
             });
         },
+        redirigir() {
+            let user = JSON.parse(localStorage.getItem("user"));
+            if (user.rol != 1) {
+                this.url({
+                    id: user.sucursal
+                });
+            }
+        }
         /* ingresar() {
             const data = {
                 'sucursal': this.sucursal,
@@ -123,6 +131,8 @@ export default {
         } */
     },
     mounted() {
+        this.redirigir();
         this.traer();
-    }
+    },
+
 };

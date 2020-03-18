@@ -20,10 +20,10 @@
                 <select class="form-control" v-model="rol">
                   <option value="0">Seleccione un Rol</option>
                   <option
-                    v-for="option in select_sucursal"
+                    v-for="option in select_rol"
                     v-bind:value="option.id"
                     :key="option.id"
-                  >{{option.descripcion}}</option>
+                  >{{option.rol}}</option>
                 </select>
               </div>
               <div class="form-group col-md-4">

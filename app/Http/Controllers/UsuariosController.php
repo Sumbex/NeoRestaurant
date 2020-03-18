@@ -15,4 +15,8 @@ class UsuariosController extends Controller
     {
         return Empleados::traerUsuarios($sucursal);
     }
+    public function TraerRoles()
+    {
+        return Empleados::traerRoles();
+    }
 }

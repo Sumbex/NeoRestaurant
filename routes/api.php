@@ -99,5 +99,6 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     /* <---Usuarios---> */
     Route::post('/ingresar_empleado', 'UsuariosController@CrearUsuario');
     Route::get('/traer_empleados', 'UsuariosController@TraerUsuarios');
+    Route::get('/traer_roles', 'UsuariosController@TraerRoles');
     /* <---Usuarios---> */
 });

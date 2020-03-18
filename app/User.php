@@ -180,15 +180,20 @@ class User extends Authenticatable implements JWTSubject
 
     protected function traerUser()
     {
-        $user = DB::table('users')
+        $user = DB::table('users as u')
             ->select([
-                'id',
-                'rut',
-                'nombre',
-                'rol_id'
+                'u.nombre as usuario',
+                'u.rol_id as rol',
+                'e.sucursal_id as sucursal',
+                'e.rut',
+                'e.nombres',
+                'e.apellidos',
+                'e.direccion',
+                'e.correo'
             ])
+            ->join('empleados as e', 'e.rut', 'u.rut')
             ->where([
-                'id' => Auth::user()->id
+                'u.id' => Auth::user()->id
             ])
             ->first();
 
@@ -198,5 +203,4 @@ class User extends Authenticatable implements JWTSubject
             return ['estado' => 'failed', 'mensaje' => 'Usuario no encontrado.'];
         }
     }
-
 }
